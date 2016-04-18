@@ -1,0 +1,28 @@
+==================== Design ====================
+Granularity
+    never store calculated data, you should be able to caculate it using current stored data
+Naming
+    underscore or camelCase are all fine, just be consistent
+    singular or plural table name are all fine, just be consistent
+    prefix or non-prefix table name are all fine, just be consistent
+    PK can be simply id or somethingId, just be consistent(I chose simply id)
+Normalizng
+    1st Normal Form
+        make sure there is primary key
+        and don't have multiple value inside one column
+    2nd Normal Form
+        ???
+    3rd Normal Form
+        move transitive dependency into seperate table
+        and associate it with original table using table key
+Relationship
+    foreign key benefits? integrity
+    foreign key must be set on unique or primary key values
+
+    one to many(foreign key)
+    many to many(junction table & foreign key)
+Workflow
+    write down use case
+    identify the nouns(sometime verbs)
+    identify the relationships
+    create the tables

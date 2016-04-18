@@ -1,0 +1,605 @@
+Liquid is an open-source, Ruby-based template language created by Shopify
+
+Basic concept
+    Tag: programming logic that tells templates what to do, wrapped in {% %}
+    Objects/Liquid Variables: contain attributes that are used to display dynamic content on the page
+    Filter: modify the output, placed within an output tag {{ }}, separated with a pipe character |
+    Handle: every object in Liquid has a handle to access the attributes of it
+
+Types: Liquid objects can return one of six types
+    String
+    Number
+    Boolean: true | false
+    Nil
+    Array
+    EmptyDrop: non-existent object, always has a .empty? attribute equal to ture
+
+Operators
+    == != > < >= <= or and contains
+
+Tag
+    control flow
+        if/elsif/else/endif
+            {% if customer.name == 'kevin' %}
+                Hey Kevin!
+            {% elsif customer.name == 'anonymous' %}
+                Hey Anonymous!
+            {% else %}
+                Hi Stranger!
+            {% endif %}
+        case/when/endcase
+            {% case handle %}
+                {% when 'cake' %}
+                    This is a cake
+                {% when 'cookie' %}
+                    This is a cookie
+                {% else %}
+                    This is not a cake nor a cookie
+            {% endcase %}
+        unless/enduless
+            {% unless product.title == 'Awesome Shoes' %}
+                These shoes are not awesome.
+            {% endunless %}
+    iteration
+        for/break/continue(output max 50 results, use paginate tag if more than 50 resultes)
+            forloop object is available whin for tag
+
+            {% for i in (1..5) reversed limit:2 offset:2  %}
+                {% if i == 5 %}
+                    {% break %}
+                {% elsif i == 3 %}
+                    {% continue %}
+                {% else %}
+                    {{ i }}
+                {% endif %}
+            {% endfor %}
+        cycle
+            <ul>
+            {% for product in collections.collection-1.products %}
+                <li{% cycle 'group1': ' style="clear:both;"', '', '', ' class="last"' %}>
+                    <a href="{{ product.url | within: collection }}">
+                    <img src="{{ product.featured_image.src | product_img_url: "medium" }}" alt="{{ product.featured_image.alt }}" />
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+            <ul>
+            {% for product in collections.collection-2.products %}
+                <li{% cycle 'group2': ' style="clear:both;"', '', '', ' class="last"' %}>
+                    <a href="{{ product.url | within: collection }}">
+                    <img src="{{ product.featured_image.src | product_img_url: "medium" }}" alt="{{ product.featured_image.alt }}" />
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+        tablerow
+            tablerow object availabe whthin tablerow tag
+
+            <table>
+            {% tablerow i in (1..10) cols:2 limit:3 offset:3%}
+                {{ i }}
+            {% endtablerow %}
+            </table>
+    theme
+        comment
+            {% comment %}any thing inside will not be ouput or excuted by Liquid{% endcomment %}
+        include
+            inserts a snippet from the snippets folder of a theme
+            the code inside the included snippet will have access to the variables within its parent template
+            `with` parameter assigns a value to a variable inside a snippet that shares the same name as the snippet
+
+            {% include 'color' with 'red' %}
+        form
+            generate form
+            form object available within form tag
+            parameters
+                'activate_customer_password'
+                'new_comment'
+                'contact'
+                'create_customer'
+                'customer_address'
+                'customer_login'
+                'recover_customer_password'
+
+            {% form %}
+            {% endform %}
+        layout
+            loads an alternate template file from the layout folder of a theme
+
+            {% layout 'alternate' %}
+            {% layout none %}
+        paginate
+            paginate and part object available within paginate tag
+
+            {% paginate collection.products by 5 %}
+                {% for product in collection.products %}
+                    <!--show product details here -->
+                {% endfor %}
+            {% endpaginate %}
+        raw
+            output of Liquid code on a page without being parsed
+
+            {% raw %}{{ 5 | plus: 6 }}{% endraw %} is equal to 11
+    variable
+        assign
+            {% assing my_var = 'string' %}
+        capture
+            captures the string inside of the opening and closing tags
+
+            {% capture my_var %}I am being captured.{% endcapture %}
+        increment
+            creates a new number variable, and increases its value by one every time it is called
+            increment created variable are independent from variables created through assign or capture
+
+            {% increment variable %}
+        decrement
+            {% decrement variable %}
+
+Objects/Liquid Variables
+    address(must specify shipping_address or billing_address, like billing_address.name)
+        .name
+        .first_name
+        .last_name
+        .address1
+        .address2
+        .street
+        .company
+        .city
+        .province
+        .province_code
+        .zip
+        .country
+        .country_code
+        .phone
+    article
+        .author
+        .comments
+        .comments_count
+        .comments_enabled?
+        .comment_post_url
+        .content
+        .created_at
+        .excerpt
+        .excerpt_or_content
+        .id
+        .moderated?
+        .published_at
+        .tags
+        .title
+        .url
+        .user.account_owner
+        .user.bio
+        .user.email
+        .user.first_name
+        .user.last_name
+        .user.homepage
+    blog
+        .all_tags
+        .articles
+        .articles_count
+        .comments_enabled?
+        .handle
+        .id
+        .moderated?
+        .next_article
+        .previous_article
+        .tags
+        .title
+        .url
+    cart
+        .attributes
+        .item_count
+        .items
+        .note
+        .total_price
+        .total_weight
+    checkout
+        .applied_gift_cards
+        .attributes
+        .billing_address
+        .buyer_accepts_marketing
+        .discounts
+        .discounts_amount
+        .discounts_savings
+        .email
+        .gift_cards_amount
+        .id
+        .line_items
+        .name
+        .note
+        .order
+        .order_id
+        .order_name
+        .order_number
+        .requires_shipping
+        .shipping_address
+        .shipping_method
+        .shipping_methods
+        .shipping_price
+        .subtotal_price
+        .tax_lines
+        .tax_price
+        .total_price
+        .transactions
+    collection
+        .all_types
+        .all_vendors
+        .current_type
+        .current_vendor
+        .default_sort_by
+        .description
+        .handle
+        .id
+        .image
+        .image.src
+        .next_product
+        .previous_product
+        .products
+        .products_count
+        .template_suffix
+        .title
+        .tags
+        .url
+    comment
+        .id
+        .author
+        .email
+        .content
+        .status
+        .url
+    country_option_tags(creates an <option> tag for each country, must be wrapped in <select>)
+    current_page(the number of the page you are on when browsing through paginated content)
+    current_tag(to filter collection or blog that contain a specific tag)
+    customer_address
+        .first_name
+        .last_name
+        .address1
+        .address2
+        .street
+        .company
+        .city
+        .province
+        .province_code
+        .zip
+        .country
+        .country_code
+        .phone
+        .id
+    customer
+        .accepts_marketing
+        .addresses
+        .addresses_count
+        .default_address
+        .email
+        .first_name
+        .has_account
+        .id
+        .last_name
+        .last_order
+        .name
+        .orders
+        .orders_count
+        .tags
+        .total_spent
+    discount
+        .id
+        .code
+        .amount
+        .savings
+        .type
+    forloop
+        .first
+        .index
+        .index0
+        .last
+        .rindex
+        .rindex0
+        .length
+    form
+        .author
+        .body
+        .email
+        .errors
+        .posted_successfully?
+    fulfillment
+        .tracking_company
+        .tracking_number
+        .tracking_url
+    gift_card
+        .balance
+        .code
+        .currency
+        .customer
+        .enabled
+        .expired
+        .expires_on
+        .initial_value
+        .properties
+        .url
+    image
+        .alt
+        .attached_to_variant?
+        .id
+        .product_id
+        .position
+        .src
+        .variants
+    line_item
+        .id
+        .image
+        .product
+        .variant
+        .title
+        .price
+        .line_price
+        .quantity
+        .grams
+        .properties
+        .sku
+        .type
+        .vendor
+        .requires_shipping
+        .taxable
+        .url
+        .variant_id
+        .product_id
+        .fulfillment
+    link(must be invoked inside a linklist)
+        .active
+        .object
+        .title
+        .type
+        .url
+    linklist
+        .handle
+        .id
+        .links
+        .title
+    metafields(store additional information for products, collections, orders, blogs, pages and your shop)
+    order
+        .billing_address
+        .cancelled
+        .cancelled_at
+        .cancel_reason
+        .cancel_reason_label
+        .created_at
+        .customer
+        .customer_url
+        .discounts
+        .email
+        .financial_status
+        .financial_status_label
+        .fulfillment_status
+        .fulfillment_status_label
+        .line_items
+        .location
+        .name
+        .note
+        .order_number
+        .shipping_address
+        .shipping_methods
+        .shipping_price
+        .subtotal_price
+        .tax_lines
+        .tax_price
+        .total_price
+        .transactions
+    page_description(the description of a Product, Page, Collection, or Blog Article)
+    page_title(title of a Product, Page, or Blog Article)
+    page
+        .author
+        .content
+        .handle
+        .id
+        .published_at
+        .template_suffix
+        .title
+        .url
+    paginate
+        .current_page
+        .current_offset
+        .items
+        .parts
+        .next
+        .previous
+        .page_size
+        .pages
+    part(array represents a link in the pagination's navigation)
+        .is_link
+        .title
+        .url
+    product
+        .available
+        .collections
+        .compare_at_price_max
+        .compare_at_price_min
+        .compare_at_price_varies
+        .content
+        .description
+        .featured_image
+        .first_available_variant
+        .handle
+        .id
+        .images
+        .options
+        .price
+        .price_max
+        .price_min
+        .price_varies
+        .selected_variant
+        .selected_or_first_available_variant
+        .tags
+        .template_suffix
+        .title
+        .type
+        .url
+        .variants
+        .vendor
+    search
+        .performed
+        .results
+        .results_count
+        .terms
+    shipping_method
+        .handle
+        .price
+        .title
+    shop
+        .address
+        .collections_count
+        .currency
+        .description
+        .domain
+        .email
+        .enabled_payment_types
+        .metafields
+        .money_format
+        .money_with_currency_format
+        .name
+        .password_message
+        .permanent_domain
+        .products_count
+        .types
+        .url
+        .vendors
+        .locale
+    tablerow
+        .index
+        .index0
+        .rindex
+        .rindex0
+        .first
+        .last
+        .col
+        .col0
+        .col_first
+        .col_last
+    tax_line
+        .title
+        .price
+        .rate
+        .rate_percentage
+    template(the name of the template used to render the current page)
+    theme(information about published themes in a shop. You can also use themes to iterate through both themes)
+        .id
+        .role
+        .name
+    transaction
+        .id
+        .amount
+        .name
+        .status
+        .status_label
+        .created_at
+        .receipt
+        .kind
+        .gateway
+        .payment_details
+    variant
+        .available
+        .barcode
+        .compare_at_price
+        .id
+        .image
+        .inventory_management
+        .inventory_policy
+        .inventory_quantity
+        .option1
+        .option2
+        .option3
+        .price
+        .requires_shipping
+        .selected
+        .sku
+        .taxable
+        .title
+        .url
+        .weight
+        .weight_unit
+        .weight_in_unit
+
+Filter
+    array
+        join: 'by'
+        first, .first
+        last, .last
+        index([])
+        map: 'array_ele'
+        size
+        sort
+    HTML
+        img_tag: ['alt text', 'cssClass1 cssClass2 ...']
+        script_tag
+        stylesheet_tag
+    math
+        ceil
+        divided_by:
+        floor
+        minus:
+        plus:
+        round:
+        times:
+        modulo:
+    money
+        money
+        money_with_currency
+        money_without_trailing_zeros
+        money_without_currency
+    string
+        append: 'tail'
+        camelcase
+        capitalize
+        downcase
+        escape
+        handle/handleize
+        md5
+        newline_to_br
+        pluralize: 'display if singular', 'display if plural'
+        prepend: 'leading'
+        remove: 'to remove'
+        remove_first: 'to remove'
+        replace: 'find', 'replace with'
+        replace_first: 'find', 'replace with'
+        slice: fromIndex, length
+        split: 'by'
+        strip
+        lstrip
+        rstrip
+        strip_html
+        strip_newlines
+        truncate: length
+        truncatewords: length
+        uniq
+        upcase
+        url_escape
+        url_param_escape
+    URL
+        asset_url
+        file_url
+        customer_login_link
+        global_asset_url
+        img_url: 'size'
+            available size: pico icon thumb small compact medium large grande original 1024x1024 2048x2048 master
+        link_to: 'href', 'title'
+        link_to_vendor:
+        link_to_type
+        link_to_tag: 'tag'
+        link_to_add_tag: 'tag'
+        link_to_remove_tag
+        payment_type_img_url
+        product_img_url
+        collection_img_url
+        shopify_asset_url
+        url_for_type
+        url_for_vendor
+        within
+    other
+        date: 'format'
+            available format: %a %A %b %B %c %d %-d %D %e %F %H %I %j %k %m %M %p %r %R %T %U %W %w %x %X %Y %Z
+        default: 'default value if variable has no value'
+        default_errors
+        default_pagination
+        highlight: search.terms
+        highlight_active_tag
+        json
+        weight_with_unit

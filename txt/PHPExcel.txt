@@ -1,0 +1,631 @@
+====================== PHPExcel =======================
+Achitecture
+	Lazy Loader
+	SpreadSheet in memory
+	Readers and Writers
+		PHPExcel does not provide the functionality to read from or write to a persisted spreadsheet
+		(on disk or in a database). To provide that functionality, readers and writers can be used
+	Fluent Interfaces
+		make your code easier to read and maintain. It can also improve performance
+Creating a spreadsheet
+	- Load from file
+		1. use IOFactory::load()
+			$inputFileName = './sampleData/example1.xls';
+			$objPHPExcel = PHPExcel_IOFactory::load($inputFileName);
+		2. use a Reader::load()
+			$inputFileName = './sampleData/example1.xls';
+			/** Create a new Excel5 Reader  **/
+			$objReader = new PHPExcel_Reader_Excel5();
+			//    $objReader = new PHPExcel_Reader_Excel2007();
+			//    $objReader = new PHPExcel_Reader_Excel2003XML();
+			//    $objReader = new PHPExcel_Reader_OOCalc();
+			//    $objReader = new PHPExcel_Reader_SYLK();
+			//    $objReader = new PHPExcel_Reader_Gnumeric();
+			//    $objReader = new PHPExcel_Reader_CSV();
+
+			/** Load $inputFileName to a PHPExcel Object  **/
+			$objPHPExcel = $objReader->load($inputFileName);
+		3. use IOFactory to create a Reader, then load
+			/**  if uncertain, you can identify the type of $inputFileName  **/
+			//	  $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+			$inputFileType = 'Excel5';
+			//    $inputFileType = 'Excel2007';
+			//    $inputFileType = 'Excel2003XML';
+			//    $inputFileType = 'OOCalc';
+			//    $inputFileType = 'SYLK';
+			//    $inputFileType = 'Gnumeric';
+			//    $inputFileType = 'CSV';
+			$inputFileName = './sampleData/example1.xls';
+
+			/**  Create a new Reader of the type defined in $inputFileType  **/
+			$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+			/**  Load $inputFileName to a PHPExcel Object  **/
+			$objPHPExcel = $objReader->load($inputFileName);
+	- Intantiate new workbook
+		$objPHPExcel = new PHPExcel();
+Configure Settings
+	- You cannot change the configuration settings once you have started to read a workbook, or have
+	  created your first worksheet
+	- Cell Caching
+		- function: PHPExcel_Settings::setCacheStorageMethod($cacheMethod, $cahceSetting);
+		- available $cacheMethod:
+			PHPExcel_CachedObjectStorageFactory::cache_in_memory,
+			PHPExcel_CachedObjectStorageFactory::cache_in_memory_serialized
+			PHPExcel_CachedObjectStorageFactory::cache_in_memory_gzip
+			PHPExcel_CachedObjectStorageFactory::cache_igbinary
+			PHPExcel_CachedObjectStorageFactory::cache_to_discISAM
+			PHPExcel_CachedObjectStorageFactory::cache_to_phpTemp
+			PHPExcel_CachedObjectStorageFactory::cache_to_apc
+			PHPExcel_CachedObjectStorageFactory::cache_to_memcache
+			PHPExcel_CachedObjectStorageFactory::cache_to_wincache
+			PHPExcel_CachedObjectStorageFactory::cache_to_sqlite
+			PHPExcel_CachedObjectStorageFactory::cache_to_sqlite3
+		- available $cacheSetting:
+			'dir' => '/usr/local/tmp',
+			'memoryCacheSize' => '8MB',
+			'cacheTime' => 600,
+			'memcacheServer' => 'localhost',
+		    'memcachePort'   => 11211,
+	- Reading Only Data
+		$objReader->setReadDataOnly(true)
+	- Reading Only Specified WorkSheets
+		$objReader->setLoadSheetsOnly($sheetname) // can be an array to set multiple
+	- Reading All WorkSheets(default)
+		$objReader->setLoadAllSheets()
+	- Reading Only Specific Columns and Rows from a File (Read Filters)
+		1.
+			$inputFileType = 'Excel5';
+			$inputFileName = './sampleData/example1.xls';
+			$sheetname = 'Data Sheet #3';
+
+			/**  Define a Read Filter class implementing PHPExcel_Reader_IReadFilter  */
+			class MyReadFilter implements PHPExcel_Reader_IReadFilter
+			{
+			    public function readCell($column, $row, $worksheetName = '') {
+			        //  Read rows 1 to 7 and columns A to E only
+			        if ($row >= 1 && $row <= 7) {
+			            if (in_array($column,range('A','E'))) {
+			                return true;
+			            }
+			        }
+			        return false;
+			    }
+			}
+
+			/**  Create an Instance of our Read Filter  **/
+			$filterSubset = new MyReadFilter();
+
+			/**  Create a new Reader of the type defined in $inputFileType  **/
+			$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+			/**  Tell the Reader that we want to use the Read Filter  **/
+			$objReader->setReadFilter($filterSubset);
+			/**  Load only the rows and columns that match our filter to PHPExcel  **/
+			$objPHPExcel = $objReader->load($inputFileName);
+		2.
+			/**  Define a Read Filter class implementing PHPExcel_Reader_IReadFilter  */
+			class MyReadFilter implements PHPExcel_Reader_IReadFilter
+			{
+			    private $_startRow = 0;
+			    private $_endRow   = 0;
+			    private $_columns  = array();
+
+			    /**  Get the list of rows and columns to read  */
+			    public function __construct($startRow, $endRow, $columns) {
+			        $this->_startRow = $startRow;
+			        $this->_endRow   = $endRow;
+			        $this->_columns  = $columns;
+			    }
+
+			    public function readCell($column, $row, $worksheetName = '') {
+			        //  Only read the rows and columns that were configured
+			        if ($row >= $this->_startRow && $row <= $this->_endRow) {
+			            if (in_array($column,$this->_columns)) {
+			                return true;
+			            }
+			        }
+			        return false;
+			    }
+			}
+
+			/**  Create an Instance of our Read Filter, passing in the cell range  **/
+			$filterSubset = new MyReadFilter(9,15,range('G','K'));
+	- Language/Locale
+		- function :PHPExcel_Settings::setLocale($locale);
+Deleting A Workbook
+	code:
+		$objPHPExcel->disconnectWorksheets();
+		unset($objPHPExcel);
+Worksheets
+	- Notes:
+		A worksheet is a collection of cells, formulae, images, graphs, etc. It holds all data
+		necessary to represent a spreadsheet worksheet.
+	- Methods:
+		createSheet()
+		addSheet($oWorksheet, $position)
+		removeSheetByIndex($sheetIndex)
+		getSheet($index)
+		getIndex($oWorksheet)
+		getSheetByName($sheetName)
+		setActiveSheetIndex($index)
+		setActiveSheetIndexByName($name)
+		getActiveSheet()
+		getSheetCount()
+		getSheetNames()
+Accessing Cells
+	- Setting value by coordinate:
+		Note:
+			you can write custom "value binders" to change the behaviour of cell datatype conversion
+			when setting cell values
+		Methods:
+			setCellValues($cellCoor, $value)
+			setCellValueByColumnAndRow($columnNum, $rowNum, $value)
+			getCell($cellCorr)->setValue($value)
+	- Setting a date and/or time value in a cell
+		Code:
+		// Get the current date/time and convert to an Excel date/time
+		$dateTimeNow = time();
+		$excelDateValue = PHPExcel_Shared_Date::PHPToExcel( $dateTimeNow );
+		// Set cell A6 with the Excel date/time value
+		$objPHPExcel->getActiveSheet()->setCellValue(
+		    'A6',
+		    $excelDateValue
+		);
+		// Set the number format mask so that the excel timestamp will be displayed as a
+		// human-readable date/time
+		$objPHPExcel->getActiveSheet()->getStyle('A6')
+		    ->getNumberFormat()
+		    ->setFormatCode(
+		        PHPExcel_Style_NumberFormat::FORMAT_DATE_DATETIME
+		    );
+	- Setting number with leading zero
+		1. treat as string
+		Code:
+		// Set cell A8 with a numeric value, but tell PHPExcel it should be treated as a string
+		$objPHPExcel->getActiveSheet()->setCellValueExplicit(
+		    'A8',
+		    "01513789642",
+		    PHPExcel_Cell_DataType::TYPE_STRING
+		);
+		2. use a number format mask
+		Code:
+		// Set cell A9 with a numeric value
+		$objPHPExcel->getActiveSheet()->setCellValue('A9', 1513789642);
+		// Set a number format mask to display the value as 11 digits with leading zeroes
+		$objPHPExcel->getActiveSheet()->getStyle('A9')
+		    ->getNumberFormat()
+		    ->setFormatCode(
+		        '0000-000-0000'
+		    );
+	- Setting a range of cells from an array
+		1. 2-d array
+			$arrayData = array(
+			    array(NULL, 2010, 2011, 2012),
+			    array('Q1',   12,   15,   21),
+			    array('Q2',   56,   73,   86),
+			    array('Q3',   52,   61,   69),
+			    array('Q4',   30,   32,    0),
+			);
+			$objPHPExcel->getActiveSheet()
+			    ->fromArray(
+			        $arrayData,  // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'C3'         // Top left coordinate of the worksheet range where
+			                     //    we want to set these values (default is A1)
+			    );
+		2. 1-d row array
+			$rowArray = array('Value1', 'Value2', 'Value3', 'Value4');
+			$objPHPExcel->getActiveSheet()
+			    ->fromArray(
+			        $rowArray,   // The data to set
+			        NULL,        // Array values with this value will not be set
+			        'C3'         // Top left coordinate of the worksheet range where
+			                     //    we want to set these values (default is A1)
+			    );
+		3. 1-d column array
+			$rowArray = array('Value1', 'Value2', 'Value3', 'Value4');
+			$columnArray = array_chunk($rowArray, 1);
+			$objPHPExcel->getActiveSheet()
+			    ->fromArray(
+			        $columnArray,   // The data to set
+			        NULL,           // Array values with this value will not be set
+			        'C3'            // Top left coordinate of the worksheet range where
+			                        //    we want to set these values (default is A1)
+			    );
+	- Retrieving a cell value by coordinate
+		retrieve raw value:
+			getCell('A1')->getValue()
+			getCellByColumnAndRow(1, 5)->getValue()
+		retrieve calculated value:
+			getCell('A1')->getCalculatedValue()
+			getCellByColumnAndRow(0, 4)->getCalculatedValue()
+		retrieve formated value:
+			getCell('A1')->getFormattedValue()
+	- Retrieving a range of cell values to an array
+		Methods:
+			toArray()
+			rangeToArray()
+			namedRangeToArray()
+		Example:
+			$dataArray = $objPHPExcel->getActiveSheet()
+			    ->rangeToArray(
+			        'C3:E5',     // The worksheet range that we want to retrieve
+			        NULL,        // Value that should be returned for empty cells
+			        TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
+			        TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
+			        TRUE         // Should the array be indexed by cell row and cell column
+			    );
+	- Loop Through Cells
+		1. use iterators
+		$objReader = PHPExcel_IOFactory::createReader('Excel2007');
+		$objReader->setReadDataOnly(TRUE);
+		$objPHPExcel = $objReader->load("test.xlsx");
+
+		$objWorksheet = $objPHPExcel->getActiveSheet();
+
+		echo '<table>' . PHP_EOL;
+		foreach ($objWorksheet->getRowIterator() as $row) {
+		    echo '<tr>' . PHP_EOL;
+		    $cellIterator = $row->getCellIterator();
+		    $cellIterator->setIterateOnlyExistingCells(FALSE); // This loops through all cells,
+		                                                       // even if a cell value is not set.
+		                                                       // By default, only cells that have a
+		                                                       // value
+		                                                       // set will be iterated.
+		    foreach ($cellIterator as $cell) {
+		        echo '<td>' .
+		             $cell->getValue() .
+		             '</td>' . PHP_EOL;
+		    }
+		    echo '</tr>' . PHP_EOL;
+		}
+		echo '</table>' . PHP_EOL;
+		2. use indexes
+			2.1
+				$objReader = PHPExcel_IOFactory::createReader('Excel2007');
+				$objReader->setReadDataOnly(TRUE);
+				$objPHPExcel = $objReader->load("test.xlsx");
+
+				$objWorksheet = $objPHPExcel->getActiveSheet();
+				// Get the highest row and column numbers referenced in the worksheet
+				$highestRow = $objWorksheet->getHighestRow(); // e.g. 10
+				$highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
+				$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
+
+				echo '<table>' . "\n";
+				for ($row = 1; $row <= $highestRow; ++$row) {
+				    echo '<tr>' . PHP_EOL;
+				    for ($col = 0; $col <= $highestColumnIndex; ++$col) {
+				        echo '<td>' .
+				             $objWorksheet->getCellByColumnAndRow($col, $row)
+				                 ->getValue() .
+				             '</td>' . PHP_EOL;
+				    }
+				    echo '</tr>' . PHP_EOL;
+				}
+				echo '</table>' . PHP_EOL;
+			2.2
+				$objReader = PHPExcel_IOFactory::createReader('Excel2007');
+				$objReader->setReadDataOnly(TRUE);
+				$objPHPExcel = $objReader->load("test.xlsx");
+
+				$objWorksheet = $objPHPExcel->getActiveSheet();
+				// Get the highest row number and column letter referenced in the worksheet
+				$highestRow = $objWorksheet->getHighestRow(); // e.g. 10
+				$highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
+				// Increment the highest column letter
+				$highestColumn++;
+
+				echo '<table>' . "\n";
+				for ($row = 1; $row <= $highestRow; ++$row) {
+				    echo '<tr>' . PHP_EOL;
+				    for ($col = 'A'; $col != $highestColumn; ++$col) {
+				        echo '<td>' .
+				             $objWorksheet->getCell($col . $row)
+				                 ->getValue() .
+				             '</td>' . PHP_EOL;
+				    }
+				    echo '</tr>' . PHP_EOL;
+				}
+				echo '</table>' . PHP_EOL;
+	- Value Binders
+		When advanced value binding is required, you can implement the PHPExcel_Cell_IValueBinder
+		interface or extend the PHPExcel_Cell_DefaultValueBinder or PHPExcel_Cell_AdvancedValueBinder
+		classes.
+Recipes
+	- Setting a spreadsheet's medatata
+		$objPHPExcel->getProperties()
+		    ->setCreator("Maarten Balliauw")
+		    ->setLastModifiedBy("Maarten Balliauw");
+		    ->setTitle("Office 2007 XLSX Test Document")
+		    ->setSubject("Office 2007 XLSX Test Document")
+		    ->setDescription(
+		        "Test document for Office 2007 XLSX, generated using PHP classes."
+		    )
+		    ->setKeywords("office 2007 openxml php")
+		    ->setCategory("Test result file");
+	- Setting a spreadsheet's active sheet
+		setActiveSheetIndex()
+		setActiveSheetIndexByName()
+	- Write a newline character "\n" in a cell
+		$objPHPExcel->getActiveSheet()->getCell('A1')->setValue("hello\nworld");
+		$objPHPExcel->getActiveSheet()->getStyle('A1')->getAlignment()->setWrapText(true);
+	- Change a cell into a clickable URL
+		$objPHPExcel->getActiveSheet()->setCellValue('E26', 'www.phpexcel.net');
+		$objPHPExcel->getActiveSheet()->getCell('E26')->getHyperlink()
+			->setUrl('http://www.phpexcel.net'); // you can set to another worksheet also
+	- Setting Printer Options
+		getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE)
+		getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4)
+		getPageSetup()->setFitToPage()
+		getPageSetup()->setScale()
+		getPageSetup()->setFitToWidth()
+		getPageSetup()->setFitToHeight()
+		getPageSetup()->setHorizontalCentered()
+		getPageSetup()->setVerticalCentered()
+		getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(1, 5)
+		getPageSetup()->setPrintArea('A1:E5,G4:M20')
+		getPageMargins()->setTop()
+		getPageMargins()->setRight()
+		getPageMargins()->setBottom()
+		getPageMargins()->setLeft()
+		getHeaderFooter()->setOddHeader()
+		getHeaderFooter()->setOddFooter()
+		setBreak( 'A10' , PHPExcel_Worksheet::BREAK_ROW )
+		setShowGridlines(true)
+	- Settinig Cell Style
+		1. use Methods:
+			getStyle('B2')->getFont()->getColor()->setARGB(PHPExcel_Style_Color::COLOR_RED)
+			getStyle('B2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT)
+			getStyle('B2')->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THICK)
+			getStyle('B2')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+			getStyle('B2')->getFill()->getStartColor()->setARGB('FFFF0000')
+		2. use an Array:
+			$styleArray = array(
+			    'font' => array(
+			        'bold' => true,
+			    ),
+			    'alignment' => array(
+			        'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_RIGHT,
+			    ),
+			    'borders' => array(
+			        'top' => array(
+			            'style' => PHPExcel_Style_Border::BORDER_THIN,
+			        ),
+			    ),
+			    'fill' => array(
+			        'type' => PHPExcel_Style_Fill::FILL_GRADIENT_LINEAR,
+			        'rotation' => 90,
+			        'startcolor' => array(
+			            'argb' => 'FFA0A0A0',
+			        ),
+			        'endcolor' => array(
+			            'argb' => 'FFFFFFFF',
+			        ),
+			    ),
+			);
+			$objPHPExcel->getActiveSheet()->getStyle('A3')->applyFromArray($styleArray);
+	- Combining Multiple Files into a Single PHPExcel Object
+		$inputFileType = 'CSV';
+		$inputFileNames = array('./sampleData/example1.csv',
+		    './sampleData/example2.csv'
+		    './sampleData/example3.csv'
+		);
+
+		/**  Create a new Reader of the type defined in $inputFileType  **/
+		$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+
+
+		/**  Extract the first named file from the array list  **/
+		$inputFileName = array_shift($inputFileNames);
+		/**  Load the initial file to the first worksheet in a PHPExcel Object  **/
+		$objPHPExcel = $objReader->load($inputFileName);
+		/**  Set the worksheet title (to the filename that we've loaded)  **/
+		$objPHPExcel->getActiveSheet()
+		    ->setTitle(pathinfo($inputFileName,PATHINFO_BASENAME));
+
+
+		/**  Loop through all the remaining files in the list  **/
+		foreach($inputFileNames as $sheet => $inputFileName) {
+		    /**  Increment the worksheet index pointer for the Reader  **/
+		    $objReader->setSheetIndex($sheet+1);
+		    /**  Load the current file into a new worksheet in PHPExcel  **/
+		    $objReader->loadIntoExisting($inputFileName,$objPHPExcel);
+		    /**  Set the worksheet title (to the filename that we've loaded)  **/
+		    $objPHPExcel->getActiveSheet()
+		        ->setTitle(pathinfo($inputFileName,PATHINFO_BASENAME));
+		}
+	- Combining Read Filters with the setSheetIndex() method to split a large CSV file across
+	  multiple Worksheets
+	  $inputFileType = 'CSV';
+	  $inputFileName = './sampleData/example2.csv';
+
+
+	  echo 'Loading file ',pathinfo($inputFileName,PATHINFO_BASENAME),' using IOFactory with a defined reader type of ',$inputFileType,'<br />';
+	  /**  Create a new Reader of the type defined in $inputFileType  **/
+	  $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+
+
+	  /**  Define how many rows we want to read for each "chunk"  **/
+	  $chunkSize = 65530;
+	  /**  Create a new Instance of our Read Filter  **/
+	  $chunkFilter = new chunkReadFilter();
+
+	  /**  Tell the Reader that we want to use the Read Filter  **/
+	  /**    and that we want to store it in contiguous rows/columns  **/
+
+	  $objReader->setReadFilter($chunkFilter)
+	      ->setContiguous(true);
+
+	  /**  Instantiate a new PHPExcel object manually  **/
+	  $objPHPExcel = new PHPExcel();
+
+	  /**  Set a sheet index  **/
+	  $sheet = 0;
+	  /**  Loop to read our worksheet in "chunk size" blocks  **/
+	  /**  $startRow is set to 2 initially because we always read the headings in row #1  **/
+	  for ($startRow = 2; $startRow <= 1000000; $startRow += $chunkSize) {
+	      /**  Tell the Read Filter which rows we want to read this loop  **/
+	      $chunkFilter->setRows($startRow,$chunkSize);
+
+	      /**  Increment the worksheet index pointer for the Reader  **/
+	      $objReader->setSheetIndex($sheet);
+	      /**  Load only the rows that match our filter into a new worksheet  **/
+	      $objReader->loadIntoExisting($inputFileName,$objPHPExcel);
+	      /**  Set the worksheet title for the sheet that we've justloaded)  **/
+	      /**    and increment the sheet index as well  **/
+	      $objPHPExcel->getActiveSheet()->setTitle('Country Data #'.(++$sheet));
+	  }
+	- Pipe or Tab Separated Value Files
+		$inputFileType = 'CSV';
+		$inputFileName = './sampleData/example1.tsv';
+
+		/**  Create a new Reader of the type defined in $inputFileType  **/ $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+		/**  Set the delimiter to a TAB character  **/
+		$objReader->setDelimiter("\t");
+		//    $objReader->setDelimiter('|');
+
+		/**  Load the file to a PHPExcel Object  **/
+		$objPHPExcel = $objReader->load($inputFileName);
+Helper Methods
+	Reader::
+		->listWorkSheetNames($inputFileName)
+		->listWorkSheetInfo($inputFileName)
+AutoFilter
+	Step by Step:
+		1. set active sheets's auto filter
+
+			$objPHPExcel->getActiveSheet()->setAutoFilter('A1:E20');
+
+		2. get the autoFilter column object setted in last sentence
+
+			$autoFilter = $objPHPExcel->getActiveSheet()->getAutoFilter();
+
+		3. identify which column you're going to be applying this filter
+
+			$columnFilter = $autoFilter->getColumn('C');
+
+		4. identifying the filter type
+
+			$columnFilter->setFilterType(
+				PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_FILTER
+			);
+
+		5. create a filter rule and set the filter values and rule type
+		   can set multiple(joined by OR logic)
+
+			$columnFilter->createRule()
+				->setRule(
+					PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_EQUAL, 'France'
+				)->setRuleType();
+
+		6. apply the filter: will set all rows that match the filter criteria to visible, while
+			hiding all other rows within the autofilter area
+
+			$autoFilter->showHideRows()
+
+		7. display filtered rows: Simply looping through the rows in an autofilter area will still
+			  access ever row, whether it matches the filter criteria or not. To selectively access
+			  only the filtered rows, you need to test each row’s visibility setting
+
+			foreach ($objPHPExcel->getActiveSheet()->getRowIterator() as $row) {
+				if ($objPHPExcel->getActiveSheet()->getRowDimension($row->getRowIndex())->getVisible()) {
+					echo ' Row number - ' , $row->getRowIndex() , ' ';
+					echo $objPHPExcel->getActiveSheet()->getCell(
+						'C'.$row->getRowIndex()
+					)->getValue(), ' ';
+					echo $objPHPExcel->getActiveSheet()->getCell(
+						'D'.$row->getRowIndex()
+					)->getFormattedValue(), ' ';
+					echo EOL;
+				}
+			}
+	AutoFilter expression(You should not mix the different types of filter in the same column)
+		Simple
+			filterType:PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_FILTER
+		DateGroup
+			filterType:PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_FILTER
+			ruleType:PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_DATEGROUP
+			ruleValue:
+				array(
+					'year' => 2012,
+					'month' => 1,
+					'day' => ,
+					'hour' => ,
+					'minute' => ,
+					'second'
+				)
+		Custom
+			filterType: PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_CUSTOMFILTER
+			ruleType: PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_CUSTOMFILTER
+		Dynamic
+			filterType: PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_DYNAMICFILTER
+			ruleType: PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_DYNAMICFILTER
+			ruleValue:
+				AUTOFILTER_RULETYPE_DYNAMIC_YESTERDAY
+				AUTOFILTER_RULETYPE_DYNAMIC_TODAY
+				AUTOFILTER_RULETYPE_DYNAMIC_TOMORROW
+				AUTOFILTER_RULETYPE_DYNAMIC_YEARTODATE
+				AUTOFILTER_RULETYPE_DYNAMIC_THISYEAR
+				AUTOFILTER_RULETYPE_DYNAMIC_THISQUARTER
+				AUTOFILTER_RULETYPE_DYNAMIC_THISMONTH
+				AUTOFILTER_RULETYPE_DYNAMIC_THISWEEK
+				AUTOFILTER_RULETYPE_DYNAMIC_LASTYEAR
+				AUTOFILTER_RULETYPE_DYNAMIC_LASTQUARTER
+				AUTOFILTER_RULETYPE_DYNAMIC_LASTMONTH
+				AUTOFILTER_RULETYPE_DYNAMIC_LASTWEEK
+				AUTOFILTER_RULETYPE_DYNAMIC_NEXTYEAR
+				AUTOFILTER_RULETYPE_DYNAMIC_NEXTQUARTER
+				AUTOFILTER_RULETYPE_DYNAMIC_NEXTMONTH
+				AUTOFILTER_RULETYPE_DYNAMIC_NEXTWEEK
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_1
+				AUTOFILTER_RULETYPE_DYNAMIC_JANUARY
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_2
+				AUTOFILTER_RULETYPE_DYNAMIC_FEBRUARY
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_3
+				AUTOFILTER_RULETYPE_DYNAMIC_MARCH
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_4
+				AUTOFILTER_RULETYPE_DYNAMIC_APRIL
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_5
+				AUTOFILTER_RULETYPE_DYNAMIC_MAY
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_6
+				AUTOFILTER_RULETYPE_DYNAMIC_JUNE
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_7
+				AUTOFILTER_RULETYPE_DYNAMIC_JULY
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_8
+				AUTOFILTER_RULETYPE_DYNAMIC_AUGUST
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_9
+				AUTOFILTER_RULETYPE_DYNAMIC_SEPTEMBER
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_10
+				AUTOFILTER_RULETYPE_DYNAMIC_OCTOBER
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_11
+				AUTOFILTER_RULETYPE_DYNAMIC_NOVEMBER
+				AUTOFILTER_RULETYPE_DYNAMIC_MONTH_12
+				AUTOFILTER_RULETYPE_DYNAMIC_DECEMBER
+				AUTOFILTER_RULETYPE_DYNAMIC_QUARTER_1
+				AUTOFILTER_RULETYPE_DYNAMIC_QUARTER_2
+				AUTOFILTER_RULETYPE_DYNAMIC_QUARTER_3
+				AUTOFILTER_RULETYPE_DYNAMIC_QUARTER_4
+				AUTOFILTER_RULETYPE_DYNAMIC_ABOVEAVERAGE
+				AUTOFILTER_RULETYPE_DYNAMIC_BELOWAVERAGE
+		Top Ten
+			filterType: PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_FILTERTYPE_TOPTENFILTER
+			ruleType: PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_RULETYPE_TOPTENFILTER
+			rule:
+				AUTOFILTER_COLUMN_RULE_TOPTEN_BY_VALUE
+				AUTOFILTER_COLUMN_RULE_TOPTEN_PERCENT
+				AUTOFILTER_COLUMN_RULE_TOPTEN_TOP
+				AUTOFILTER_COLUMN_RULE_TOPTEN_BOTTOM
+		Like Standard filters, DateGroup filters are always a match of EQUALS, and multiple standard
+		filters are always treated as being joined by an OR condition
+	Rules
+		PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_EQUAL
+		PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_NOTEQUAL
+		PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_LESSTHAN
+		PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_LESSTHANOREQUAL,
+		PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_GREATERTHAN
+		PHPExcel_Worksheet_AutoFilter_Column_Rule::AUTOFILTER_COLUMN_RULE_GREATERTHANOREQUAL
+	Logic
+		PHPExcel_Worksheet_AutoFilter_Column::AUTOFILTER_COLUMN_ANDOR_AND
+
+
+//@unfinished@https://github.com/PHPOffice/PHPExcel/blob/develop/Documentation/markdown/Overview/08-Recipes.md

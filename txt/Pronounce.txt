@@ -1,0 +1,11 @@
+SOUNDMARKS(alt+<num>)
+æ			0230
+Ə
+
+
+
+lite		[lait]
+select		[si'lekt]
+mobile		['mƏubail]
+syntax		['sintæks]
+decimal		['desimƏl]

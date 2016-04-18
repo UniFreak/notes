@@ -1,0 +1,23 @@
+============== Installation ===============
+- `composer global require "laravel/installer=~1.1"
+- `composer create-project laravel/laravel --perfer-dis`
+
+
+=============== Artisan ===============
+
+
+
+=============== Fixation ===============
+artisan output messy code
+	just change OS's language into English
+if you can do `artisan migrate:rollback`
+	you may need to do `composer require doctrine/dbal`
+not the controller you're thinking should be loaded?
+    check the order of route in routes.php
+
+=============== Question ===============
+如果两个同样 id 但内容经过不同的 update 的 Article Model 对象调用 save(), 哪一个真正被持久到数据库?
+
+=============== Note ===============
+- Request 的 validattion 和 authorization 会在 Controller 方法之前执行, 如果错误自动返回上一页面
+- Views 总是有一个 $errors 变量

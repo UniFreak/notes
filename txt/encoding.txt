@@ -1,0 +1,7 @@
+=============== Concept ===============
+- character repertoire: specifies a collection of characters, such as "a", "!", and "ä"
+- character code: defines numeric codes for characters in a repertoire
+- character encoding: defines how sequences of numeric codes are presented as (i.e., mapped to) sequences of octets
+
+- character set: might denotes just a character repertoire but it may also refer to a character code, and quite often a particular character encoding is implied too
+- charset: is used to refer to an encoding

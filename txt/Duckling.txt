@@ -1,0 +1,38 @@
+;/shift + 字母		快捷输入英文
+z + 空格 			上次输入字符
+ctrl + j 				簡繁切換
+shift + 空格			全半切换
+zv + 				输入符号
+	ys(e)			圆数				①
+	ks				括数				⑴
+	sd 				数点				⒈
+	zs				中数				㈠
+	dw(e) 			单位				㎎
+	py(a|o|e|i|u|v)	拼音				ā
+	hb 				货币				￡
+	jt 				箭头				↖
+	bd				标点				【
+	zy 				注音				ㄈ
+	sx 				数学				∑
+	ts 				特殊				※
+	pp 				偏旁				扌
+	dl				大罗				Ⅲ
+	xl 				小罗				ⅲ
+	dx 				大希				Γ
+	xx 				小希				γ
+	de 				大俄				Ж
+	xe				小俄				ж
+	rw(p) 			日文				ぁ
+	qt 				其它
+
+ctrl + M/ctrl + shift + M
+					切换字符集
+ctrl + = 			造词
+ctrl + -/ctrl + shift + 数字
+					删词
+ctrl + 数字 		调频
+ctrl + / 			查码
+
+"date" 				日期
+"time" 				时间
+"week" 				星期

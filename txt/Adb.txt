@@ -1,0 +1,12 @@
+devices
+
+shell
+
+kill-server
+start-server
+
+push
+pull
+
+install
+uninstall
