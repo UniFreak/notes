@@ -112,6 +112,8 @@ Mode: switching between modes
 	v					visual
 	V					visual-lines
 	Esc					normal
+    Ctrl+[              normal
+    Ctrl+o              insert-normal
 
 Motion: move the cursor, or defines the range for an operator
 	h/j/k/l				left/down/up/right
@@ -140,36 +142,49 @@ Motion: move the cursor, or defines the range for an operator
 
 	f+<c>				find and move to <c> forward
 	F+<c>				find and move to <c> backward
-	t+<c>				find and move until <c> forward
-	T+<c>				find and move until <c> backward
-	,/;					prev/next find
+    t+<c>               find and move until <c> forward
+    T+<c>               find and move until <c> backward
+    ,/;                 prev/next find
 
-	/					search forward and move to
-	?					search backward and move to
-	n					move to next search result
-	N					move to next search result reversely
+    /                   search forward and move to
+    ?                   search backward and move to
+    n                   move to next search result
+    N                   move to next search result reversely
 
 Command: direct action command
-	K					open help about what's under the cursor
-	["a-Z]x				delete char [and reg a-Z]
-	["a-Z]X				delete prev char [and reg a-Z]
-	J					join line
-	C					=`c$`
-	D					=`d$`
-	Y					=`yy`
-	r+<c>				replace char under cursor with <c>
-	~					toggle character case
-	u 					undo
+    c                   change
+    d                   delete
+    y                   copy to register
+    g~                  toggle case
+    gu                  lowercase
+    gU                  uppercase
+    !                   filter with external tool
+    K                   open help about what's under the cursor
+    ["a-Z]x             delete char [and reg a-Z]
+    ["a-Z]X             delete prev char [and reg a-Z]
+    J                   join line
+    C                   =`c$`
+    D                   =`d$`
+    Y                   =`yy`
+    r+<c>               replace char under cursor with <c>
+    ~                   toggle character case
+    u                   undo
     U                   undo all changes to current line
-	Ctrl+R				redo
-	["a-Z]p				paste [reg a-Z] after
-	["a-Z]P				paste [reg a-Z] before
-	m[a-Z]				set mark a-Z
-	`[a-Z | .]			goto mark [a-Z | last modified]
-	'[a-Z]				goto mark [a-Z] SOFT-BOL
-	q[a-Z]				start | stop record macro [a-Z]
-	@[a-Z | @]			replays macro [a-Z]	 | last u played
-	.					repeat last action
+    Ctrl+R              redo
+    ["a-Z]p             paste [reg a-Z] after
+    ["a-Z]P             paste [reg a-Z] before
+    m[a-Z]              set mark a-Z
+    `[a-Z | .]          goto mark [a-Z | last modified]
+    '[a-Z]              goto mark [a-Z] SOFT-BOL
+    q[a-Z]              start | stop record macro [a-Z]
+    @[a-Z | @]          replays macro [a-Z]  | last u played
+    .                   repeat last action
+    zz                  center current line
+Edit
+    Ctrl+h              delete last character
+    Ctrl+w              delete last word
+    Ctrl+u              delete line
+    Ctrl+r{register}    paste content in {register}
 
 Operator: require Motion afterward, operates between cusor & destination
 	["a-Z]d				delete [and reg a-Z]
@@ -180,10 +195,13 @@ Operator: require Motion afterward, operates between cusor & destination
 	["a-Z]yy			yank line [and reg a-Z]
 	>>					indent
 	<<					outdent
-	=					auto format
+	=					auto indent
 
 
 ====================== Shortcut =======================
+ctrl+a                      increase forward closest number
+ctrl+x                      decrease forward closest number
+
 Ctrl+w [+[hjkl]]			nagative between windows
 Ctrl+c						close current window
 Ctrl+o						close others windows

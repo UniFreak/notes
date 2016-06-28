@@ -1,0 +1,54 @@
+@startuml
+class class1 {
+    String -string
+    void {static} method()
+    void {abstract} method()
+    #void {static} method()
+}
+
+class class2 {
+    ==nonsence seperacoter==
+    -String privateVar
+    ..
+    {static} method()
+    +void {abstract} aMethod()
+}
+
+class class3
+
+note top of Object : In java, every class\nextends this one.
+
+note "This is a floating note" as N1
+note "This note is connected\nto several objects." as N2
+class3 .. N2
+N2 .. class4
+
+class class4
+note left: On last defined class
+
+note right of class4
+  In java, <size:18>every</size> <u>class</u>
+  <b>extends</b>
+  <i>this</i> one.
+end note
+
+note as N3
+  This note is <u>also</u>
+  <b><color:royalBlue>on several</color>
+  <s>words</s> lines
+  And this is hosted by <img:sourceforge.jpg>
+end note
+
+class1 <|-- class2
+class3 <|.. class4
+class5 *-- class6
+class7 *.. class8
+class9 o-- class10
+class11 o.. class12
+class13 <-- class14
+class15 <.. class16
+class17 <--* class18
+class19 <|--* class20
+class21 .. class22
+class23 o--|> class24
+@enduml

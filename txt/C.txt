@@ -1,0 +1,29 @@
+Q:
+    character vs character constant vs string vs string constant
+    single quote vs double quote
+IRC:
+    <UniFreak> when K&R say `constant`, can I understand it as `literal` ?
+    <kamog> UniFreak: yeah, it looks like they mean literals.
+
+
+Every program must have a main function
+
+A sequence of characters in double quotes, like  "hello, world\n" , is called a character
+string or string constant
+
+All variables must be declared before they are used
+
+char int short long float double
+
+By definition,  char s are just small integers
+
+'\n' is a single character
+
+A character written between single quotes represents an integer value equal to the numerical value of the character in the machine's character set. This is called a character constant, although it is just another way to write a small integer. So, for example,  'A' is a character constant; in the ASCII character set its value is 65, the internal representation of the character A. Of course,  'A' is to be preferred over  65 : its meaning is obvious, and it is independent of a particular character set.
+
+%d %f %o %x %c %s %%
+
+Integer division truncates: any fractional part is discarded
+
+Writing floating-point constants with explicit decimal points even when they have integral values
+emphasizes their floating-point nature for human readers

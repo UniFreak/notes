@@ -215,7 +215,6 @@ Use 'feature detect' rather than browser sniffing
     静态私有变量
     模块模式
     增强的模块模式
-
 对象
     JavaScript 中的所有事物都是对象, 拥有属性和方法
     对象只是带有属性和方法的特殊数据类型,方法只不过是附加在对象上的函数
@@ -579,7 +578,6 @@ Use 'feature detect' rather than browser sniffing
             Sub.prototype.sayAge = function() {
                 alert(this.age);
             }
-
 
 参考(*:experimental !:not-standardized)
     Global

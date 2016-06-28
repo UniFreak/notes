@@ -12,7 +12,7 @@ Builder
 Factory Method
 	Creates an instance of several derived classes
 Object Pool
-	Avoid expensive acquisition and release of resources by recycling objects that are no longer 
+	Avoid expensive acquisition and release of resources by recycling objects that are no longer
 	in use
 Prototype
 	A fully initialized instance to be copied or cloned
@@ -65,3 +65,7 @@ Template Method
 Visitor
 	Define a new operationi to a class without change
 
+Dependency injection
+    Constructor injection
+    Setter injection
+    Interface injection

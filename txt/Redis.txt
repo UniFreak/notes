@@ -13,14 +13,14 @@ Redis's LIST is implemented with linked lists
 
 =============== Setup ===============
 install:
-	$ wget http://download.redis.io/releases/redis-3.0.0.tar.gz
-	$ tar xzf redis-3.0.0.tar.gz
-	$ cd redis-3.0.0
-	$ make
+	`wget http://download.redis.io/redis-stable.tar.gz`
+    `tar xvzf redis-stable.tar.gz`
+    `cd redis-stable`
+    `make`
 start redis:
-	$ src/redis-server
+	`src/redis-server`
 interact with redis:
-	$ src/redis-cli
+	`src/redis-cli`
 conf file:
 	redis/redis.conf
 
@@ -35,7 +35,7 @@ Set: unordered collection of unique Strings
 	More than 4 billion of members per set
 Sorted Set: Set ordered by score
 	While members are unique, scores may be repeated
-HyperLogLog:a algorithm that use randomization to provide an approximation of the number of unique elements in a set 
+HyperLogLog:a algorithm that use randomization to provide an approximation of the number of unique elements in a set
 Pub/Sub: a messager system
 	Publishers sends the messages while subscribers receive them
 	The link by which messages are transferred is called channel
@@ -89,7 +89,7 @@ KEYS MANIPULATION
 	SCAN
 STRING
 	SET <key> <value>
-		sets the value at the specified key 
+		sets the value at the specified key
 		will replace any existing value
 	MSET <key> <value> [<key2> <value2>...]
 		set multiple keys to multiple values

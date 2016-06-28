@@ -70,3 +70,24 @@
 小部件
 资源
 扩展
+
+搜索
+    setFlash
+    getFlash
+    hasFlash
+
+Massive Assignment will only be made for fields which have passed some explicit validation rule
+
+事件:
+    Model
+        afterConstruct
+        beforeValidate afterValidate
+        unsafeAttribute
+    AR
+        beforeSave afterSave
+        beforeDelete afterDelete
+        beforeFind afterFind
+        beforeCount
+    Controller
+        beforeAction afterAction
+        beforeRender afterRender

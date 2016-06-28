@@ -416,6 +416,10 @@ Date/Time
         命名
             大驼峰命名法
             一个文件包含一个类, 文件名以 类名.class.php 命名
+
+            1. PascalCase
+            2. camelCase
+            3. snake_case
         访问控制关键字
             public : 可以在任何地方被访问
             protected : 可以被其所在类及其子类和父类访问
@@ -740,18 +744,24 @@ function validateDate($date) {
     return $date == date('Y-m-d', strtotime($date));
 }
 
-while (list($option, $value) = each($products)){
+/**
+ * same as foreach($products as $option => $value) { }
+ */
+while (list($option, $value) = each($products)) { }
 
-}
-
-$ary = array('key1' => 'value1',
-             'key2' => 'value2',
-             ...);
+/**
+ * psr code indentation style
+ */
+$ary = array(
+    'key1' => 'value1',
+    'key2' => 'value2',
+    ...
+);
 
 $var = explode(',', $ary)[idx];
 
 Random String
-    1.substr(md5(rand()), 0, 20)."\r\n"
+    1.substr(md5(rand()), 0, 20)
     2.substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 30)
 
 return $this at the end of method will make this method chainable
@@ -759,6 +769,9 @@ return $this at the end of method will make this method chainable
 set utf8 header
     header('Content-Type: text/html; charset=utf-8');
 
+/**
+ * complicate array merging
+ */
 $ary1 = array(
     array(
         'sn' => '123',
@@ -779,18 +792,26 @@ $ary2 = array(
         'gender' => 'male',
         ),
     );
-
 $res = [];
 foreach (array_merge($ary1, $ary2) as $a) {
     $res[$a['sn']] = (isset($res[$a['sn']])) ? array_merge($res[$a['sn']], $a) : $a;
 }
 
-=============== Idiom ===============
+/**
+ * in case of error when foreaching
+ */
+if(!is_array($models))
+    $models=array($models);
+foreach($models as $model) { //... }
+
+=============== best practice ===============
 declare variable before using them
 use spl_autoload_register(), not autoload()
 ?typehint everywhere, user assertions for scalars
 use === instead of ==
 use bracket to make your operator precedence more clear
+
+=============== Idiom ===============
 
 ====================== TinyThings =======================
 array_search() only return key name when the *whole* value match the needle
@@ -800,15 +821,9 @@ you can't remove elements with array_walk()
 json_encode() considers an array with non-sequential non-numeric keys as an object
 json_decode() can convert object json str to assoc array if you pass the second param as true to it
 you can convert object to assoc array simply by doing type casting (object)
+In json object, keys must be quoted
+In json, quote mark must be " , not '
 
-
-@new
-* In json object, keys must be quoted
-* In json, quote mark must be " , not '
-
-
-
-// @add
 ====================== Confusion =======================
 1. 子类会继承父类的静态属性和方法吗?
 A. NO
@@ -864,6 +879,7 @@ A. `!emtpy($var)` is enough.
 27. 禁用 `register_globals`, 禁用 `magic_quotes`
 28. user isset() and is_array() when tring to use a variable as array , like `echo $ary[1]` or `foreach($notAry as ...)`
 29. 如果 IE 展示中文下载名为乱码, 试试将名字 urlencode() 一下
+30. 如果你不懂某些代码如何运作, 就不要轻易改动
 
 ====================== Quote in IRC =======================
 rager:
@@ -908,12 +924,20 @@ Alphos:
 - the way php handles functions usually is to find all function definitions, create the corresponding functions, then run the rest of the script. when you define a function conditionnally, you pull it out of that first step, and it gets defined IF the condition is true WHEN it reaches the condition ; it is then unavailable for anything that calls it before it's defined
 - never to define functions conditionally
 
-TML-prv:
+TML:
 -  just avoid changing variables in-place
+-  You shouldn't pass the enums, constants or magic numbers value to/from the API, you should pass the meaningful value like 'Female'.  The API should document stable values that you can map against
+
 
 <UniFreak> should I make it a rule that always put api call in try catch block?
 <AcidReign> UniFreak: no, you try/catch for a reason
 <fleetfox> UniFreak: only if you want to handle the exception
+
+<UniFreak> seems kinda easy convert between octal/hexadecimal to binary
+<pragma-> that's the only meaningful conversion.
+<pragma-> it is pointless to convert octal or hex to each other or to decimal.
+
+<googleguy> Let PHP only provide the _data_ part by adding a <script></script> to the bottom of your php templates with the needed variables.
 
 =============== Understand ===============
 Interface

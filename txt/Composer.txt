@@ -12,6 +12,18 @@ json schema
 	name
 	description
 	version
+        use exact version: 1.0.2
+        use range operator: > >= < <= !=
+            seperate with space(AND)
+            or || (OR)
+            AND has higher precedence than OR
+        use range(inclusive): 1.0 - 2.0
+        use wildecard: 1.0.*
+        use tilde operator: ~1.2 (>=1.2 <2.0.0)
+        use caret: ^1.2.3 (>=1.2.3 <2.0.0)
+        stability:
+            1.2.3-stable
+            1.2.3-dev
 	type	libraray|project|metapackage|composer-plugin
 	keywords
 	homepage
