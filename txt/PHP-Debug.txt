@@ -53,7 +53,7 @@ Settings(in php.ini or with ini_set() call)
     xdebug.collect_params
     xdebug.collect_return
     xdebug.collect_includes
-    xdebug.dump.* 
+    xdebug.dump.*
     xdebug.dump_globals
     xdebug.dump_undefined
     xdeubg.dump_once
@@ -149,7 +149,8 @@ Functions
 
     xdebug_break()
 
-FirePHP
-ChromePHP(now as ChromeLogger)
-PHP_Debug
-Postman
+==================== FirePHP ====================
+==================== ChromePHP(now as ChromeLogger) ====================
+==================== PHP_Debug ====================
+==================== Postman ====================
+==================== phpdbg ====================

@@ -1498,9 +1498,9 @@ Mongo模型 (必须继承 MongoModel )
         TAGLIB_BUILD_IN
 =============== 日志 ===============
 开启日志
-    'LOG_RECORD' => true,                                   是否开启日志
+    'LOG_RECORD' => true,                               是否开启日志
     'LOG_LEVEL'  =>'EMERG,ALERT,CRIT,ERR',              日志级别
-    'LOG_TYPE' =>1,                                         记录方式
+    'LOG_TYPE' =>1,                                     记录方式
     'LOG_DEST' =>'admin@domain.com',                    收件人地址
     'LOG_EXTRA' =>'From: webmaster@example.com',        发件人信息
 日志级别

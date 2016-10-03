@@ -411,3 +411,23 @@ Ctrl + Shift + [            Previous tab
 Ctrl + Shift + Tab          Previous tab
 Ctrl + \                    Toggle sidebar
 Ctrl + ,                    Open settings
+
+
+==================== XShell ====================
+Ctrl + Alt + T              New Shell Window
+Ctrl + Alt + F              New Ftp
+Ctrl + Shift + T            Show Tabs
+Alt + Num                   Switch tab
+Alt + C                     Close Session
+Alt + Enter                 Full Screen
+Alt + Insert                Paste
+Alt + P                     View Properties
+Alt + N                     New Session
+Alt + O                     Open Sessions List
+
+==================== VBox ====================
+right ctrl                  default host
+host                        escape mouse
+host+f                      toggle full screen
+host+home                   display menu
+host+c                      toggle auto-resize

@@ -1,3 +1,4 @@
+==================== Basic ====================
 拍摄时, 要时刻把后期放在心上, 一个看起来没什么意思的场景, 经过后期可大不一样
 决定拍摄某场景时, 就要分析要拍摄的场景可能会对曝光造成什么困难, 以及解决之道
 
@@ -48,6 +49,7 @@
     标准镜头(normal): 焦距为50mm, 视角60 (和人眼一样)
     长焦镜头(telephoto): 135-300mm, 视角大概是18-5度
     超长焦镜头(altra telephoto): 300mm以上的称为超长焦距
+Wide angle lenses expand perspective, emphasizing the foreground and pushing background objects back; while telephoto lenses compress perspective, minimize foreground and tend to flatten perspective
 
 因为投进相机的图像是圆的(镜头是圆的), 而传感器是长方形的, 所以照片是被传感器裁剪后的结果
 所以照片的视角不仅由焦距决定, 还由相机的传感器尺寸决定(会将视野变小, 亦即变成比镜头本身焦距更长的焦距效果)
@@ -86,7 +88,7 @@
         人眼大致是相机的两倍, 所以不要指望你看到什么相机就能拍到什么
         所以此时你需要抉择那些细节是更重要的细节(一般来说保留亮部细节, 暗部后期处理)
 
-        也可以用闪光灯(别以为闪光灯只是为了夜晚用)来平衡阴影处的曝光
+        也可以用闪光灯(别以为闪光灯只是为了夜晚用)来平衡阴影处的曝光(fill flash)
             比如拍摄逆光人像, 或者戴着帽子, 在树下(反正给脸上投去阴影)的人像
         也可以用 AEB + 后期来弥补这个缺陷
         也可以用多重曝光来弥补这个缺陷
@@ -253,5 +255,36 @@ Lens matter, but its you who are taking pictures
     感应器防抖
     光学防抖(会对图像质量造成影响, 不要这个!)
 
+清理保养
+    沾灰:
+        使用气吹
+        - 专业气吹都是一头进气一头出气, 且能过滤
+        - 先空吹几次, 把气吹灰尘吹走; 然后把镜头上灰尘吹走
+        使用镜头布
+        - 要求真空包装
+        - 在擦拭之前, 要确保没有硬质灰尘, 若有, 则使用棉签做定点清除
+        - 建议把布裹在手指上, 以免不小心手指触镜
+        - 轻柔的, 从中心向外螺旋擦拭(要保持一个方向)
+        如果有指纹或油脂, 使用镜头清洁液和镜头布
+        - 滴一滴清洁液在镜头布上, 挥发一会儿
+        - 然后参照使用镜头布要领, 进行擦拭
+        最后记得清洁镜头盖
+
 ==================== Composition ====================
 Rule -> practice -> volcabulary -> feels -> break rules
+
+good photo can happen any where, it's more about you than where you are in
+
+Good composition variables
+    - clearly defined subject, clearly defined background
+    - balanced
+    - point of view
+    - simplicity
+
+==================== Rule ====================
+Know your lens
+    If you own a zoom, shoot at only one end of it
+Prefer raw format
+
+==================== Tricks ====================
+- Want to make the sun or moon look really big in relation to a building or structure? Back away from your subject a bit and use a telephoto lens to compress the perspective and distort the size relationship

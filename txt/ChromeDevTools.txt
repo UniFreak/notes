@@ -1,3 +1,7 @@
+==================== Shortcuts ====================
+ctrl+shift+F            search
+ctrl+p                  switch sources file
+
 =============== Source ===============
 concept
 	step in: if you are interested in this function and whatever functions this functions calls
@@ -77,14 +81,19 @@ ctrl+shift+f to open
 
 =============== Console API ===============
 console.log()
-console.debug()
+console.dir()
 console.info()
 console.warn()
 console.error()
 console.group()
 console.groupEnd()
+console.profile()
 console.time()
 console.timeEnd()
+console.trace()
+console.table()
+debug()
+monitor()
 
 =============== Command API ===============
 $0

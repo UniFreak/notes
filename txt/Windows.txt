@@ -5,6 +5,7 @@ show login account
     whoami
 
 
+pac
 ==================== Installation ====================
 Cygwin
 Git

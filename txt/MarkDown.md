@@ -1,3 +1,5 @@
+########################### Standard ##################################
+
 Markdown syntax:
 (You can always use HTML tag&attributs in Markdown file)
 
@@ -75,6 +77,11 @@ __strong__
 | 1900 |               -10 |                 25 |  
 | 1910 |               -15 |                 30 |  
 | 1920 |               -10 |                 32 | 
+
+
+
+#######################Kramdown######################
+
 
 
 

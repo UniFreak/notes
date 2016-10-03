@@ -1,0 +1,9 @@
+- use search engine friendly URLs
+- don't use "click here" links
+- have a XML sitemap
+- Use <link rel="canonical" ... /> when you have multiple URLs that point to the same content
+- Use Google Webmaster Tools and Bing Webmaster Tools
+- use google analytics or open source tool like piwik
+- know robot.txt and spiders
+- know 301 vs 302 redirects
+- 
