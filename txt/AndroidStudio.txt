@@ -1,0 +1,6 @@
+==================== Shortcut ====================
+Shift+Shift         search everywhere
+Alt+1               project view
+Ctrl+Shift+N        go to file
+Ctrl+E              recent file
+Alt+Home            navigation bar
