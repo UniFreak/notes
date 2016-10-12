@@ -1,3 +1,6 @@
+==================== NOTES ====================
+don't use smarty
+
 =============== 配置 ===============
 	require('Smarty.class.php'); 		// 引入库文件
 
@@ -81,7 +84,7 @@
 	|wordwrap[:<num>[:"<wrapWith>"[:true|false]]]				行宽约束:宽度值:约束字符:是否精确到字符
 
 	对于同一个变量,你可以从左到右使用"|"组合多个修改器
-		
+
 函数语法
 	{funcname attr1="val" attr2="val"}
 
@@ -90,14 +93,14 @@
 	自定义函数通过插件机制起作用,它们是附加函数. 只要你喜欢,可以随意修改.
 
 属性语法
-	smarty函数的属性很像HTML中的属性. 
-	静态数值,变量,布尔值不需要加引号,但是字符串建议使用引号. 
+	smarty函数的属性很像HTML中的属性.
+	静态数值,变量,布尔值不需要加引号,但是字符串建议使用引号.
 	Smarty可以识别嵌入在双引号中的变量，只要此变量只包含数字、字母、下划线和中括号[].对于其他的符号（句号、对象相关的，等等）此变量必须用两个'`'包住
 	数学运算可以直接应用到变量
 
 内建函数
 	捕获模板输出
-	{capture name=<varName>}{/capture} 		
+	{capture name=<varName>}{/capture}
 		name: 捕获后的内容存储到的变量
 
 	配置文件中加载变量
@@ -108,7 +111,7 @@
 		global: 说明加载的变量是否全局可见
 
 	循环数组
-	{foreach from=$arr [name=<foreachName> [key=<keyName>]] item=<itemName>} 
+	{foreach from=$arr [name=<foreachName> [key=<keyName>]] item=<itemName>}
 	[{foreachelse}]
 	{/foreach}
 		from: 待循环数组的名称
@@ -117,7 +120,7 @@
 		name: 该循环的名称, 用于访问该循环
 
 	包含模板
-	{include file="<filepath>" [assign="varName" [var ...]]}		
+	{include file="<filepath>" [assign="varName" [var ...]]}
 		varName: 用于保存待包含模板的输出, 这样待包含模板的输出就不会直接显示
 		var: 传递给待包含模板的本地参数, 只在待包含模板中有效
 
@@ -146,13 +149,13 @@
 	{rdelim}
 
 	直接显示
-	{literal} {/literal}	
+	{literal} {/literal}
 
 	嵌入 php
 	{php} {/php}
 
 	遍历数组
-	{section name=<sectionName> loop=<$varName> [start=<integer>[step=<integer>[max=<integer>[show=true|false]]]]} 
+	{section name=<sectionName> loop=<$varName> [start=<integer>[step=<integer>[max=<integer>[show=true|false]]]]}
 	[{sectionelse}]
 	{/section}
 		name: 该循环的名称
@@ -176,7 +179,7 @@
 	{counter [name=<counterName>] [start=<integer>] [skip=<integer>] [direction=up|down] [print=true|false] [assign=$<varName>]}
 		name: 计数器的名称
 		start: 记数器初始值
-		skip: 记数器步长					
+		skip: 记数器步长
 		direction: 记数器方向
 		print: 是否输出值
 		assign: 输出值将被赋给模板变量的名称
@@ -204,7 +207,7 @@
 		file: 待请求的文件，http或ftp方式
 		assign: 输出值将被赋给模板变量的名称
 
-	创建复选按钮组	
+	创建复选按钮组
 	{html_checkboxes}
 		name: 复选按钮组的名称
 		values: 包含复选按钮组值的数组
@@ -224,7 +227,7 @@
 		alt: alt 信息
 		href: 图象链接
 
-	创建选项组	
+	创建选项组
 	{html_options}
 		values: 下拉列表各元素值的数组
 		output: 下拉列表各元素显示值的数组
@@ -232,7 +235,7 @@
 		options: 包含值和显示的关联数组
 		name: 下拉菜单的名称
 
-	创建单选按钮组	
+	创建单选按钮组
 	{html_radios}
 		name: 单选按钮列表的名称
 		values: 包含单选按钮值的数组
@@ -243,78 +246,78 @@
 
 	创建日期下拉菜单
 	{html_select_date}
-		prefix: 变量名称前缀 
-		time: UNIX时间戳或年-月-日 使用时间类型(data/time) 
-		start_year: 下拉列表中第一个年份, 或与当前年份的相对值(正/负 几年) 
-		end_year: 下拉列表中最后一个年份, 或与当前年份的相对值(正/负 几年) 
-		display_days: 是否显示天 
-		display_months: 是否显示月 
-		display_years: 是否显示年 
-		month_format:月份的表示方法(strftime) 
-		day_format: 天显示的格式(sprintf) 
-		day_value_format: 天的表示方法(sprintf) 
-		year_as_text: 是否以文本方式显示年份 
-		reverse_years: 逆序显示年份 
-		field_array: 如果指定了名称, 选定的区域将以[Day],[Year],[Month]的形式返回给PHP(待考) 
-		day_size: 如果给定, 为标签添加大小属性 
-		month_size: 如果给定, 为标签添加大小属性 
-		year_size: 如果给定, 为标签添加大小属性 
-		all_extra: 如果给定, 为所有标签添加附加属性 
-		day_extra: 如果给定, 为标签添加附加属性 
-		month_extra: 如果给定, 为标签添加附加属性 
-		year_extra: 如果给定, 为标签添加附加属性 
-		field_order: 显示区域的顺序 
-		field_separator: 各区域间输出的分隔字符串 
-		month_value_format: 月份值的strftime表示方法, 默认为 %m  
+		prefix: 变量名称前缀
+		time: UNIX时间戳或年-月-日 使用时间类型(data/time)
+		start_year: 下拉列表中第一个年份, 或与当前年份的相对值(正/负 几年)
+		end_year: 下拉列表中最后一个年份, 或与当前年份的相对值(正/负 几年)
+		display_days: 是否显示天
+		display_months: 是否显示月
+		display_years: 是否显示年
+		month_format:月份的表示方法(strftime)
+		day_format: 天显示的格式(sprintf)
+		day_value_format: 天的表示方法(sprintf)
+		year_as_text: 是否以文本方式显示年份
+		reverse_years: 逆序显示年份
+		field_array: 如果指定了名称, 选定的区域将以[Day],[Year],[Month]的形式返回给PHP(待考)
+		day_size: 如果给定, 为标签添加大小属性
+		month_size: 如果给定, 为标签添加大小属性
+		year_size: 如果给定, 为标签添加大小属性
+		all_extra: 如果给定, 为所有标签添加附加属性
+		day_extra: 如果给定, 为标签添加附加属性
+		month_extra: 如果给定, 为标签添加附加属性
+		year_extra: 如果给定, 为标签添加附加属性
+		field_order: 显示区域的顺序
+		field_separator: 各区域间输出的分隔字符串
+		month_value_format: 月份值的strftime表示方法, 默认为 %m
 
 	创建时间下拉菜单
 	{html_select_time}
-		prefix: 变量名称前缀 
-		time: 使用时间类型(data/time) 
-		display_hours: 是否显示小时 
-		display_minutes: 是否显示分钟 
-		display_seconds: 是否显示秒 
-		display_meridian: 是否显示正午界(上午/下午) 
-		use_24_hours: 是否使用24小时制 
-		minute_interval: 分钟下拉列表的间隔 
-		second_interval: 秒钟下拉列表的间隔 
-		field_array: 输出值到该值指定的数组 
-		all_extra: 如果给定, 为标签添加附加属性 
-		hour_extra: 如果给定, 为标签添加附加属性 
-		minute_extra: 如果给定, 为标签添加附加属性 
-		second_extra: 如果给定, 为标签添加附加属性 
-		meridian_extra: 如果给定, 为标签添加附加属性 
+		prefix: 变量名称前缀
+		time: 使用时间类型(data/time)
+		display_hours: 是否显示小时
+		display_minutes: 是否显示分钟
+		display_seconds: 是否显示秒
+		display_meridian: 是否显示正午界(上午/下午)
+		use_24_hours: 是否使用24小时制
+		minute_interval: 分钟下拉列表的间隔
+		second_interval: 秒钟下拉列表的间隔
+		field_array: 输出值到该值指定的数组
+		all_extra: 如果给定, 为标签添加附加属性
+		hour_extra: 如果给定, 为标签添加附加属性
+		minute_extra: 如果给定, 为标签添加附加属性
+		second_extra: 如果给定, 为标签添加附加属性
+		meridian_extra: 如果给定, 为标签添加附加属性
 
 	将数组中的数据填充到 HTML 表格中
 	{html_table}
-		loop: 待遍历的数组 
-		cols: 表格的列数目 
-		table_attr: 表格的属性 
-		tr_attr: 行标签属性(或轮转数组) 
-		td_attr: 列标签属性(或轮转数组) 
-		trailpad: 最后一行附加的数据(如果有的话) 
-		hdir: 行的对齐方式, 可能的值为 left 或 right  
-		vdir: 列的对齐方式, 可能的值为 up 或 down  
+		loop: 待遍历的数组
+		cols: 表格的列数目
+		table_attr: 表格的属性
+		tr_attr: 行标签属性(或轮转数组)
+		td_attr: 列标签属性(或轮转数组)
+		trailpad: 最后一行附加的数据(如果有的话)
+		hdir: 行的对齐方式, 可能的值为 left 或 right
+		vdir: 列的对齐方式, 可能的值为 up 或 down
 
 	进行数学表达式运算
 	{math}
-		equation: 待执行的表达式 
-		format: 结果的格式(遵从sprintf函数) 
-		var: 表达式变量值 
-		assign: 输出值将被赋给模板变量的名称 
-		[var ...]: 表达式变量值 
+		equation: 待执行的表达式
+		format: 结果的格式(遵从sprintf函数)
+		var: 表达式变量值
+		assign: 输出值将被赋给模板变量的名称
+		[var ...]: 表达式变量值
 
 	生成电子邮件链接
 	{mailto}
-		address: 电子邮件地址 
-		text: 邮件链接上显示的文本, 默认为电子邮件地址 
-		encode: none, hex或javascript 
-		cc: 邮件抄送地址, 多条地址信息以逗号分隔 
-		bcc: 邮件暗送地址, 多条地址信息以逗号分隔 
-		subject: 邮件主题 
-		newsgroups: 发送到新闻组的地址, 多条地址信息以逗号分隔 
-		followupto: 追踪地址信息, 多条信息以逗号分隔 
-		extra: 其它需要传递给链接的信息, 如css样式 
+		address: 电子邮件地址
+		text: 邮件链接上显示的文本, 默认为电子邮件地址
+		encode: none, hex或javascript
+		cc: 邮件抄送地址, 多条地址信息以逗号分隔
+		bcc: 邮件暗送地址, 多条地址信息以逗号分隔
+		subject: 邮件主题
+		newsgroups: 发送到新闻组的地址, 多条地址信息以逗号分隔
+		followupto: 追踪地址信息, 多条信息以逗号分隔
+		extra: 其它需要传递给链接的信息, 如css样式
 
 	创建帮助窗口或工具提示
 		{popup_init}
@@ -324,14 +327,14 @@
 
 	格式化文本
 	{textformat}
-		style: 预处理风格 
-		indent: 单行缩进的字符数目 
-		indent_first: 首行缩进的字符数目 
-		indent_char: 填充缩进区域的字符(或字符串) 
-		wrap: 单行长度, 超过该长度自动折行 
-		wrap_char: 折行使用的字符(或字符串), 被附加在行尾 
-		wrap_cut: 如果设置为真, 换行时不考虑换行点所在位置是否为完整单词, 直接换行. 反之将在单词的边界处换行. 
-		assign: 输出值将被赋给模板变量的名称 
+		style: 预处理风格
+		indent: 单行缩进的字符数目
+		indent_first: 首行缩进的字符数目
+		indent_char: 填充缩进区域的字符(或字符串)
+		wrap: 单行长度, 超过该长度自动折行
+		wrap_char: 折行使用的字符(或字符串), 被附加在行尾
+		wrap_cut: 如果设置为真, 换行时不考虑换行点所在位置是否为完整单词, 直接换行. 反之将在单词的边界处换行.
+		assign: 输出值将被赋给模板变量的名称
 
 
 配置文件语法
@@ -362,81 +365,81 @@
 常量
 	SMARTY_DIR
 变量
-	$template_dir 						模板目录变量 
-	$compile_dir 						编译目录变量 
-	$config_dir 						配置目录变量 
-	$plugins_dir 						插件目录变量 
-	$debugging 							调试变量 
+	$template_dir 						模板目录变量
+	$compile_dir 						编译目录变量
+	$config_dir 						配置目录变量
+	$plugins_dir 						插件目录变量
+	$debugging 							调试变量
 	$debug_tpl[							调试模板变]
-	$debugging_ctrl 					调试控制变量 
-	$global_assign 						全局配置变量 
-	$undefined 							未定义变量 
-	$autoload_filters 					自动加载过滤器变量 
-	$compile_check 						编译检查变量 
-	$force_compile 						强迫编译变量 
-	$caching 							缓存变量 
-	$cache_dir 							缓存目录变量 
-	$cache_lifetime 					缓存生存时间变量 
-	$cache_handler_func 				缓存处理函数变量 
-	$cache_modified_check 				缓存修正检查变量 
-	$config_overwrite 					配置覆盖变量 
-	$config_booleanize 					配置布尔化变量 
-	$config_read_hidden 				配置读取隐藏变量 
-	$config_fix_newlines 				配置固定换行符变量 
-	$default_template_handle r_func 	默认模板处理函数变量 
-	$php_handling 						PHP处理变量 
-	$security 							安全变量 
-	$secure_dir 						安全目录变量 
-	$security_settings 					安全配置变量 
-	$trusted_dir 						信任目录变量 
-	$left_delimiter 					左结束符变量 
-	$right_delimiter 					右结束符变量 
-	$compiler_class 					编译类变量 
-	$request_vars_order 				变量顺序变量 
-	$request_use_auto_globals 			自动全局变量 
-	$compile_id 						编译ID变量 
-	$use_sub_dirs 						子目录变量 
-	$default_modifiers 					默认修正器变量 
-	$default_resource_type 				默认源类型变量 
+	$debugging_ctrl 					调试控制变量
+	$global_assign 						全局配置变量
+	$undefined 							未定义变量
+	$autoload_filters 					自动加载过滤器变量
+	$compile_check 						编译检查变量
+	$force_compile 						强迫编译变量
+	$caching 							缓存变量
+	$cache_dir 							缓存目录变量
+	$cache_lifetime 					缓存生存时间变量
+	$cache_handler_func 				缓存处理函数变量
+	$cache_modified_check 				缓存修正检查变量
+	$config_overwrite 					配置覆盖变量
+	$config_booleanize 					配置布尔化变量
+	$config_read_hidden 				配置读取隐藏变量
+	$config_fix_newlines 				配置固定换行符变量
+	$default_template_handle r_func 	默认模板处理函数变量
+	$php_handling 						PHP处理变量
+	$security 							安全变量
+	$secure_dir 						安全目录变量
+	$security_settings 					安全配置变量
+	$trusted_dir 						信任目录变量
+	$left_delimiter 					左结束符变量
+	$right_delimiter 					右结束符变量
+	$compiler_class 					编译类变量
+	$request_vars_order 				变量顺序变量
+	$request_use_auto_globals 			自动全局变量
+	$compile_id 						编译ID变量
+	$use_sub_dirs 						子目录变量
+	$default_modifiers 					默认修正器变量
+	$default_resource_type 				默认源类型变量
 方法
-	append 								添加 
-	append_by_ref 						引用添加 
-	assign 								赋值 
-	assign_by_ref 						引用赋值 
-	clear_all_assign 					清除所有赋值 
-	clear_all_cache 					清除所有缓存 
-	clear_assign 						清除赋值 
-	clear_cache 						清除缓存 
-	clear_compiled_tpl 					清除已编译模板 
-	clear_config 						清除配置 
-	config_load 						加载配置 
-	display 							显示 
-	fetch 								取得输出的内容 
-	get_config_vars 					取配置变量的值 
-	get_registered_object 				取得已注册的对象 
-	get_template_vars 					取得模板变量的值 
-	is_cached 							是否已被缓存 
-	load_filter 						加载过滤器 
-	register_block 						注册一个块 
-	register_compiler_function 			注册编译函数 
-	register_function 					注册函数 
-	register_modifier 					注册修饰器 
-	register_object 					注册对象 
-	register_outputfilter 				注册输出过滤器 
-	register_postfilter 				注册提交过滤器 
-	register_prefilter 					注册预过滤器 
-	register_resource 					注册资源 
-	trigger_error 						触发错误 
-	template_exists 					模板是否存在 
-	unregister_block 					注销一个块 
-	unregister_compiler_function 		注销编译函数 
-	unregister_function 				注销函数 
-	unregister_modifier 				注销修饰器 
-	unregister_object 					注销对象 
-	unregister_outputfilter 			注销输出过滤器 
-	unregister_postfilter 				注销提交过滤器 
-	unregister_prefilter 				注销预过滤器 
-	unregister_resource 				注销资源 						
+	append 								添加
+	append_by_ref 						引用添加
+	assign 								赋值
+	assign_by_ref 						引用赋值
+	clear_all_assign 					清除所有赋值
+	clear_all_cache 					清除所有缓存
+	clear_assign 						清除赋值
+	clear_cache 						清除缓存
+	clear_compiled_tpl 					清除已编译模板
+	clear_config 						清除配置
+	config_load 						加载配置
+	display 							显示
+	fetch 								取得输出的内容
+	get_config_vars 					取配置变量的值
+	get_registered_object 				取得已注册的对象
+	get_template_vars 					取得模板变量的值
+	is_cached 							是否已被缓存
+	load_filter 						加载过滤器
+	register_block 						注册一个块
+	register_compiler_function 			注册编译函数
+	register_function 					注册函数
+	register_modifier 					注册修饰器
+	register_object 					注册对象
+	register_outputfilter 				注册输出过滤器
+	register_postfilter 				注册提交过滤器
+	register_prefilter 					注册预过滤器
+	register_resource 					注册资源
+	trigger_error 						触发错误
+	template_exists 					模板是否存在
+	unregister_block 					注销一个块
+	unregister_compiler_function 		注销编译函数
+	unregister_function 				注销函数
+	unregister_modifier 				注销修饰器
+	unregister_object 					注销对象
+	unregister_outputfilter 			注销输出过滤器
+	unregister_postfilter 				注销提交过滤器
+	unregister_prefilter 				注销预过滤器
+	unregister_resource 				注销资源
 缓存
 高级
 插件

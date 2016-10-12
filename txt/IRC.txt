@@ -195,6 +195,7 @@ mfw			mfw
 lel			(always in lower case)laugh even louder, or show bored
 <3          love
 ime         In My Experience
+mofo        mother fucker
 
 =============== Server&Channel ===============
 irc.evilzone.org

@@ -66,6 +66,7 @@
         magic_quotes_runtime = Off
 
 - turn off `safe mode`(removed in PHP 5.4)
+- Place important file(database.php) outside of web folder
 - other configuration
 
         ; don't show PHP version in response header
@@ -91,29 +92,24 @@
         allow_url_fopen = Off
         allow_url_include = Off
 
-#Filter inputs & control output
+- server related configuration
+    + Disable `directory listing`
+    + Place a `index.html` file in every folder
+
+
+#Coding
 
 ##Validating input
 
-- Regulating request
-    + only accept expected request methods
-    + request should tell you, what they are sending in(`Content-Type` header), and what they expect to get back(`Accept` header)
-
-- Validation: reject if not acceptable
-    + Only allow expected data in submission
-    + Set default values
-    + Common validation
-        * Presence/Length
-        * Type
-        * Format
-        * Within a set of values
-        * Uniqueness
-    + Be aware of language logic pitfalls
+- when using 3rd party validator, know that
+    + the 3rd party self maybe unsafe, check them if you use them
+    + the may not contain our web-app-specific required validation
 
 ##Sanitizing data:render data harmless
 
 - Use type casting, not type juggling
 - Don't use custom sanitization methods
+- Encode or escape characters, Don't remove or correct invalid data
 - How to sanitize data depends on how you are going to use the data
     * SQL(database)
     * HTML
@@ -142,7 +138,12 @@
 
 _*note_: filter_var and the old way functions are not replacement for each others. the old way functions may have feature that filter_var don't have.
 
-##Privacy
+##MISC
+
+- Properly setting character encodings at all stages of the process and specifying character encoding for functions where possible
+
+
+#Privacy
 
 - Code
     + Public directory/Libraries directory
@@ -155,21 +156,18 @@ _*note_: filter_var and the old way functions are not replacement for each other
     + keep them out of version control
     + have as few copies as possible
     + don't reuse password
+- Admin area
+    + use turing test when login(captcha)
+    + disable login if fail repeately
+    + log IP both failed and succeed, spot those suspicous IP and block it
 
-##Logging
 
-- Smart logging
-    + Types: 
-        * Errors
-        * Sensitive actions/Audit trail
-        * Possible attacks
-    + Fileds:
-        * Date and times
-        * Source(user/IP)
-        * Action
-        * Target
-        * Cookie/Session; URL and all parameters(in raw format)
-        * Backtrace
-    + Don't log sensitive data: passwords, keys, tokens
-    + Keep old content: versioning, Paranoid delete
-    + Review log routinely
+#Database
+
+- least privilege principle(minimize damage even database got hacked)
+- implement false deletion, and disable all user's deletion privilege
+
+
+
+
+** see Security-general.md
