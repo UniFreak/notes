@@ -13,7 +13,30 @@ via repository:
 
     configuration change will be applied after reload/restart
     
-- config files:
+#Nginx architecture
+
+`master process` read the conf file and determine how many `worker process` is spawn
+
+request are processed by worker process
+
+#Command
+
+##options
+```
+-?,-h         : this help
+-v            : show version and exit
+-V            : show version and configure options then exit
+-t            : test configuration and exit
+-T            : test configuration, dump it and exit
+-q            : suppress non-error messages during configuration testing
+-s signal     : send signal to a master process: stop, quit, reopen, reload
+-p prefix     : set prefix path (default: NONE)
+-c filename   : set configuration file (default: conf/nginx.conf)
+-g directives : set global directives out of configuration file
+```
+    
+#general usage
+
     + main: nginx.conf
 
     ```
@@ -115,28 +138,16 @@ via repository:
         }
     }
     ```
-    
-    
+
+#load balancing
+
+three load balancing mechanisms are supported:
+
+- round-robin (default)
+- least-connected
+- ip-hash
 
 
-#Nginx architecture
 
-`master process` read the conf file and determine how many `worker process` is spawn
 
-request are processed by worker process
 
-#Command
-
-##options
-```
--?,-h         : this help
--v            : show version and exit
--V            : show version and configure options then exit
--t            : test configuration and exit
--T            : test configuration, dump it and exit
--q            : suppress non-error messages during configuration testing
--s signal     : send signal to a master process: stop, quit, reopen, reload
--p prefix     : set prefix path (default: NONE)
--c filename   : set configuration file (default: conf/nginx.conf)
--g directives : set global directives out of configuration file
-```
