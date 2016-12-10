@@ -1,6 +1,7 @@
 =============== Intallation ===============
 `curl -sS https://getcomposer.com/installer | php`
 `php -r "readfile('https://getcomposer.org/installer');" | php`
+on cygwin: http://www.pavlatka.cz/2015/01/install-composer-cygwin/
 
 =============== 配置用中国镜像(防被墙) ===============
 http://pkg.phpcomposer.com/

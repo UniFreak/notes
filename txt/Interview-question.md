@@ -8,8 +8,14 @@
 
 #Tech
 跨域
-jsonp
-validate email(be smart: http://www.ex-parrot.com/~pdw/Mail-RFC822-Address.html)
+    jsonp
+单点登录
+$_POST, $_RAW_POST_DATA, input://
+架构设计
+框架设计
+静态化设计
+框架设计
+瓶颈分析
 分表
 数据库设计
 主从复制
@@ -31,43 +37,6 @@ date time
     后台 -> 前台:
         同一个页面, 直接 echo
         不同页面, 可用 Ajax+json
-
-Ajax实现
-    原生
-        创建对象:
-            if (window.XMLHttpRequest)
-              {// code for IE7+, Firefox, Chrome, Opera, Safari
-              xmlhttp=new XMLHttpRequest();
-              }
-            else
-              {// code for IE6, IE5
-              xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-              }
-        打开请求:
-            xmlhttp.open("GET","test1.txt",true);
-        头信息  :
-            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        发送请求:
-            xmlhttp.send("fname=Bill&lname=Gates");
-        监视状态 & 接收数据
-            xmlhttp.onreadystatechange=function()
-              {
-              if (xmlhttp.readyState==4 && xmlhttp.status==200)
-                {
-                document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
-                }
-              }
-    Jquery
-        1.  .load(URL, data, callback)
-        2.  $.get(URL, callback)
-        3.  $.post(URL, data, callback)
-        4.  $.ajax({
-                type: "",
-                url: "",
-                data: "",
-                success: function(){}
-            })
-
 无极分类实现
 分页实现
 权限管理实现
@@ -114,12 +83,22 @@ Sql 注入和防范
 DDOS
 PHP:Hypertext Preprocessor
 
-linux文件排序, 剩余空间, 控制权限
-    ll -rt
-    fdisk -l
-    chmod
-    chown
-session vs cookie , cookie 禁了session 为什么不能用
+发送一个 Ajax 请求
+    
+- 原生: 见 sandbox/js/ajax
+- jQuery
+    1.  .load(URL, data, callback)
+    2.  $.get(URL, callback)
+    3.  $.post(URL, data, callback)
+    4.  $.ajax({
+            type: "",
+            url: "",
+            data: "",
+            success: function(){}
+        })
+
+session vs cookie, 禁用 cookie 的话, session 是否还能用
+
     Session 工作原理
         Session 储存于服务器端( 默认以文件方式存储 session ),  并通过 session id 标识这个 session
     Cookie 工作原理
@@ -128,7 +107,56 @@ session vs cookie , cookie 禁了session 为什么不能用
     联系
         Session 在默认情况下是使用客户端的 Cookie 来保存 session id 的, 所以当客户端的 Cookie 出现问题的时候就会影响 session 了. 但是 Session 不一定必须依赖 Cookie, 当客户端的 Cookie 被禁用或出现问题时, PHP会自动把 session id 附着在 URL 中, 这样再通过 session id 就能跨页使用 session 变量了. 但这种附着也是有一定条件的, 即 php.ini 中的 session.use_trans_sid = 1 或者编译时打开打开了--enable-trans-sid 选项
 
+简述 session 生存时间机制
+
+    以下设置都可影响 session 生存时间
+
+    1. session.gc_maxlifetime: session 数据过多久之后会被当做垃圾, 以便被垃圾回收器回收
+    2. session.gc_probability, session.gc_divisor: 共同决定当 session_start() 时, 垃圾回收器运行的概率
+
+    当 session.save_handler 为默认的 file 时, session 文件是否过期是由 mtime(modified time) 决定, 而非 atime(accessed time), 这会导致 session 文件由于长期没更新而使垃圾回收器过早回收依然有效的 session 数据
+
+    3. session.cookie_lifttime: 设定 cookie 的过期时间
+
+    由于 session 生存时间应该由服务器端决定, 所以这个参数实际上用处不大
+
+    4. 最好的方案是自己实现 session 过期机制:
+
+        if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+            // last request was more than 30 minutes ago
+            session_unset();     // unset $_SESSION variable for the run-time 
+            session_destroy();   // destroy session data in storage
+        }
+        $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+                                             // this update mtime, too. prevent
+                                             // gc collector from gc session 
+                                             // prematurely
+
+    相关函数:
+    - session_save_path()
+    - session_set_cookie_params()
+
+修改 session 生存时间
+
+    修改php.ini文件
+        session.gc_maxlifetime，与session.cookie_lifetime一致，同时确认session.use_cookies = 1。
+    也可以用程式控制
+        $savePath = "./session_save_dir/";
+        $lifeTime = 24 * 3600;
+        session_save_path($savePath);
+        session_set_cookie_params($lifeTime);
+        session_start();
+
+如何实现多服务器共享 session
+
+    使用 mySQL 数据库存储并共享 session 数据
+
+大型网站中 Session 方面应注意什么
+
+    如果使用默认的 file session_headler 的话, 会非常影响大访问量网站的性能. 考虑适用数据库来存储 session 数据
+
 GET 与 POST 的区别
+
     GET
         - 请求的数据会附在 URL 之后, 以 ? 分割 URL 和传输数据, 参数之间以 & 相连
         - 数据量限制由 URL 长度(由浏览器决定, HTTP 规范没有对 URL 进行长度限制)决定
@@ -140,10 +168,12 @@ GET 与 POST 的区别
     - GET data can exist in a POST request, because it is simply part of the URL being requested and doesn't rely on the request method
 
 rawurlencode()/rawurldecode() VS urlencode()/urldecode()
+
     raw is binary safe
     it means that if you want to transfer binary data over the web, you should use raw
 
 如何加快页面加载速度
+
     前端
         代码优化(减少冗余, 优化算法)
         减少 HTTP 请求(合并脚本, css等; 使用sprint)
@@ -166,6 +196,7 @@ rawurlencode()/rawurldecode() VS urlencode()/urldecode()
     硬件
 
 如何优化数据库
+
     设计
         三大范式与适度反范式
         选择适当的字段类型
@@ -186,11 +217,15 @@ rawurlencode()/rawurldecode() VS urlencode()/urldecode()
         分区
     硬件/操作系统
 
+简述三大范式
+
 负载均衡
+
     就是将负载(工作任务)进行平衡, 分摊到多个操作单元上进行执行, 从而共同完成工作任务
     分 软件/硬件/本地/全局 四种实现方式
 
 echo, print, print_r, var_dump, var_export 的区别
+
     下两个是语言结构, 可不用括号传参, 也不能被可变函数调用
 
     - `echo`: 可用 ',' 同时输出多个变量; 比 print 快一点; 不返回, 所以不能用于表达式中
@@ -238,66 +273,24 @@ echo, print, print_r, var_dump, var_export 的区别
 
         用途: 变量引用传递, 函数引用传参, 函数引用返回, 对象默认即为引用传递(see php-syntax.md)
 
-设计一个简易问答网站
-    拓展
-    1.提问人, 回答人
-    2.论坛样式, 主楼为提问, 其余为回答
-    3.可对回复点赞
-    4.个人信息统计, 如提问数, 回答数
-    要求
-    1.可在此需求上拓展
-    2.按功能模块划分(可绘草图)
-    3.描述主要的功能逻辑
-    4.主要的数据样式
-    5.所需开发环境和工具
+如何验证邮箱
 
-    表设计
-        user
-            id
-            name
-            email
-        question
-            id
-            uid
-            create_time
-        answer
-            id
-            uid
-            qid
-            like
-            create_time
+- 使用内置函数: `filter_var($email, FILTER_VALIDATE_EMAIL);` (推荐)
+- 使用第三方库
+- 使用正则
 
-实现存整形的一维数组从大到小排序, 并说明如何改善执行效率(不能使用 php 函数)
-    // 冒泡排序
-    function bubbleImprovedSort($arr) {
-        $len = count($arr);
-        for($i = 0; $i < $len; $i ++) {
-            $noswap = true;                         // 用于指示是否还需要继续判断, 默认不需要
-            for($j = $len - 1; $j > $i; $j --) {
-                if ($arr [$j] > $arr [$j - 1]) {
-                    $tmp = $arr [$j - 1];
-                    $arr [$j - 1] = $arr [$j];
-                    $arr [$j] = $tmp;
-                    $noswap = false;                // 如果做出了排序更改, 则设为需要再判断
-                }
-            }
-            if ($noswap) {                          // 检查是否需要继续判断, 否则返回数组
-                return $arr;
-            }
-        }
-    }
-
-写一个邮箱验证函数
     function checkEmail($str) {
         $pattern = '/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/';
         return preg_match($pattern, $str);
     }
 
 显示当前脚本路径
+
     1.echo $_SERVER['REQUEST_URI'];
     2.echo $_SERVER['SCRIPT_FILENAME'].'?'.$_SERVER['QUERY_STRING'];
 
 error_reporting() 可以设定的错误报告级别
+
     0
     E_NOTICE
     E_WARNING
@@ -306,19 +299,23 @@ error_reporting() 可以设定的错误报告级别
     E_ALL | -1
 
 设置自增属性的列必须是
+
     主键或者加UNIQUE索引
 
 如何解决大流量问题
+
     硬件：升级
     软件配置: 防盗链, 缓存, 控制大文件下载, 主从分离
     php 代码: 静态化
 
 什么是面向过程, 面向对象, 为什么使用, 特点
+
     面向过程就是分析出解决问题所需要的步骤，然后用函数把这些步骤一步一步实现，使用的时候一个一个依次调用就可以了; 面向对象是把构成问题事务分解成各个对象，建立对象的目的不是为了完成一个步骤，而是为了描叙某个事物在整个解决问题的步骤中的行为 , 将现实世界抽象成对象, 将他们的关系抽象成继承, 类等; 对象的数据抽象为属性, 对象的操作抽象为方法
     重用性, 灵活性, 扩展性
     封装, 继承, 多态
 
 include include_once require require_once
+
     require VS include
         1. 如果引用文件找不到或者引用时出错, require() 会产生错误并中止程序运行; 而include()会产生警告并忽略错误, 继续执行
         2. require() 不能在循环体中根据条件的不同而包含不同的文件. require()语句只会在第一次执行时调用它所包含的文件中的内容替换本身这条语句, 当再次被执行时只能执行第一次所包含的语句. 但是include()语句可以在循环体中来包含不同的文件
@@ -327,7 +324,10 @@ include include_once require require_once
         _once 会检查是否已经包含, 如果包含过了则不再进行包含, 即只包含一次
 
 常用 http 状态代码
+
     200         OK
+    301         moved permanently
+    304         not modified
     400         Bad Request
     401         Unauthorized
     402         Payment Required
@@ -335,9 +335,11 @@ include include_once require require_once
     404         Not Found
 
 mysql 取得当前时间和格式化日期函数
+
     now(), date_format()
 
 版本控制工具
+
     git, svn(subversion), cvs
 
 不用第三个变量，把两个变量的值交换
@@ -353,19 +355,23 @@ mysql 取得当前时间和格式化日期函数
     list($a, $b) = array($b, $a);
 
 编写正则取出 value 值 (<input value='text' />)
+
     (?<=value=")|(?<=value=')[^\"\'.]*
 
 输出昨天此刻时间
+
     1. echo date("Y-m-d H:i:s",strtotime("-1 day"));
     2. echo date('Y-n-j H:i:s', time()-60*60*24);
 
 写出两种连接数据库的方法
+
     mysql_connect("主机名","用户名","密码")；
             mysql_select_db("数据库名");
     或
     $pdo=new PDO(mysql:host="主机名",dbname="数据库名","用户名","密码");
 
 实现字符串反转
+
     1.  strrev()
     2.  $str = 'test';
         for($i = 1; $i <= strlen($str); $i++) {
@@ -373,13 +379,16 @@ mysql 取得当前时间和格式化日期函数
         }
 
 实现中文字符串截取无乱码
+
     1.mb_substr('中文乱码问题的解决方法', 0, 7, 'utf-8');          //按字来切分字符 输出：中文乱码问题的
     2.mb_strcut('中文乱码问题的解决方法', 0, 7, 'utf-8');          //按字节来切分字符 输出：中文乱
 
 获取服务器 ip
+
     $serverip = gethostbyname($_SERVER['SERVER_ADDR']);
 
 获取客户端 ip
+
     function getIp(){
           if (isset($_SERVER)){
                 if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])){
@@ -409,20 +418,11 @@ mysql 取得当前时间和格式化日期函数
          return $realip;
     }
 
-修改 session 生存时间
-    修改php.ini文件
-        session.gc_maxlifetime，与session.cookie_lifetime一致，同时确认session.use_cookies = 1。
-    也可以用程式控制
-        $savePath = "./session_save_dir/";
-        $lifeTime = 24 * 3600;
-        session_save_path($savePath);
-        session_set_cookie_params($lifeTime);
-        session_start();
-
-取得 baidu.com/index.html 的内容
+    取得 baidu.com/index.html 的内容
     file_get_content($url)
 
 用正则实现:找到一个字符串中所有大写的字母, 并在它后面加上匹配到它时的次数? 比如 " A c B d e F G " 变成 " A1 c B2 d e F3 G4 "
+
     $str = 'A bcD eFG hHi J 12%I';
     $pattern = '/[A-Z]/';
     function replace($matches) {
@@ -434,10 +434,12 @@ mysql 取得当前时间和格式化日期函数
     echo preg_replace_callback($pattern, 'replace', $str);
 
 JS 重定向页面
+
     1. window.location.href = 'url';
     2. window.location.assign('url');
 
 mysql_fetch_row() VS mysql_fetch_assoc VS mysql_fetch_array()
+
     row : 返回一行作为枚举数组
     assoc : 返回一行作为关联数组
     array : 返回一行作为枚举或关联数组, 或兼有
@@ -445,11 +447,13 @@ mysql_fetch_row() VS mysql_fetch_assoc VS mysql_fetch_array()
 实现下拉菜单选择文章分类
 
 如何获取图像大小
+
     getimagesize()
     imagesx()
     imagesy()
 
 写出下面程序的输出
+
     $x = 5;
     echo $x;
     echo "\n";
@@ -467,9 +471,11 @@ mysql_fetch_row() VS mysql_fetch_assoc VS mysql_fetch_array()
     1
 
 实现防止表单重复提交
-    使用 JS 检查是否重复提交
-    使用 JS 禁用提交按钮
+
+    使用 js, 第一次提交后就禁用提交按钮
+    使用 js, 利用 onsubmit 事件处理程序取消后续的表单提交操作
     使用 Session 存取 token 在后端检查是否重复提交
+    使用 PRG(Post->Redirect(303)->Get) 模式
 
 运行下面的代码，$text 的值是多少？strlen($text)又会返回什么结果？
 
@@ -482,6 +488,7 @@ mysql_fetch_row() VS mysql_fetch_assoc VS mysql_fetch_array()
     $text[10] = "Doe"给某个字符串具体的某个位置具体字符时候，实际只会把D赋给$text. 虽然$text才开始只有5个自负长度，但是php会默认填充空格。这和别的语言有些差别。
 
 执行下面代码$x会变成什么值呢？
+
     $x = NULL;
 
     if ('0xFF' == 255) {
@@ -496,8 +503,7 @@ mysql_fetch_row() VS mysql_fetch_assoc VS mysql_fetch_array()
 
     但是$x = (int)'0xFF';是否也会变成255呢？显然不是，将一个字符串进行强制类型转换实际上用的是convert_to_long,它实际上是将字符串从左向右进行转换，遇到非数字字符则停止。因此0xFF到x就停止了。所以$x=0
 
-写一个函数，尽可能高效的，从一个标准 url 里取出文件的扩展名
-    例如: http://www.phpddt.com/abc/de/fg.php?id=1 需要取出 php 或 .php
+写一个函数，尽可能高效的，从一个标准 url 里取出文件的扩展名. 例如: http://www.phpddt.com/abc/de/fg.php?id=1 需要取出 php 或 .php
 
     $url = "http://www.phpddt.com/abc/de/fg.php?id=1";
     $path = parse_url($url);
@@ -506,10 +512,43 @@ mysql_fetch_row() VS mysql_fetch_assoc VS mysql_fetch_array()
 
 写一个函数，能够遍历一个文件夹下的所有文件和子文件夹
 
+    function deepScan($path, &$level = 0) {
+        static $prevIsDir = false; //  上次递归是否是目录
+        if (is_dir($path)) {
+            $indent = str_repeat("\t", $level);
+            $dir = opendir($path);
+            while (($file = readdir($dir)) != false) {
+                if ($file != '.' && $file != '..') {
+                    echo "{$indent}{$file}\n";
+                    if (is_dir($subDir = ($path . '/' . $file))) {
+                        ++$level;
+                        deepScan($subDir, $level);
+                        $prevIsDir = true;
+                    } else if ($prevIsDir) { // 上次递归是目录, 且本次非目录
+                        --$level;            // 层级减一
+                        $prevIsDir = false;
+                    }
+                }
+            }
+        }
+    }
 
-无限极分类的实现
+编写函数实现无极限分类
+
+    function tree($arr, $pid = 0, $level = 0) {
+        static $list = array();
+        foreach ($arr as $v) {
+            if ($v['parent_id'] == $pid) {
+                $v['level'] = $level;
+                $list[] = $v;
+                tree($arr, $v['cat_id'], $level+1);
+            }
+        }
+        return $list;
+    }
 
 获取用户输入参数的三个方法
+
 - argc, argv
 - getopt()
 - fwrite(STDOUT, 'Enter your name'); name = fget(STDIN);
@@ -517,8 +556,6 @@ mysql_fetch_row() VS mysql_fetch_assoc VS mysql_fetch_array()
 posix和perl标准的正则表达式区别
 
 Safe_mode 打开后哪些地方受限
-
-请介绍 Session 的原理, 大型网站中Session方面应注意什么
 
 测试php性能和mysql数据库性能的工具,和找出瓶颈的方法
 
@@ -539,8 +576,6 @@ echo 8%(-3) 输出: 2
 一个10G的表,你用php程序统计某个字段出现的次数,思路是?
 
 应对高访问量和突发访问量(秒杀, 抢票, 12306): 服务器架构/数据存储
-
-多服务器共享 session
 
 nginx配置一下rewrite指定到某个具体路径?
 
@@ -821,5 +856,292 @@ PHP 访问数据库有哪几部
 2. 确保 .php 文件是 utf8
 3. 执行 set names utf8
 4. 对于不是 utf8 编码的文本, 使用 iconv() 转码成 utf8 再保存到数据库
+5. 确保 html 是 utf8
+    - `<meta http-equiv="Content-type" value="text/html;charset=utf8" />`
+    - `header("content-type:text/html;charset=utf8");`
+
+打开 safe mode 会影响哪些函数
+
+    move_uploaded_file(), chdir(), fopen(), mkdir(), rmdir(), dl(), shell_exec(), backtick operator, set_time_limit(), putenv(), exec(), system(), passthru()...
+
+写一段 PHP 代码, 确保多个进程写入文件成功
+
+    $fp = fopen('lock.txt', 'w+');
+    if (flock($fp, LOCK_EX)) {
+        fwrite($fp, 'content');
+        flock($fp, LOCK_UN);
+    } else {
+        echo 'file is locked';
+    }
+    fclose($fp);
+
+将一个远程图片抓取到本地
+
+    $content = file_get_contents('http://cn.bing.com/sa/simg/CN_Logo_Gray.png');
+    $handle = fopen('tmp.png', 'w+');
+    fwrite($handle, $content);
+
+写一个函数， 能计算两个文件的相对路径， 如 a/b/12/34/c.php 相对于 /a/b/c/d/e.php 的路径是 ../../c/d
+
+    function relativePath($a, $b) {
+        $a = explode('/', dirname($a));
+        $b = explode('/', dirname($b));
+        for ($i = 0, $len = count($b);  $i < $len; $i++) {
+            if ($a[$i] != $b[$i]) {
+                break;
+            }
+        }
+        if ($i < $len) {
+            $ret = array_fill(0, $len-$i, '..');
+        }
+        $ret = array_merge($ret, array_slice($a, $i));
+        return implode('/', $ret);
+    }
+
+获取 http://baidu.com/index.html 的内容
+
+- 方法一
+    
+    $fh = fopen('http://baidu.com/index.html', 'rb');
+    $content = stream_get_contents($fh);
+    fclose($fh);
+    echo $content;
+
+- 方法二
+
+    echo file_get_contents('http://baidu.com/index.html');
+
+GD 库是做什么的
+
+    PHP 内置的处理或生成图片的 api, 通常用于生成缩略图或加水印或生成表报
+
+使用 PHP 实现页面跳转
+
+- `header('Location:b.php');`
+- `header('refresh:3; url=b.php');`
+- `echo '<meta http-equiv="refresh" content="0;url=b.php" />'`
+
+如何去除文件中的 HTML 标签
+
+- 使用内置函数: `strip_tags()`
+- 自定义函数
+    
+    function stripHTMLTags($str) {
+        $pattern = '/<(.+?)[\s]*\/?[\s]*>';
+        return preg_replace($pattern, '', $str);
+    }
+
+如何验证一个字符串是否是有效的日期
+
+    function validateDate($date) {
+        return $date == date('Y-m-d', strtotime($date));
+    }
+
+说几个模板引擎
+
+    smarty, twig, blade, volt, mustache, Plates
+
+使对象可以像数组一样进行 foreach 循环
+
+    // 实现 Iterator 接口
+    class Cls implements Iterator
+    {
+        private $container = array(
+            'okay',
+            'yeah',
+            'I do'
+            );
+
+        public function rewind()
+        {
+            reset($this->container);
+        }
+
+        public function current()
+        {
+            return current($this->container);
+        }
+
+        public function next()
+        {
+            return next($this->container);
+        }
+
+        public function valid()
+        {
+            return ($this->current() !== false);
+        }
+
+        public function key()
+        {
+            return key($this->container);
+        }
+    }
+
+用 PHP 实现双向队列
+
+    class Deque
+    {
+        private $container = array();
+
+        public function addFirst($item)
+        {
+            return array_unshift($this->container, $item);
+        }
+
+        public function removeFirst()
+        {
+            return array_shift($this->container);
+        }
+
+        public function addLast($item)
+        {
+            return array_push($this->container);
+        }
+
+        public function removeLast()
+        {
+            return array_pop($this->container);
+        }
+    }
+
+对数组 [10, 2, 36, 25, 5] 进行排序
+
+    // 冒泡排序
+    function bubbleImprovedSort($arr) {
+        $len = count($arr);
+        for($i = 0; $i < $len; $i ++) {
+            $noswap = true; // 用于指示是否还需要继续判断, 默认不需要
+            for($j = $len - 1; $j > $i; $j --) {
+                if ($arr [$j] > $arr [$j - 1]) {
+                    $tmp = $arr [$j - 1];
+                    $arr [$j - 1] = $arr [$j];
+                    $arr [$j] = $tmp;
+                    $noswap = false; // 如果做出了排序更改, 则设为需要再判断
+                }
+            }
+            if ($noswap) { // 检查是否需要继续判断, 否则返回数组
+                return $arr;
+            }
+        }
+    }
+    bubbleImprovedSort([10, 2, 36, 25, 5]);
+
+    // 快速排序
+    function partition(&$arr, $low, $high)
+    {
+        $pivot = $arr[$low];
+        while ($low < $high) {
+            while ($low < $high && $arr[$high] >= $pivot) {
+                $high--;
+            }
+            $arr[$low] = $arr[$high];
+
+            while ($low < $high && $arr[$low] <= $pivot) {
+                $low++;
+            }
+            $arr[$high] = $arr[$low];
+
+        }
+        $arr[$low] = $pivot;
+        print_r($arr);
+        return $low;
+    }
+
+    function quickSort(&$arr, $low, $high)
+    {
+        if ($low < $high) {
+            $pivot = partition($arr, $low, $high);
+            quickSort($arr, $low, $pivot-1);
+            quickSort($arr, $pivot+1, $high);
+        }
+    }
+
+    $arr = [2, 5, 8, 3, 10, 1, 8, 7, 6];
+    quickSort($arr, 0, count($arr) - 1);
+
+描述顺序查找和二分查找
+
+    // 顺序查找顺序表
+    function seqSearch($array, $val)
+    {
+        $array[] = $val;
+
+        $i = 0;
+        while ($array[$i] != $val) {
+            $i++;
+        }
+
+        if ($i < (count($array)-1)) {
+            return $i;
+        }
+        return -1;
+    }
 
 
+    // 二分查找有序表
+    function binSearch($arr, $val)
+    {
+        $low = 0;
+        $high = count($arr) - 1;
+        while ($low <= $high) {
+            $mid = (int) ($low + $high) / 2;
+            if ($val == $arr[$mid]) {
+                return $mid;
+            } else if ($val < $arr[$mid]) {
+                $high = $mid - 1;
+            } else {
+                $low = $mid + 1;
+            }
+        }
+        return 0;
+    }
+
+
+给出约瑟夫问题的函数定义
+
+    function josephus($n,$k){
+        if($n ==1)
+            return 1;
+        else
+            return (josephus($n-1,$k)+$k-1) % $n+1;
+    }
+
+写出常用的 Linux 命令
+
+- top
+- ps
+- mv
+- find
+- df
+- cat
+- chmod
+- chgrp
+- grep
+- wc
+- ifconfig
+- ...
+
+获取文件行数
+
+    wc -l filename
+
+输入文件的最后 5 行到另一个文件
+
+    tail -n 5 file1 >> file2
+
+说几个常用协议的简称, 有什么缩写以及端口
+
+- SMTP: Simple Mail Transfer Protocal
+- POP3: Post Office Protocal 3
+- HTTP: HypterText Transfer Protocal: 80
+- HTTPS: 443
+- FTP: File Transfer Protocal: 21
+- DNS: Domain Name System and Domain Name Service Protocal
+- SSH: Secure Shell: 22
+- telnet: 23
+
+如何检查 PHP 脚本执行效率和 SQL 效率
+
+- PHP: 启用 xdebug 配合 WinCacheGrind 分析
+- MySQL: 启用 slow query log, 配合 EXPLAIN 语句分析

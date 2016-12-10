@@ -1,6 +1,6 @@
 1.shell文件头
 	因为shell有多种，所以编写shell要注明文件头：
-	#!/bin/sh 
+	#!/bin/sh
 b-shell
 c-shell
 z-shell
@@ -9,7 +9,7 @@ z-shell
 	“#”代表注释
 	如：
 	#这是一行注释
-	
+
 	多行注析：
 	:<<BLOCK
 　　....注释内容
@@ -44,10 +44,10 @@ z-shell
 	7、拼接字符串时，不需要加上任何辅助符号，直接拼接
 	8、:表示分隔符
 	9、`执行一条命令
-	
+
 4.变量输出
 	name=elson
-	echo my name is $name    #my name is elson   
+	echo my name is $name    #my name is elson
 	echo my name is ${name}  #my name is elson   推荐方式
 	echo my name is '$name'  #my name is $name   这一个得注意！！！
 	echo my name is "$name"  #my name is elson
@@ -58,7 +58,7 @@ z-shell
 	name=elson
 	echo my name is $namewu      #输出为：my name is    空白，因为shell以为$namewu是一个变量
 	echo my name is ${name}wu    #输出为：my name is elsonwu  正确，能区分开变量名和字符串连接
-	
+
 5.变量释放
 	unset name
 	echo $name    #不会报错，只输出空
@@ -76,18 +76,16 @@ z-shell
 
 	6.3.方式3:
 		echo "U input string1:$1"	#./t3.sh sky miny  sky就是$1，miny是$2
-		
-	提示：字符串连接，不需要任何连接符
 
 7.数学计算
 	a=10
 	b=20
 	c=30
-	
+
 	7.1.方式1.
 		value1=`expr $a + $b + $c`
 		echo $value1                   #输出60
-		
+
 		value1=`expr $c \* $a`    	   #*表示任意字符
 		echo $value1                   #输出300
 
@@ -97,22 +95,22 @@ z-shell
 8.特殊变量
 	8.1.当前命令$0或${0}
 		echo "The command is ${0}"
-	
+
 	8.2.当前命令接受的参数个数$#或${#}，read的输入，不算入$#
 		echo "The command is first ${1}, the second is ${2} total ${#}"
-		
+
 	8.3  $? 最近的状态码（上一条指令）,一般情况下，直接输出$?，值为0，表示程序执行正常，其他值表示程序错误；如果$?写在函数后面，输出的是函数的返回值
 
-		
-		
+
+
 9.if语句
-	
+
 	利用if编写一个只允许给定一个参数的shell文件
 	vim if01.sh
-	
+
 	内容：
 	#!/bin/sh
-	
+
 	if [ $# -eq 0 ]
 	then
 	  echo "Too few"
@@ -132,33 +130,25 @@ z-shell
 	./if01.sh elson        #输出 well
 	./if01.sh elson 24     #输出 Too many
 
--eq(==) -比较两个参数相等	
+-eq(==) -比较两个参数相等
 -ne(!=) —比较两个参数是否不相等
 -lt(\<) —参数1是否小于参数2
 -le —参数1是否小于等于参数2
 -gt(\>) —参数1是否大于参数2
 -ge —参数1是否大于等于参数2
--f — 检查某文件是否存在（例如，if [ -f "filename" ]） ->!-f 判断文件不存在
--d — 检查目录是否存在 
 
-[ -f "somefile" ] ：判断是否是一个文件
-[ -x "/bin/ls" ] ：判断/bin/ls是否存在并有可执行权限
-[ -n "$var" ] ：判断$var变量是否有值
--r file　　　　　用户可读为真
--w file　　　　　用户可写为真
--x file　　　　　用户可执行为真
--f file　　　　　文件为正规文件为真
--d file　　　　　文件为目录为真
--c file　　　　　文件为字符特殊文件为真
--b file　　　　　文件为块特殊文件为真
--s file　　　　　文件大小非0时为真
--t file　　　　　当文件描述符(默认为1)指定的设备为终端时为真 
--n 变量			 变量是否有值
-	
-练习1：判断参数个数是否等于2个，若是，输出参数2；若参数大于2个，输出参数1；若参数少于2个的，输出命令的名字
+-r file　　　　　用户可读
+-w file　　　　　用户可写
+-x file　　　　　用户可执行
+-f file　　　　　文件为正规文件
+-d file　　　　　文件为目录
+-c file　　　　　文件为字符特殊文件
+-b file　　　　　文件为块特殊文件
+-s file　　　　　文件大小非 0
+-t file　　　　　文件描述符(默认为1)指定的设备为终端
+-n 变量			 变量有值
 
 10.for语句
-
 	for day in Saturday Tuesday Sunday
 	do
 		echo "The day is : ${day}"
@@ -188,10 +178,6 @@ z-shell
 12.while语句
 
 	12.1.代码1
-		vim while02.sh
-		
-		#!/bin/sh
-		
 		num=3
 		while [ $num -gt 0 ]
 		do
@@ -200,20 +186,16 @@ z-shell
 		done
 
 	12.2.代码2，特殊的shift
-		vim while02.sh
-	
-		#!/bin/sh
-		
 		num=1
 		while [ $# -gt 0 ]
 		do
-			echo '$num='${num} ', $#='$# ', $1='${1}  
+			echo '$num='${num} ', $#='$# ', $1='${1}
 			num=`expr $num + 1`
 			shift                         # 参数列表往左移一位
 										  # sky jim lamson elson->左移->jim lamson elson
 		done
-		
-		./while02.sh david elson lamson
+
+		./while.sh david elson lamson
 
 13.1.函数定义
 	#source 脚本名    //载入上个计算程序脚本
@@ -229,13 +211,14 @@ z-shell
 
 	调用函数
 	example1 elson lamson
-	
+
 	source fun02.sh #加载程序source 文件名
+
 13.2.函数返回值
 	example2()
 	{
 		echo $1
-		return 9  #return的只能是一个整数 
+		return 9  #return的只能是一个整数
 	}
 
 	调用函数
@@ -248,18 +231,7 @@ z-shell
 	f=$(example2 5) #正确调用
 	echo $?  # 9，$?此时可以输出上一个函数返回的值，但必须要写在函数调用后的下一句
 	echo $f  # 5，输出函数在中间输出的值，有多个值则输出多个，以空格分隔
-	
+
 14 exit
 exit 0：完全退出
 exit 1：退出本程序，只退出执行中的shell文件
-
-15 需求1：写出apache启用程序，要求包括启动、停止、重启
-apache.sh start	    /usr/local/apache/bin/apachectl -f /usr/local/apache/conf/httpd.conf
-apache.sh restart 
-apache.sh stop
-要包括安全性，参数只能有一个
-apache.sh sky->要报错
-apache.sh start sky->要报错
-用函数去实现
-16 需求2：写出mysql数据库备份程序，并定时执行，数据库要按日期来备份
-$(date +%y%m%d) 时间格式函数

@@ -13,7 +13,10 @@
 #温习
 HTTP
     状态码
+网络
 PHP
+    错误记录与监控系统
+    网络编程
     全局常量
     魔术常量
     魔术方法
@@ -24,6 +27,8 @@ PHP
         数组
         图像处理
         URL
+        cURL
+        Socket
         文件系统相关
         选项信息函数
         数据库(PDO, mySQLi)
@@ -34,9 +39,12 @@ PHP
         spl
         XML
         网络函数
+        fitler
+        错误处理
     文件上传
     Cli PHP
     Memcached/Apc
+    debug/Xdebug
 ThinkPHP
 Yii
 Laravel
@@ -56,6 +64,7 @@ MySQL
     存储过程
     触发器
     主从复制, 读写分离
+    分库
     分表
     备份
     优化

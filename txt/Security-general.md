@@ -4,7 +4,7 @@ Malicious software:
 
 - Email spam
 - Sypware
-- Sengind web requests
+- Sending web requests
 - Scanning for vulnerabilities
 - Data crunching
 - Backdoor for future access
@@ -18,12 +18,18 @@ Black hat hackers:
 - Political activists
 - Professionals
 
-#Security
+#Mindset
 
 - 100% of security is not possible
 - security level is determined by the weakest link
 - should match your needs and goals
 - re-evaluate periodically
+- Be completely and utterly paranoid
+- All web application are vulnerable
+- Trust nobody and nothing(including ourown database)
+- Assuming everyone or thing is tring to breach your app
+- Validat input, Escape output
+
 
 #Principle
 
@@ -57,6 +63,9 @@ Black hat hackers:
 - Security through obscurity
     + Limit exposed information
     + Limit feeback
+    + Don't use any default username & password
+    + Don't be predictable(use admin/ folder)
+    
 
 - Prefer whitelisting
 
@@ -78,6 +87,7 @@ Black hat hackers:
         * Within a set of values
         * Uniqueness
     + Be aware of language logic pitfalls
+    + Wherever you must filter, filter *before* validation
 
 - Sanitizing: render harmless
     + Use type casting, not type juggling
@@ -161,7 +171,7 @@ Hacker is able to execute arbitary SQL request
 
 Example:
 
-    // pass usename as `jsmith' OR 1=1; --`:
+    // pass username as `jsmith' OR 1=1; --`:
     SELECT * FROM users WHERE username='${username}' AND password='${password}';
 
     // pass title as 

@@ -48,6 +48,7 @@
 - cli-php
 - date time
 - MySQL
+    + 分库
     - 分表
     - 数据库设计
     - 主从复制

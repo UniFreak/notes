@@ -311,6 +311,11 @@ TML:
 
 <googleguy> Let PHP only provide the _data_ part by adding a <script></script> to the bottom of your php templates with the needed variables.
 
+<jbafford>
+returning [] would imply that whatever query or request you made can return an array of results, but there was no results to return
+false would imply that there was a *failure* doing whatever was requested (though an exception might also be appropriate as well)
+<tw2113> if you get to do php7, return type hints would be the answer to go with
+
 =============== Understand ===============
 Interface
     - is a special type of entity in Object Oriented Programming (OOP) which defines a *contract*

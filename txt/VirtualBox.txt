@@ -29,7 +29,7 @@ install guest addition
     - install
         `yum update`
         `yum install kernel-devel gcc`
-        `echo export KERN_DIR=/usr/src/kernels/`uname -r` >> ~/.bashrc
+        `echo export KERN_DIR=/usr/src/kernels/`uname -r` >> ~/.bashrc`
 
         `wget https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-8.noarch.rpm`
         `rpm --import http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7`
@@ -45,7 +45,7 @@ install guest addition
         `sudo sh ./VBoxLinuxAddition-x86.run`
 
 start vbox headless
-    `VBoxManage startvm "VM name" --type headless
+    `VBoxManage startvm "VM name" --type headless`
 
 Use shared folder(only work when host is Windows)
     0. make sure guest addition is correctly installed
