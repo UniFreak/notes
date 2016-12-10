@@ -14,8 +14,10 @@
 HTTP
     状态码
 网络
+分布式系统开发
 PHP
     错误记录与监控系统
+    性能优化
     网络编程
     全局常量
     魔术常量
@@ -107,6 +109,8 @@ Tools
     SVN
     Composer
     Jekins
+    性能分析工具
+    单元测试工具
 面试题(interview-question.md)
 
 #准备
