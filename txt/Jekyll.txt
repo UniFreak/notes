@@ -25,6 +25,10 @@ Installation
         - curl
         - python
 
+Fixation
+    - when run `jekyll serve`, show `some gem can not be found`
+        try run `bundle install`
+
 Basic Usage
     jekyll build [--source <source>] [--destination <destination>] [--watch]
     jekyll serve [--detach] [--no-watch]

@@ -295,3 +295,5 @@ what's the difference between `clone` and `remote add`?
 what if I don't commit and don't stash then switch to other branch directly?
     you can't, if the working directory is not clean
 add to git repo's directory from another directory? and sync the two?
+ignore mode changes?
+    `git config --global core.filemode false`

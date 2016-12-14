@@ -59,20 +59,35 @@ svnadmin-version
 svnadmin create					建立版本库
 svn import						初始化导入
 svnserve -d -r 版本库路径		启动 svn 服务
-												
-svn checkout
+
+svn info                                            // view repo detail
+svn ls <repo>                                       // git branch -a
+
+svn checkout <branch> <folder>                      // git clone
 svn mkdir
 svn add
-svn copy
+svn copy <currentBranch> <newBranch> -m 'message'   // git checkout -b
+svn switch <branch>                                 // git checkout <branch>
+svn update                                          // git pull
+svn merge                                           // git merge <branch>
 svn move
-svn commit
+svn commit -m 'message'                         // git commit && git push
+svn commit <file> -m 'message'                  // commit a single file
 
-svn diff					// 可以使用 diff 生成补丁, 然后用 patch 打补丁
+svn status                                          // git status
+svn diff                                            // git diff
+
 svn log
-	[--stop-on-copy]
-svn info
+svn log --diff
+svn log -r <revision>
+svn log <file> -v -l3                               // git log -n 3
+svn revert . -R                                     // revert changes
+svn revert <file>                                   // git checkout <file>
+
+svn resolve --accept working . -R
+// merge conflicts, accept whatever the current directory structure is at this time
+
 svn blame
-svn status
 
 svn propset
 svn propget
@@ -80,14 +95,11 @@ svn proplist
 svn propedit
 svn propdel
 
-svn update
-svn revert
-svn resolved
-svn merge
-svn switch
-
 svn lock [--force]
 svn unlock [--force]
 
 ====================== 问题 =======================
-svn close commandline means close svn server? how to solve this? 
+svn close commandline means close svn server? how to solve this?
+diff with color
+    1. install colordiff
+    2. run `svn diff | colordiff`
