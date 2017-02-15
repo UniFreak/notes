@@ -365,13 +365,13 @@ _					一个字符
 		  | ADD [CONSTRAINT [symbol]]
 		        FOREIGN KEY [index_name] (index_col_name,...)
 		        [reference_definition]
-		  | ALTER [COLUMN] col_name {SET DEFAULT literal | DROP DEFAULT}
 		  // 设置或删除列的默认值. 该操作会直接修改 .frm 文件而不涉及表数据, 所以这个操作非常快
-		  | CHANGE [COLUMN] old_col_name column_definition
-		        [FIRST|AFTER col_name]
+          | ALTER [COLUMN] col_name {SET DEFAULT literal | DROP DEFAULT}
 		  // 列的重命名, 列类型的变更以及列位置的移动.
-		  | MODIFY [COLUMN] column_definition [FIRST | AFTER col_name]
+          | CHANGE [COLUMN] old_col_name column_definition
+                [FIRST|AFTER col_name]
 		  // 除了列的重命名之外, 他干的活和 CHANGE COLUMN 是一样的
+          | MODIFY [COLUMN] column_definition [FIRST | AFTER col_name]
 		  | DROP [COLUMN] col_name
 		  | DROP PRIMARY KEY
 		  | DROP INDEX index_name

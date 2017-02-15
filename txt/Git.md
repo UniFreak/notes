@@ -297,3 +297,8 @@ what if I don't commit and don't stash then switch to other branch directly?
 add to git repo's directory from another directory? and sync the two?
 ignore mode changes?
     `git config --global core.filemode false`
+how to rename local and remote branch
+    1. enter target branch: `git checkout <oldName>`
+    2. rename local branch: `git branch -m <newName>`
+    3. delete the old remote branch: `git push origin :<oldName> <newName>`
+    4. reset the upstream branch: `git push origin -u <newName>`

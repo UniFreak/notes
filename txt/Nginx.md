@@ -5,8 +5,30 @@ via repository:
     yum install epel-release
     yun install nginx
 
+compile:
+
+1. install dependency
+    - yum: gcc, gcc-c++, pcre, pcre-devel, zlib, zlib-devel, openssl, openssl-devel
+    - apt: gcc, g++, libpcre3, zlib1g, libssl
+2. download source from nginx.org
+3. `tar -zxvf <file>`
+4. `cd <untared folder>`
+5. `./configure`
+6. `make`
+7. `make intall`
+
+
+
 #defaut dirs/files
 
+- nginx path prefix: "/usr/local/nginx"
+- nginx binary file: "/usr/local/nginx/sbin/nginx"
+- nginx modules path: "/usr/local/nginx/modules"
+- nginx configuration prefix: "/usr/local/nginx/conf"
+- nginx configuration file: "/usr/local/nginx/conf/nginx.conf"
+- nginx pid file: "/usr/local/nginx/logs/nginx.pid"
+- nginx error log file: "/usr/local/nginx/logs/error.log"
+- nginx http access log file: "/usr/local/nginx/logs/access.log"
 - path: `/etc/nginx`
 - log: `/var/log/nginx` or `/usr/local/nginx/logs`
 - conf: `/user/local/nginx/conf` or `/etc/nginx` or `/usr/local/etc/nginx`

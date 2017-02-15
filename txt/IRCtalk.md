@@ -189,12 +189,20 @@
 > *oorza*: UniFreak or just had a rare day :D
 
 
+#How to force a child to define a constant
+> *UniFreak*: hi. in PHP, is there a way to force a child class to define a constant?
+> 
+> *__adrian*: no
+> 
+> *__adrian*: you can define the constant on the parent as a default.
+> 
+> *__adrian*: you can define the constant on the parent as a default, and have {whatever method} throw an exception if the child's constant has the default value
 
+> *__adrian*: but just defining it should be enough
 
+> *UniFreak*: I guess that will do. thanks __adrian
 
-
-
-
+> *__adrian*: better, make a method that returns the constant's value.
 
 
 

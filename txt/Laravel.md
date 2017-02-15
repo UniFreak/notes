@@ -139,7 +139,7 @@
 - if you need to restore users old input, you may checkout Laravel's `validation service`, or use `flash`:
     + use `->flash()` or `->flashOnly()` or `->flashExcept()` to flash request data into session
     + if you then need to redirect use something like `return redirect('form')->withInput()` 
-    + get the old data by `->old('name')` or helper `old('name')`
+    + get the old data by `->old('name')` or helper `{{ old('name') }}`
 - use `->cookie('name')` to access cookie data, all cookie data are encrypted and signed by Laravel, if you don't want that, add an entry into middleware `EncryptCookies::$except`
 - obtain a `SplFileInfo` object from request by `->file('photo')`, use `->hasFile('photo')` to determine its presence
 - use `$file->isValid()` to determine whether there is problem uploading the file, and `$file->move($path, $name)` to move it. check [Symfony UploadedFile][symfonyFile] for more file operations 
@@ -1926,6 +1926,9 @@ __note__: pagination operations that use a `groupBy` statement cannot be execute
 - use `VerifyCsrfToekn::$except` property to exclude URIs from auto 
   CSRF protection
 
+# MISC
 
+- 打开 notice 报警错误无级别后, 访问 Illuminate\Http\Request 实例中不存在的项目, 并不会报 notice 错误
+- validation 的 IN 规则中, 逗号两边不可以有空格
 
 [symfonyFile]: http://api.symfony.com/2.7/Symfony/Component/HttpFoundation/File/UploadedFile.html
