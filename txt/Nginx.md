@@ -109,6 +109,10 @@ request are processed by worker process
     
     ```
     server {
+        # location directive search order: 
+        # 1) Exact matches (location = /foo.html), if matched searching stops. # 2) Prefix matches (location /foo or location ^~ /bar) longest to shortest; if ^~ then searching stops, else search continues with... 
+        # 3) regex matches (location ~ \.php$) in order of appearance. 
+        # NOTE: regex matches beat regular prefix matches
         location / {           # `/` is the prefix compared with the URI from the request
             root /data/www;
         }
@@ -169,7 +173,7 @@ three load balancing mechanisms are supported:
 - least-connected
 - ip-hash
 
-
-
-
-
+#Q&A
+- how to know if nginx is currently running?
+    + use `service nginx status`, or
+    + use `ps auxww | grep nginx`

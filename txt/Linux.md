@@ -8,3 +8,6 @@
 # search for package
 - apt-cache search <name>
 - use http://packages.ubuntu.com/
+
+# useful utils
+- `tree`: output directory tree
