@@ -1,14 +1,25 @@
-Ctrl + Enter                Send Request
-Ctrl + S                    Save Request
-Ctrl + Shift + S            Save Request As
-Ctrl + E                    Manage Enviroments
-Ctrl + N                    New window
-Ctrl + T                    New tab
-Ctrl + 1~8                  Switch tab by position
-Ctrl + 9                    Switch to last tab
-Ctrl + Shift + ]            Next tab
-Ctrl + Tab                  Next tab
-Ctrl + Shift + [            Previous tab
-Ctrl + Shift + Tab          Previous tab
-Ctrl + \                    Toggle sidebar
-Ctrl + ,                    Open settings
+#Tabs
+
+open new tab                            ctrl + T
+switch to next                          ctrl + shift + ]
+switch to previous                      ctrl + shift + [
+switch to position                      ctrl + 1~8
+switch to                               ctrl + 9
+
+#Request
+
+request URL                             ctrl + L
+save                                    ctrl + S
+save as                                 ctrl + shift + S
+send                                    ctrl + enter
+send and download                       ctrl + alt + enter
+scroll to request                       ctrl + alt + up
+scroll to response                      ctrl + alt + down
+
+#Sidebar
+
+search                                  ctrl + F
+toggle                                  ctrl + \
+next                                    down
+previous                                up
+expand
