@@ -223,8 +223,8 @@ git branch
 git checkout
     -b
     --track
-git stash
-    save
+git stash [-u|--include-untracked] [--patch]
+    save [--keep-index] 
     list [<options>]
     show [<stash>]
     pop [--index] [-q|--quiet] [<stash>]
@@ -235,6 +235,7 @@ git stash
 
     create         // useful for scripting
     store          // useful for scripting
+git clean
 git merge
     --no-commit
     --squash

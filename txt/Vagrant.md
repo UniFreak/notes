@@ -41,10 +41,10 @@ vagrant ssh
 vagrant suspend
 vagrant resume
 vagrant halt
-vagrant destory
 vagrant reload [--provision]
 vagrant login
 vagrant share
+vagrant destory
 
 vagrant global-status
 vagrant package [--base NAME] [--output NAME] [--include x,y,z] [--vagrantfile FILE]

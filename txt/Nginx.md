@@ -10,7 +10,7 @@ compile:
 1. install dependency
     - yum: gcc, gcc-c++, pcre, pcre-devel, zlib, zlib-devel, openssl, openssl-devel
     - apt: gcc, g++, libpcre3, zlib1g, libssl
-2. download source from nginx.org
+2. download source from nginx.org(http://nginx.org/download/nginx-1.10.3.tar.gz)
 3. `tar -zxvf <file>`
 4. `cd <untared folder>`
 5. `./configure`
@@ -172,6 +172,12 @@ three load balancing mechanisms are supported:
 - round-robin (default)
 - least-connected
 - ip-hash
+
+#module dev
+1. code
+2. compile
+    - define a `config` file
+    - edit `ngx.modules.c`
 
 #Q&A
 - how to know if nginx is currently running?

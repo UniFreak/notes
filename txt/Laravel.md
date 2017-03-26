@@ -1930,5 +1930,10 @@ __note__: pagination operations that use a `groupBy` statement cannot be execute
 
 - 打开 notice 报警错误无级别后, 访问 Illuminate\Http\Request 实例中不存在的项目, 并不会报 notice 错误
 - validation 的 IN 规则中, 逗号两边不可以有空格
+- 如何把单个 Model 装载进 Eloquent\Collection ?
+    + `new Illuminate\Database\Eloquent\Collection([$model])`
+    + `$person->newCollection([$model])`
+    + `SomeModel::newCollection([$model])`
+    + `Model::find([$that_id])`
 
 [symfonyFile]: http://api.symfony.com/2.7/Symfony/Component/HttpFoundation/File/UploadedFile.html
