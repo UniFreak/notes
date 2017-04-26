@@ -303,3 +303,5 @@ how to rename local and remote branch
     2. rename local branch: `git branch -m <newName>`
     3. delete the old remote branch: `git push origin :<oldName> <newName>`
     4. reset the upstream branch: `git push origin -u <newName>`
+
+# Alias config

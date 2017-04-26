@@ -1,3 +1,41 @@
+#安装
+- install dependencies
+    + `apt-get install libxml2 libxml2-dev`
+    + `apt-get install libcurl4-openssl-dev pkg-config`
+    + apt-get:
+        * `apt-get install libldb-dev libldap2-dev &&`
+        * `ln -s /usr/lib/x86_64-linux-gnu/libldap.so /usr/lib/libldap.so &&`
+        * `ln -s /usr/lib/x86_64-linux-gnu/liblber.so /usr/lib/liblber.so`
+    + yum:
+        * `yum install -y openldap-devel &&`
+        * `cp -frp /usr/lib64/libldap* /usr/lib &&`
+
+
+- `cd /tmp &&`
+- `wget http://am1.php.net/distributions/php-5.6.17.tar.bz2 &&` 或
+- `wget http://jp2.php.net/distributions/php-5.6.17.tar.bz2 &&`
+- `tar xvf php-5.6.17.tar.bz2 &&`
+- `cd php-5.6.17 &&`
+- 
+    ```
+    ./configure 
+    --enable-fpm 
+    --with-mysql 
+    --with-ldap
+    --with-openssl
+    --enable-mbstring
+    ```
+
+- `make && make install`
+
+- `cp php.ini-development /usr/local/php/php.ini`
+- `cp /usr/local/etc/php-fpm.conf.default /usr/local/etc/php-fpm.conf`
+- `cp sapi/fpm/php-fpm /usr/local/bin`
+- edit php-fpm.conf: change `user=www-data`, and `group=www-data`
+
+- `/usr/local/bin/php-fpm`
+
+
 #特点
 
 ##安全模式
