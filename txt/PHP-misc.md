@@ -367,3 +367,5 @@ return ($a == 5) ? true : false;
 return ($a == 3) ? true : false;
 // more concise
 return $a == 3;
+
+null['abc'] 并不会报 undefined index 错误
