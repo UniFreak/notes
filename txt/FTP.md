@@ -1,0 +1,3 @@
+- Two transfer modes curl supports are 'ASCII' and 'BINARY'. 
+- Ascii is basically for text and usually means that the server will send the files with converted newlines 
+- Binary means sending the data unaltered and assuming the file is not text
