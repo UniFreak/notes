@@ -340,6 +340,10 @@ if (strpos('testing', 'test') !== false) {
     // code...
 }
 
+$a = true ? '8' : (true ? '7' : 6); 和
+$a = true ? '8' : true ? '7' : 6; 并不一样
+使用三目运算符一定要注意小括号!!
+
 
 /**
  * - use concatenation operator instead of concatenating assignment operator
