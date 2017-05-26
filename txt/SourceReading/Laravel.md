@@ -8,6 +8,9 @@
 - IoC, DI: common design decision
 - contract, service provider
 
+#question
+- validator 是否可根据值做出不同的错误提示, 如 `如果client source是2,dealerid必填` => `如果客源类型是商家推荐, 则商家 id 必填`
+
 # Opinion
 
 - elegant: read like a prose, including code style, documentation ....

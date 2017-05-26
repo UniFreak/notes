@@ -208,98 +208,163 @@
 #404 VS 204
 
 > *UniFreak* if one client requested my `myapi.com/user?login_mobile=133....`
+
 > *UniFreak* if the user dones't exist, should I return 404(I'm tring to do it restful)
+
 > *wowaname* the resource doesnt exist so yes i would return 404
+
 > *wowaname* i dont see a more appropriate response for it
-> *AppError* I'm trying to use json_decode, but I'm using a URL as a source and get NULL back when I var_dump it. I'm guessing that the source wasn't ready yet. What do I need to do, for json_decode to wait until the source is loaded?
-> *__adrian* json_decode() takes a string
-> *__adrian* not a resource
-> *AppError* But isn't a URL a... ok... yea
-> *shadowhand* you might want json_decode(file_get_contents($uri));
+
 > *pthreat* UniFreak: 204 would be more appropriate since you would specify that the end point does in fact exists but no content was found
-> *AppError* Oh... yea
-> *AppError* Thanks shadowhand, let me try
+
 > *pthreat* imagine if I'm using your API and it just responds with 404, "This dude is an idiot, pointed me to something that it doesn't exists"
-> *wowaname* 204:     The server successfully processed the request, but is not returning any content. Usually used as a response to a successful delete request.
-> *wowaname* as opposed to 404:     The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible.
+
+> *wowaname* 204:The server successfully processed the request, but is not returning any content. Usually used as a response to a successful delete request.
+
+> *wowaname* as opposed to 404:The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible.
+
 > *pthreat* Right, the end point does exists ...
+
 > *wowaname* i mean if a user doesnt exist but it may in the future, i would see 404 as appropriate
+
 > *pthreat* but it returns no content
+
 > *pthreat* yeah well some people like to be a little more specific, like me for instance
+
 > *wowaname* so do i
-> *AppError* file_get_contents() worked. Now I got to figure out how to get this into CSV. :)
+
 > *pthreat* so if you use 404, how can I tell that the end point does not exists, versus no content was found
-> *__adrian* AppError: http://php.net/fputcsv
+
 > *wowaname* http://blog.ploeh.dk/2013/04/30/rest-lesson-learned-avoid-204-responses/
+
 > *wowaname*  From the service's perspective, a 204 (No Content) response may be a perfectly valid response to a POST, PUT or DELETE request. Particularly, for a DELETE request it seems very appropriate, because what else can you say?
-> *AppError* oh what... it's all right there
+
 > *wowaname* pthreat i'm going to have to disagree with you
+
 > *wowaname* 204 implies there was a valid request that returns no content because there is no content to return, so that could mean to the client that the user exists but there's nothing to say about the user? you don't really know
+
 > *pthreat* there's always something to "say" about a user because a use has at least one attribute, i.e the username
+
 > *pthreat* I'm just waiting for you to tell me how can I distinguish what I said above instead of pointing me to blog articles
+
 > *wowaname* https://stackoverflow.com/questions/2195639/restful-resource-not-found-404-or-204-jersey-returns-204-on-null-being-returne
+
 > *wowaname* i just think you fail to understand http status responses and valid contexts for using each
+
 > *pthreat* No, not really
+
 > *pthreat* Do you have reading problems? Answer my question
+
 > *wowaname* are you insulting me now
+
 > *pthreat* Answer my question
+
 > *wowaname* i came here to ask a question about php7 not get talked down by some infant
-> *EoN* A third party service wants me to pass them GET parameters to a url to identify and return data about a user. I have a guid for every user in my db. If i were to pass them guids (rather than a user_id) eg: https://them/service.aspx?user_guid=F37E7A32-11DA-42A6-9CF6-DC72CE311521 , how secure is that? the end user could try and change the parameter, but statistically would never be able to find one would they?
+
 > *pthreat* wowaname: Answer the question and quit the accusations
+
 > *wowaname* i dont have to answer to you, mom
+
 > *wowaname* shut the hell up
+
 > *UniFreak* um.... interesting discussion.
+
 > *pthreat* How is the infant now?
+
 > *pthreat* or rather who ... but we know already
-> *UniFreak* sorry I asked that.
+
 > *wowaname* ya, i guess we do
+
 > *wowaname* could you leave pthreat
+
 > *wowaname* instead of derailing conversations with your shit
+
 > *pthreat* Answer the question or quit the discussion
+
 > *wowaname* you do not tell me what to do
-> *AppError* hmmm.... PHP Warning:  fputcsv() expects parameter 1 to be resource, boolean given    that's not good
+
 > *pthreat* Ok so I'll take it you left the discussion and you have no valid argument whatsoever to your pathetic point of view
+
 > *wowaname* i gave you a valid *ucking argument you *ucking reta5rd
+
 > *pthreat* No you didn't
+
 > *pthreat* you just cited blog articles
+
 > *pthreat* ohhh are you insulting me noooow
+
 > *wowaname* yes and they supported my argument
+
 > *pthreat* I'm about to break in tears
+
 > *wowaname* go back to reddit
-> *AppError* This thought would work... back to php.net :)    https://hastebin.com/emidiyiror.php
+
 > *wowaname* argue down those idiots
+
 > *wowaname* quit wasting my time
+
 > *pthreat* ok www.reddit.com done
+
 > *pthreat* what next
+
 > *pthreat* wowaname: Name calling doesn't answers my question
+
 > *pthreat* could you please answer the question or quit the discussion
+
 > *wowaname* 404
+
 > *wowaname* file
+
 > *wowaname* not
+
 > *wowaname* found
+
 > *pthreat* wowaname: yeah you cant
+
 > *wowaname* i think that
+
 > *pthreat* FILE not found
+
 > *wowaname* is plain
+
 > *pthreat* not RESOURCE
+
 > *wowaname* english
+
 > *pthreat* not found
+
 > *wowaname* when did 204 ever mean
+
 > *wowaname* resource not found
+
 > *pthreat* no not really, you fail to see the subtle distinction
+
 > *pthreat* content
+
 > *wowaname* when is  a file not a resource in the context of http
+
 > *pthreat* you want to name it content, let's name it content
+
 > *wowaname* you are returning a resource in the format of a *ucking file
+
 > *pthreat* Mmm no, I'm returning a string, content not a "file"
+
 > *AppError* Wow, things are heated in here
+
 > *wowaname* ok go back to school idiot
+
 > *wowaname* ignored
+
 > *wowaname* you know zero about the workings of the http protocol and its no use *ucking arguing with you
+
 > *pthreat* TML: you know, you are kind of abscent when things like these happen and I'd really appreciate your input in this wonderful discussion
+
 > *pthreat* wowaname: :'( You hurt my feelings
+
 > *pthreat* So name calling is a valid way of proving you are right, this was the most constructive discussion I had in *years*
+
 > *pthreat* round of applause everyone
+
 > *pthreat* Ahh he is one of those i2p people, now I get it
 
 
