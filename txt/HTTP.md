@@ -115,3 +115,32 @@ __5xx__: Server error
 |503 |Service Unavailable       |
 |504 |Gateway Timeout           |
 |505 |HTTP Version Not Supported|
+
+
+# Cookies
+- Cookies are set using the `Set-Cookie` HTTP header
+- Cookies are send using the `Cookie` HTTP header
+
+## types
+- session cookie
+    + does not have an Expires or Max-Age attribute
+    + intended to be deleted by the browser when the browser closes
+- persistent cookie
+    + has `Expires` or `Max-Age` attribute
+    + browser deletes the cookie at a specific date
+- host-only cookie
+    + has `Domain` or `Path` attribute
+    + browser only send the cookie to the domain only, not sub-domain
+
+## attributes
+- `Domain` & `Path`
+- `Expires` & `Max-Age`
+- `Secure`
+    + directing browsers to use cookies only via secure/encrypted connections
+    + should only be set over a secure connection
+- `HttpOnly`
+    + cookie cannot be accessed via client-side scripting languages
+    + therefore cannot be stolen easily via cross-site scripting
+
+## alternative to cookies
+- JSON Web Tokens(JWT)
