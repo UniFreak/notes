@@ -1,6 +1,6 @@
-#General
+# General
 
-##Global Shortcuts
+## Global Shortcuts
 Create Content              c
 Go to Dashboard             gd
 Open Notifications          gn
@@ -11,7 +11,7 @@ Quick Search                /
 Quick Search                gg
 Toggle Space Sidebar        [
 
-##Page / Blog Post Actions
+## Page / Blog Post Actions
 Add Blog                    b
 Edit                        e
 Comment                     m
@@ -24,9 +24,9 @@ Edit Labels                 l
 View Attachments            t
 Link to Page                k
 
-#Editor
+# Editor
 
-##Block Formatting
+## Block Formatting
 Paragraph                   Ctrl+0
 Heading 1                   Ctrl+1
 Heading 6                   Ctrl+6
@@ -35,7 +35,7 @@ Quote                       Ctrl+8
 Bullet list                 Ctrl+Shift+B
 Numbered list               Ctrl+Shift+N
 
-##Rich Formatting
+## Rich Formatting
 Files and images            Ctrl+M
 Link                        Ctrl+K
 Insert markup               Ctrl+Shift+D
@@ -45,6 +45,43 @@ Cut table row               Ctrl+Shift+X
 Copy table row              Ctrl+Shift+C
 Paste table row             Ctrl+Shift+V
 
-##Editing Actions
+## Editing Actions
 Preview                     Ctrl+Shift+E
 Save                        Ctrl+S
+
+
+# Autoformatting
+
+## Font
+
+*Bold*
++Underline+
+_Italic_
+{{Monospace}}
+
+## Autocomplete
+
+!   image/media
+[   link
+{   macro
+
+## Table
+
+||||| + enter
+||heading||heading||
+
+## Styles
+
+h1. Heading
+h3. Heading
+bq. Quote
+
+## Emoticons
+(/) done
+:)  smiley
+
+## List
+
+`#`  list
+*    bullets
+[]   task 
