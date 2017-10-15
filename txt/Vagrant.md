@@ -23,7 +23,8 @@ Vagrant Share
 
 
 By default, Vagrant shares your project directory(the one with the Vagrantfile) to the /vagrant directory in your guest machine
-We can have several projects sharing the same base boxes where the Puppet/Chef definitions are different
+We can have several projects sharing the same base 
+es where the Puppet/Chef definitions are different
 With synced folders, you can continue to use your own editor on your host machine and have the files sync into the guest machine
 
 # Commands

@@ -49,7 +49,6 @@ tools->build system->new build system
 - BufferScroll
 - EasyMotion
 - Emmet(需要Pyv8插件)&Emmet CSS Snippet
-- HostEdit
 - ProjectManager
 - CodeFormatter
 - DocBlockr

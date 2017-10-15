@@ -26,6 +26,8 @@ Installation
         - python
 
 Fixation
+    - when run `jekyll serve`, see `cannot load such file --bundler`
+        try run `gem install bundler`
     - when run `jekyll serve`, show `some gem can not be found`
         try run `bundle install`
 

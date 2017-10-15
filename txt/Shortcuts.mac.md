@@ -19,5 +19,6 @@ ctrl+cmd+I  查看容量
 
 - 通知中心
 
-ctrl+shift+eject    息屏
+ctrl+shift+eject     息屏
+command+ctrl+shift+4 截图
 

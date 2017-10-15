@@ -93,6 +93,10 @@
     + [seconds]     time
 - path-as-it        don't squashing `/../` or `/./`
 - ignore-content-length     
+- c                 save cookie to
+    + [cookieJar]
+- b                 with cookie in 
+    + [cookieJar]
     
 - x,proxy           through specified proxy
     + [IP]:[port]   default port is 3128

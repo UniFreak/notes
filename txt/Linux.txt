@@ -144,7 +144,7 @@ ext2 文件系统将文件分为两部分存放: 属性放在 inode 中, 内容�
 /proc/diskstats 		contains disks statistics (for post 2.5 kernels).
 /sys 					contains statistics for block devices (post 2.5 kernels).
 /proc/self/mountstats 	contains statistics for network filesystems.
-/dev/disk 				contains persistent device names.
+/dev/disk 				contains persistent device 2s.
 
 
 ================ Command ===============
