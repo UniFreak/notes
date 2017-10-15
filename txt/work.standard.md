@@ -32,6 +32,7 @@
 - 类中的常量所有字母都必须大写, 单词间用下划线分隔
 - 方法名称必须符合 `camelCase` 式的小写开头驼峰命名规范
 - 使用统一的块注释以及 tag
+- 不要使用令人困惑的缩写 (com_ins ?)
 
 ### 空白
 - 不要省略控制结构的花括号
@@ -172,7 +173,28 @@ function isActive($person)
 }
 ```
 
+- 使用有意义的循环变量
+
+```php
+<?php
+// 难读:
+// foreach ($payments as $k => $v) {
+//    foreach ($v as $data) {
+        // ...
+//    }
+// }
+foreach ($payments as $payId => $payment) {
+    foreach($payment as $fee) {
+        // ...
+    }
+}
+```
+
 ## 安全
+
+## 性能
+
+## 日志
 
 # 框架使用
 
@@ -188,9 +210,9 @@ api.fin -> credit/trade/paysys
 
 # 领域名词
 
+- yooli ul yoli? super, cr?
 - 制定流程: 产品提议 -> 开发决策 -> 文档化
-- yooli ul yoli...
-- super, cr...
+- 缩写
 
 # 数据库
 
