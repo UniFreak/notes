@@ -1926,6 +1926,59 @@ __note__: pagination operations that use a `groupBy` statement cannot be execute
 - use `VerifyCsrfToekn::$except` property to exclude URIs from auto 
   CSRF protection
 
+# Testing
+
+## Applicatioin Testing
+- `visit()`
+- `see()`
+- `dontSee()`
+- `seePageIs()`
+- `click()`
+- `type()`
+- `check()`
+- `press()`
+- `select()`
+- `attach()`
+
+## JSON API Testing
+- `use Illuminate\Foundations\Testing\WithoutMiddleware`
+- `withoutMiddleware()`
+- `withSession()`
+- `actingAs()`
+- `post()`
+- `call()`
+- `seeJson()`
+- `seeJsonEquals()`
+
+## Database
+- `use Illuminate\Foundations\Testing\DatabaseMigrations`
+- `use Illuminate\Foundations\Testing\DatabaseTransactions`
+- `seeInDatabase()`
+- generate pre-testing data in database by using `Model Factories`
+
+## Mocking
+- `withoutEvents()`
+- `expectsEvents()`
+- `expectsJobs()`
+- `shouldReceive()`
+- `once()`
+- `with()`
+- `adnReturn()`
+
+## Assertion
+- `assertResponseOk()`
+- `assertResponseStatus()`
+- `assertViewHas()`
+- `assertViewHasAll()`
+- `assertViewMissing()`
+- `assertRedirectedTo()`
+- `assertRedirectedToRoute()`
+- `assertRedirectedToAction()`
+- `assertSessionHas()`
+- `assertSessionHasAll()`
+- `assertSessionHasErrors()`
+- `assertHasOldInput()`
+
 # MISC
 
 - 打开 notice 报警错误无级别后, 访问 Illuminate\Http\Request 实例中不存在的项目, 并不会报 notice 错误
