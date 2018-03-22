@@ -1,3 +1,38 @@
+#Git keep deleting .env when switching branch
+> *UniFreak* hi. my project has a .env file, which is configured ignored in .gitignore
+
+> *UniFreak* but whenever I check out my branch, it got deleted
+
+> *osse* sounds like it's part of some other branch
+
+> *UniFreak* osso: what do you mean?
+
+> *UniFreak* my leader indeed had added .env under git, because he wanted to push it into product enviroment
+
+> *osse* UniFreak: the only reason for git to remove a file when you switch branches is that the file is tracked in the branch you're switching from and not in the one you're switching to
+
+> *jast* UniFreak: if another branch has the .env file tracked (i.e. it's in those commits), switching away from it git will remove the file
+
+> *UniFreak* osse: but when I checkout other branch, and I see .env is ignored in that branch
+
+> *osse* UniFreak: so ?
+
+> *jast* UniFreak: don't rely only on looking at .gitignore. if someone adds the file and then afterwards adds it to the ignore list, the ignore entry no longer has any effect.
+
+> *jast* .gitignore only prevents you from newly adding a file
+
+> *jast* (and even that can be circumvented)
+
+> *oxymoron93* also git add -f
+
+> *UniFreak* jast: could I just switch to other branch, git rm --cache .env?
+
+> *jast* yes, and commit. that should clean things up.
+
+> *UniFreak* seems done the trick
+
+
+
 #filter_var() vs htmlspecialchars/htmlentities/urlencode/...
 
 > *UniFreak*: should I use the fancy new filter_var or the old way `htmlspecialchars()`, `strip_tags()`, `urlencode()` and so on?
@@ -366,6 +401,104 @@
 > *pthreat* round of applause everyone
 
 > *pthreat* Ahh he is one of those i2p people, now I get it
+
+
+# short cuicuit operator
+
+> *UniFreak* my team's code base is full of short circuit operations. I wanna know you guys feel about short circuit operation. like `$a and $b = $a`. Is that recommended? Is that good convention/idiom? I personally feel uncomfortable
+
+> *zap0* UniFreak, why?
+
+> *zap0* you suck as a dev if you have feelings.
+
+> *UniFreak* zap0, because it reads bad
+
+> *zap0* to whom?
+
+> *zap0* there is right and there is wrong.   which is it?
+
+> *zap0* real devs have reasons.
+
+> *grknight* UniFreak: one thing to consider is falsy values like 0.. which $b would never get assigned
+
+> *UniFreak* zap0: I guess I don't. that's why I asked
+
+> *UniFreak* for reason it's good/right or for reason it's not good/wrong,
+
+> *zap0* technical reasons.   does it produce incorrect results?
+
+> *zap0* is 1 tiny typo going to cause it to break (more so than any other code) ?
+
+> *UniFreak* zap0, It may, as grknight pointed out
+
+> *zap0* (more so than any other code) ?
+
+> *zap0* don't go changing the code into a pedantic mess just beacuse it makes you feel better... adding more is also recipe for potentially more errors
+
+> *UniFreak* zap0, I really just want to focus on `style` here. and I don't think changing code to a preferrable style is making `pedantic mess`. that's why code formmatters, no?
+
+> *zap0* hipster code poet!     style of substance... lol.
+
+> *zap0* over/
+
+> *UniFreak* zap0, yeah, I do am a unexpierenced dev here. you don't need to be sarcastic. you have your opinion, say it or don't
+
+> *UniFreak* over/
+
+> *grknight* UniFreak: if the code is right, go ahead and leave it.  the context given is not enough to decide that.  just beware of false like values.  what you wrote is not equivilent to checking if $a is set
+
+> *__adrian* UniFreak: it makes you "uncomfortable" because it's relying on a side-effect rather than being a deliberate expression/operation. further, the short-circut leaves you in an uncertain state, which could produce bugs later on.
+
+> *xyphoid_* if i saw "$a and $b = $a;" i wouldn't really know what you were trying to achieve
+
+> *UniFreak* grknight, thanks for your advice. I will leave it there untill I have enough reasons.
+
+> *__adrian* ^ "obvious" code is good
+
+> *UniFreak* __adrian, you're right. and if I don't read it carefully, I can miss read it as a condition, and ask myself `where is the if()`?
+
+> *__adrian* right
+
+> *xyphoid_* like that's what, 'if a is non-falsey, assign b to a' -
+
+> *UniFreak* I guess I have some conclusion here. thanks guys
+
+> *__adrian* so now you have a variable that only exists sometimes. and there's no clear logical path that leads to it being assigned.
+
+> *__adrian* also why _the hell_ does it use  "and"
+
+> *__adrian* &&  people
+
+> *xyphoid_* it's hard to tell what the intention of it is from my point of view - it might make more sense in context - can you give an example of the context where it's used and what the actual variable names are?
+
+> *__adrian* i'm more interested in whether this is a "truthy" test and not actually an "is defined?" test.
+
+> *UniFreak* xyphoid_, okay. I'll paste a snippet
+
+> *UniFreak* xyphoid_, https://pastebin.com/DvBpVP7M
+
+> *UniFreak* some time with isset() or !empty() check, sometimes not
+
+> *UniFreak* https://pastebin.com/pbSy93EJ
+
+> *shaowei* Finally enter the channel
+
+> *__adrian* $data['car_cityid'] = $extInfo['car_cityid'] ?? 'default value';
+
+> *shaowei* PHP is one of the best language in the world
+
+> *__adrian* or, depending (my guess is likely), you could simply be merging arrays, here.
+
+> *UniFreak* shaowei, don't, I already provoked some heat here
+
+> *UniFreak* __adrian, I know the code have other problems. But just want to focus on the short circuit. according to previous discussion, I have my conclusion regarding that
+
+> *__adrian* well, my point was more of "this is another aspect of the same problem."
+
+> *__adrian* if you focus solely on the "should i use && here" you're probably going to end up with a less-than-ideal solution
+
+> *__adrian* you should base the solution on the overall "what is this supposed to be doing" picture
+
 
 
 [phpRefObj]: img/PHP_reference_object.png

@@ -637,6 +637,12 @@
 |View |    Illuminate\View\Factory | view |
 |View | (Instance) Illuminate\View\View | |
 
+- __MAKE YOUR OWN FACADES__(see api.fin/qlog)
+    + define service provider
+    + register service provider
+    + make alias
+    + make facades
+
 # Database
 
 - database config file is located at `config/database.php`
@@ -1927,6 +1933,8 @@ __note__: pagination operations that use a `groupBy` statement cannot be execute
   CSRF protection
 
 # Testing
+
+__DO REMEMBER TO CALL `parent::setUp()`!!__
 
 ## Applicatioin Testing
 - `visit()`

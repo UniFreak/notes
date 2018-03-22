@@ -1025,3 +1025,4 @@ IN() is not a valid condition, it must *NOT be empty*
 	ALTER TABLE insect
 	    ADD id INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST,
 	    ADD PRIMARY KEY (id);
+- show full columns from <table_name>

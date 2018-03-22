@@ -40,27 +40,27 @@ Ctrl+Alt+Down               Add Next Lie
 Escape                      Single Selection
 
 Ctrl+Shift+Enter            Insert Line Before
-*   Ctrl+M                      Jump to Matching Brackets
+*   Ctrl+M                  Jump to Matching Brackets
 Ctrl+Enter                  Insert Line After
 Ctrl+L                      Expand Selection to Line
 Ctrl+D                      Expand Selection to Word
 Ctrl+Shift+Space            Expand Selection to Scope
-*   Ctrl+Shift+M                Expand Selection to Brackets
-*   Ctrl+Shift+J                Expand Selection to Indentation
-*   Ctrl+Shift+A                Expand Selection to Tag
+*   Ctrl+Shift+M            Expand Selection to Brackets
+*   Ctrl+Shift+J            Expand Selection to Indentation
+*   Ctrl+Shift+A            Expand Selection to Tag
 
 Ctrl+F                      Find
 Ctrl+Shift+F                Find in Files
-*   Ctrl+F3                     Quick Find
-*   Ctrl+D                      Quick Add
+*   Ctrl+F3                 Quick Find
+*   Ctrl+D                  Quick Add
 F3                          Find Next
 F4                          Next in Find in Files Results
 Shift+F3                    Find Previous
 Alt+F3                      Quick Find All
 Ctrl+KD                     Quick Skip Next
-?   Ctrl+I                      Incremental Find
+?   Ctrl+I                  Incremental Find
 Ctrl+H                      Replace
-*   Ctrl+Shift+H                Replace Next
+*   Ctrl+Shift+H            Replace Next
 
 
 Ctrl+]                      右缩进
@@ -81,21 +81,21 @@ Ctrl+Shift+\                Toggle block comment
 
 Ctrl+T                      Transpose
 
-*   Alt+.                       Close tag
-*   Alt+Shift+W                 Warp Selection with Tag
+*   Alt+.                   Close tag
+*   Alt+Shift+W             Warp Selection with Tag
 
 Ctrl+K+Space                Set Mark
 Ctrl+KA                     Select to Mark
 Ctrl+KW                     Delete to Mark
 Ctrl+KX                     Swap with Mark
 Ctrl+KG                     Clear Mark
-?   Ctrl+KY                     Yank
+?   Ctrl+KY                 Yank
 
 Ctrl+Shift+]                Unfold
-*   Ctrl+KJ                     Unfold All
+*   Ctrl+KJ                 Unfold All
 Ctrl+Shift+[                Fold
-*   Ctrl+K+1~9                  Fold Level 1~9
-*   Ctrl+KT                     Fold Attribute
+*   Ctrl+K+1~9              Fold Level 1~9
+*   Ctrl+KT                 Fold Attribute
 
 Ctrl+KC                     Scroll to Selection
 Alt+left/right              Move by Subword
@@ -103,7 +103,7 @@ Alt+left/right              Move by Subword
 Ctrl+KU                     Uppercase
 Ctrl+KL                     Lowercase
 
-*   F9                          Sort Line
+*   F9                      Sort Line
 Ctrl+F9                     Sort Line Case Sensitive
 
 Ctrl+Q                      Record Macro
