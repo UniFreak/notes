@@ -89,11 +89,11 @@ Ctrl+Shift+Enter            Insert Line Before
 - Ctrl+KG                     Clear Mark
 - _Ctrl+KY_                 Yank
 ---
-Ctrl+Shift+]                Unfold
-*   Ctrl+KJ                 Unfold All
-Ctrl+Shift+[                Fold
-*   Ctrl+K+1~9              Fold Level 1~9
-*   Ctrl+KT                 Fold Attribute
+- Ctrl+Shift+]                Unfold
+- __Ctrl+KJ__                 Unfold All
+- Ctrl+Shift+[                Fold
+- __Ctrl+K+1~9__              Fold Level 1~9
+- __Ctrl+KT__                 Fold Attribute
 ---
 - Ctrl+KC                     Scroll to Selection
 - Alt+left/right              Move by Subword
