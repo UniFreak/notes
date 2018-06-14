@@ -27,7 +27,7 @@ json schema: https://github.com/composer/composer/blob/master/res/composer-schem
         stability:
             1.2.3-stable
             1.2.3-dev
-    type    libraray|project|metapackage|composer-plugin
+    type    library|project|metapackage|composer-plugin
     keywords
     homepage
     time

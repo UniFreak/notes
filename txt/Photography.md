@@ -1,11 +1,9 @@
-==================== Basic ====================
-拍摄时, 要时刻把后期放在心上, 一个看起来没什么意思的场景, 经过后期可大不一样
-决定拍摄某场景时, 就要分析要拍摄的场景可能会对曝光造成什么困难, 以及解决之道
+# Basic
+- 拍摄时, 要时刻把后期放在心上, 一个看起来没什么意思的场景, 经过后期可大不一样
+- 决定拍摄某场景时, 就要分析要拍摄的场景可能会对曝光造成什么困难, 以及解决之道
 
-单反:
-    SLR: single lens reflex
-    单镜头反光镜相机...
-型号(从上到下, 从左到右, 从高端到低端):
+- 单反: SLR: single lens reflex / 单镜头反光镜相机
+- 型号(从上到下, 从左到右, 从高端到低端):
     佳能(CANON):
     EOS-1D X
     EOS 5D Mark III---5D2---5D
@@ -34,33 +32,35 @@
 
     D5300---D5200---D5100---D5000
     D3300---D3200---D3100---D3000
-全画幅(full frame camera): 传感器和传统胶片大小一样: 36*24mm
-非全画幅(APS画幅): 比画幅小
 
-焦距(Focal length): 透镜中心点到图像传感器的距离
-镜头可分为定焦(prime lens)和变焦(zoom lens)镜头两种
-    定焦: 不能变换焦距, 如 80mm
-    变焦: 可以变换焦距, 如 18-55mm
-焦距越长, 视角(angle of view)越小, 视野(field of view)越小
-    超广角镜头(altra wide angle): 焦距在6-8mm, 视角接近85或等于180
-        不带抗变形 element 的: 鱼眼镜头,
-        带: rec... ?
-    广角镜头(wide angle): 焦距多在16-35mm, 视角大概60到90度左右
-    标准镜头(normal): 焦距为50mm, 视角60 (和人眼一样)
-    长焦镜头(telephoto): 135-300mm, 视角大概是18-5度
-    超长焦镜头(altra telephoto): 300mm以上的称为超长焦距
-Wide angle lenses expand perspective, emphasizing the foreground and pushing background objects back; while telephoto lenses compress perspective, minimize foreground and tend to flatten perspective
+- 全画幅(full frame camera): 传感器和传统胶片大小一样: 36*24mm
+- 非全画幅(APS画幅): 比画幅小
 
-因为投进相机的图像是圆的(镜头是圆的), 而传感器是长方形的, 所以照片是被传感器裁剪后的结果
+- 焦距(Focal length): 透镜中心点到图像传感器的距离
+- 镜头可分为定焦(prime lens)和变焦(zoom lens)镜头两种
+    + 定焦: 不能变换焦距, 如 80mm
+    + 变焦: 可以变换焦距, 如 18-55mm
+- 焦距越长, 视角(angle of view)越小, 视野(field of view)越小
+    + 超广角镜头(altra wide angle): 焦距在6-8mm, 视角接近85或等于180
+        * 不带抗变形 element 的: 鱼眼镜头,
+        * 带: rec... ?
+    + 广角镜头(wide angle): 焦距多在16-35mm, 视角大概60到90度左右
+    + 标准镜头(normal): 焦距为50mm, 视角60 (和人眼一样)
+    + 长焦镜头(telephoto): 135-300mm, 视角大概是18-5度
+    + 超长焦镜头(altra telephoto): 300mm以上的称为超长焦距
+- Wide angle lenses expand perspective, emphasizing the foreground and pushing background objects back
+- while telephoto lenses compress perspective, minimize foreground and tend to flatten perspective
+
+- 因为投进相机的图像是圆的(镜头是圆的), 而传感器是长方形的, 所以照片是被传感器裁剪后的结果
 所以照片的视角不仅由焦距决定, 还由相机的传感器尺寸决定(会将视野变小, 亦即变成比镜头本身焦距更长的焦距效果)
-所以镜头和传感器组合后如何得到正确的视野? 镜头焦距 * 倍增因数(在相机手册上能找到)
+- 所以镜头和传感器组合后如何得到正确的视野? 镜头焦距 * 倍增因数(在相机手册上能找到)
 
-在拍摄广角时, 要留意形变
+- 在拍摄广角时, 要留意形变
 
-牛头: 好的镜头(佳能的红圈, 尼康的金圈)
-狗头: 不好的...
-有光线无狗头: 光线充足的情况下, 两者表现差不多
-镜头标识:
+- 牛头: 好的镜头(佳能的红圈, 尼康的金圈)
+- 狗头: 不好的...
+- 有光线无狗头: 光线充足的情况下, 两者表现差不多
+- 镜头标识:
     CANNON ZOOM LENS: 佳能变焦镜头
     EF-S: EF 卡口, S 代表只能用于非全画幅
     18-135mm: 焦距范围
@@ -80,7 +80,7 @@ Wide angle lenses expand perspective, emphasizing the foreground and pushing bac
     N: 纳米镀膜
     VR(vibration reduction): 防抖
 
-曝光(Exposure)
+- 曝光(Exposure)
     在有光的条件下, 通过光学成像原理,
     经过数码相机图像传感器处理在物理储存器上呈现可见的数码影像的过程
 
@@ -270,7 +270,7 @@ Lens matter, but its you who are taking pictures
         - 然后参照使用镜头布要领, 进行擦拭
         最后记得清洁镜头盖
 
-==================== Composition ====================
+# Composition
 Rule -> practice -> volcabulary -> feels -> break rules
 
 good photo can happen any where, it's more about you than where you are in
@@ -281,10 +281,39 @@ Good composition variables
     - point of view
     - simplicity
 
-==================== Rule ====================
+# Rule
 Know your lens
     If you own a zoom, shoot at only one end of it
 Prefer raw format
 
-==================== Tricks ====================
+# Tricks
 - Want to make the sun or moon look really big in relation to a building or structure? Back away from your subject a bit and use a telephoto lens to compress the perspective and distort the size relationship
+
+# Feeds told me
+- Great light beats a great subject every time
+- Shoot for love, not (social media) likes
+- Learn post-processing well
+- Keep your gear simple
+- Make friends with other creatives (not restricted to photographer, best in person)
+- Hold off trying to make money as long as possible
+- Comparison will cripple you and steal your passion
+- Invest in your craft (gear, book, course...)
+- Start a blog
+
+# Tech
+- exposure bracketing
+- focus stacking
+- exposure blending
+
+# Topic
+- for neighborhood:
+    + bus stop
+    + animal life
+    + alphabet shapes
+    + grocery store
+    + signage
+    + garden
+    + ground
+    + street art
+    + demolition documentary
+    + doorway
