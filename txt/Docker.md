@@ -289,7 +289,9 @@ see: https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practice
     + nsenter:
         1. `PID=$(docker-pid <containerId>)` --> 10981
         2. `nsenter --target 10981 --mount --uts --ipc --net --pid`
+- reload php-fpm inside container: `kill -USR2 1`
 
 # bump
 - access multiple site via domain in host: jwilder/nginx-proxy
 - container be accessible for each other by domain name: net-alias
+

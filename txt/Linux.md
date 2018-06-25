@@ -1,3 +1,7 @@
+# package installation name:
+- ps: procps
+- ifconfig: net-tools
+
 # enviroment variables
 - see all: `set`
 - see one: `echo "$HOME"`

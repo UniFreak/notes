@@ -42,8 +42,8 @@ tools->build system->new build system
 - Package Control
 - Composer
 - ColorHelper
+- ColorSublime
 - PlantUML/Diagram
-- CodeIntel
 - IntelliDocs
 - Origami
 - BufferScroll
@@ -52,18 +52,13 @@ tools->build system->new build system
 - ProjectManager
 - CodeFormatter
 - DocBlockr
-- Plaintask
 - MoveTab
-- Nettuts+ Fetch
-- MarkdownEditing
+- MarkdownExtends & MarkdownEditing
 - Sublime Linter
     + SublimeLinter-PHP
     + SublimeLinter-JsHint
     + SublimeLinter-cssLint
     + SublimeLinter-Html-tidy
-- Git
-- Gist
-- GitGutter
 - PHPCS
 - BracketHighlighter
 - Synced Sidebar
@@ -82,15 +77,13 @@ tools->build system->new build system
 - Prefixr
 - Code Alignment
 - FindKeyConflict
-- FileDiffs
+- FileDiffs/Sublimerge/Meld
 - View in browsers
 - SideBarEnhancements
 - LiveRelaod
 - GBK Encoding Support
 - ColorPicker
 - Markdown Preview
-- Clipboard History           //sublime3集成了
-- Clipboard Manager
 - YUI Compressor/Minify/Minifier/ClentSide
 - ES6-Toolkit
 - JavascriptNext

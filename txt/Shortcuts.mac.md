@@ -2,6 +2,8 @@
 cm+D        splite
 cm+shift+D  un splite
 ctrl+C      cancel
+ctrl+K      delete till end
+alt+arrow   jump a word
 ctrl+cm     fullscreen
 
 #Finder
@@ -13,6 +15,7 @@ enter       重命名
 选中多个文件, 然后:
 ctrl+cmd+N  移动到新建文件夹
 ctrl+cmd+I  查看容量
+shift+cmd+. 展示隐藏文件
 
 #OSX
 按住option很多菜单会发生些小变化

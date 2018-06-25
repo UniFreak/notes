@@ -1,12 +1,43 @@
-#Intallation
+# concepts
+- package
+
+    pcakge can be served from 
+    + dist: a packaged version of the package data, stable, released
+    + source: used for development
+
+- repository
+
+    a list of packages/versions. such as packagist repository
+
+    online repository can be one of these type:
+    + composer
+
+        uses a single `packages.json` file that contains all of the package metadata
+        packgist.org use this type
+
+    + pear
+    + package
+
+    you can alos host your own by using:
+    + privage packagist
+    + satis
+    + artifact
+    + or path
+
+# Intallation
 
 1. `curl -sS https://getcomposer.com/installer | php`
 2. `php -r "readfile('https://getcomposer.org/installer');" | php`
 3. _optional on cygwin_: see: http://www.pavlatka.cz/2015/01/install-composer-cygwin/
 
-#配置用中国镜像(防被墙)
+# 配置用中国镜像(防被墙)
 
-http://pkg.phpcomposer.com/
+- see <http://pkg.phpcomposer.com/>
+- run
+
+```sh
+composer config -g repo.packagist composer https://packagist.phpcomposer.com
+```
 
 #composer.json
 

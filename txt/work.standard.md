@@ -60,8 +60,7 @@
 
 ### 示例
 
-```
-<?php
+```php
 namespace Vendor\Package;
 
 use FooInterface;
@@ -150,6 +149,7 @@ $GLOBALS['TSFE']->additionalHeaderData[$this->strApplicationName]
 - `Library`: 不受 composer 管理的第三方库或自定义库
 - `Services`: 系统服务
 - 分文件夹的话不要直接在 `app\` 目录下分(反例: credit 项目的 Models)
+- `vendor` directory should be git ignored, and never manually touched
 
 ## 错误处理
 - when silencing the exception, logging or warning should occur
@@ -183,8 +183,7 @@ $GLOBALS['TSFE']->additionalHeaderData[$this->strApplicationName]
 
 - 直接返回判断语句, 不用使用三目运算符决定返回 `true` 或 `false`
 
-```
-<?php
+```php
 function isActive($person) 
 {
     // 不必要:
@@ -197,8 +196,7 @@ function isActive($person)
 
 - `!empty($var)` 就够了
 
-```
-<?php
+```php
 // 不必要:
 // if (isset($var) && !empty($var)) {
 //      
@@ -210,8 +208,7 @@ if (!empty($var)) {
 
 - 早点 return, 以减少不必要嵌套层次
 
-```
-<?php
+```php
 function isActive($person)
 {   
     // 嵌套太多:
@@ -238,8 +235,7 @@ function isActive($person)
 
 - 使用有意义的循环变量
 
-```
-<?php
+```php
 // 难读:
 // foreach ($payments as $k => $v) {
 //    foreach ($v as $data) {
@@ -360,17 +356,17 @@ api.fin -> credit/trade/paysys
 - 占用内存高
 - 基本用法:
 
-        ```
+        ```php
         require_once './vendor/autoload.php';
-
+    
         $context = new \progpilot\Context;
         $analyzer = new \progpilot\Analyzer;
-
+    
         $context->inputs->set_file("source_code1.php");
-
+    
         $analyzer->run($context);
         $results = $context->outputs->get_results();
-
+    
         var_dump($results);
         ```
 
