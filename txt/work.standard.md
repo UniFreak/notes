@@ -1,21 +1,11 @@
-- 依据 psr1, psr2, 借鉴其他公司(百度-张阳阳), 参考 laravel 框架
-- 不做解释, 如有疑问单独探讨
-- 本次会议**确定**规范, 并后续跟进执行
+- 依据 psr1, psr2, 参考 laravel 框架和 phpcs sniffs 及 phpmd ruleset
 - 关于遗留代码: 与其风格保持一致, 适时迁移
 
 # 好的规范
-1. are short, simple and concise rules. They do not attempt to cover and processify everything and leave plenty of room for developers to exercise their own creativity.
-2. strike the right balance between formatting issues and issues that “make the wrong code look wrong”.
-3. are black and white instead of vague suggestions or recommendations.
-4. should check for both style issues and design problems
+1. 描述简短精确, 非黑即白, 没有模棱两可的定义
+2. 既要考虑格式方面的东西, 又要考虑如何"让错误的代码看起来就是错误的"以及设计方面的问题
 
-# 流程
-
-# 代码
-- 参考
-    + psr
-    + pear
-    + PHPMD rules
+# 规范
 
 ## 风格
 
@@ -27,7 +17,7 @@
 - 每行的字符数最好保持在 80 个之内,  一定不可多于 120 个
     - small screen, terminal screen
     - human cognitive limitation
-- 代码必须使用 4 个空格符的缩进, 不能用 tab 键 
+- 代码必须使用 4 个空格符的缩进, 不能用 tab 键
     - helps to avoid problems with diffs, patches, SVN history and annotations
     - display consistency
 
@@ -58,6 +48,10 @@
 - 函数定义及调用的小括号之前不要空格
 - 正确缩进, 正确折行, 注释要与被注释代码的对齐 (参见示例代码)
 
+### 注释
+
+- @todo
+
 ### 示例
 
 ```php
@@ -67,7 +61,7 @@ use FooInterface;
 use BarClass as Bar;
 use OtherVendor\OtherPackage\BazClass;
 
-class Foo extends Bar implements 
+class Foo extends Bar implements
     FooInterface,
     \ArrayAccess,
     \Countable,
@@ -85,9 +79,9 @@ class Foo extends Bar implements
      *
      * @author  authorName <email:example@xin.com, phone:1553****861>
      * @todo    refacotor: some refactor idea
-     * 
+     *
      * @param   ClassTypeHint parameter description
-     * @param   string        arg2 parameter description 
+     * @param   string        arg2 parameter description
      * @return  mixed         return description
      */
     final public static function aVeryLongMethodName(
@@ -106,7 +100,7 @@ class Foo extends Bar implements
             && $veryLongVariable3 > $veryLongVariable4
             || $veryLongVariable5
         ) {
-            return $isThisVeryLongVariableTrue 
+            return $isThisVeryLongVariableTrue
                 ? $yes
                 : $no;
         } elseif ($a > $b) {
@@ -143,13 +137,11 @@ $GLOBALS['TSFE']->additionalHeaderData[$this->strApplicationName]
 ```
 
 
-## 注释
-
 ## 代码结构
 - `Library`: 不受 composer 管理的第三方库或自定义库
-- `Services`: 系统服务
+- `Services`: 系统服务, 模块儿
 - 分文件夹的话不要直接在 `app\` 目录下分(反例: credit 项目的 Models)
-- `vendor` directory should be git ignored, and never manually touched
+- `vendor`: 不应该受版本管理工具管理, 更不应改动里面的任何东西
 
 ## 错误处理
 - when silencing the exception, logging or warning should occur
@@ -171,23 +163,20 @@ $GLOBALS['TSFE']->additionalHeaderData[$this->strApplicationName]
 - 局部变量重新赋值?
 - 无用注释?
 - 符号对齐?
-
 - 使用 `(string)` 而非 `strval()`
-
 - 避免使用
     + 全局变量
     + `extract()`
     + `eval()`
-
 - 尽量使用 `type hint`
 
 - 直接返回判断语句, 不用使用三目运算符决定返回 `true` 或 `false`
 
 ```php
-function isActive($person) 
+function isActive($person)
 {
     // 不必要:
-    // return ($person['isAlive'] && $person['talkCount'] > 3) 
+    // return ($person['isAlive'] && $person['talkCount'] > 3)
     //       ? true
     //       : false;
     return $person['talkCount'] > 3 && $person['isAlive'];
@@ -199,10 +188,10 @@ function isActive($person)
 ```php
 // 不必要:
 // if (isset($var) && !empty($var)) {
-//      
+//
 // }
 if (!empty($var)) {
-    
+
 }
 ```
 
@@ -210,7 +199,7 @@ if (!empty($var)) {
 
 ```php
 function isActive($person)
-{   
+{
     // 嵌套太多:
     // if ($person['isAlive']) {
     //     // long code...
@@ -285,32 +274,18 @@ foreach ($payments as $payId => $payment) {
 
 ## 性能
 
-- 参考 
-    + https://www.jianshu.com/p/d29f7222e7e6
+- 参考: https://www.jianshu.com/p/d29f7222e7e6
 
 ## 日志
-
-# 项目使用
-api.fin 唯一对外提供金融服务
-
-api.fin -> credit/trade/paysys
-
-# 领域名词
-
-- yooli ul yoli? super, cr?
-- 制定流程: 产品提议 -> 开发决策 -> 文档化
-- 缩写
-
-# 数据库
 
 # 工具
 
 ## 参考
 - https://en.wikipedia.org/wiki/List_of_tools_for_static_code_analysis
 
-## 问题
-- 不清楚 php 项目构建部署流程及工具
-- 报警级别
+## IDE/编辑器内置自动化工具
+- phpStorm: live template/macro
+- sublimeText: 插件: Sublime Tmpl/DocBlockr/snippet/macro
 
 ## ~~EditorConfig(https://editorconfig.org/)~~
 - 根据文件名匹配应用规则
@@ -321,7 +296,7 @@ api.fin -> credit/trade/paysys
 ## ~~PHPcheckStyle~~
 
 ## PHPCS(https://github.com/squizlabs/PHP_CodeSniffer)
-- 包含 phpcs(检测) 和 phpcbf(code beautifier and fixer, 修复) 
+- 包含 phpcs(检测) 和 phpcbf(code beautifier and fixer, 修复)
 - 使用配置的规范定义文件集合(sniff file)检测不符合规范的代码, 并自动修复
 - 默认使用 pear 代码规范
 - 可自定义规范规则
@@ -348,8 +323,6 @@ api.fin -> credit/trade/paysys
 - 根据字符匹配查找重复代码
 - 基本用法: `./run.sh cpd --minimum-tokens 100 --files /path/to/c/source --language cpp`
 
-## 
-
 ## progpilot(https://github.com/designsecurity/progpilot)
 - 根据定义的解析规则和安全配置找出存在安全隐患的代码
 - 可自定义解析规则(@seeDoc)
@@ -358,15 +331,15 @@ api.fin -> credit/trade/paysys
 
         ```php
         require_once './vendor/autoload.php';
-    
+
         $context = new \progpilot\Context;
         $analyzer = new \progpilot\Analyzer;
-    
+
         $context->inputs->set_file("source_code1.php");
-    
+
         $analyzer->run($context);
         $results = $context->outputs->get_results();
-    
+
         var_dump($results);
         ```
 
@@ -378,16 +351,29 @@ api.fin -> credit/trade/paysys
 - 误判率高/低
 - 不支持/支持集成到开发周期
 
+## Pixy(https://github.com/oliverklee/pixy)
+
 # 自动化
-- IDE 扩展
-    + Atom
-    + NetBeans
-    + PhpStorm
-    + Sublime Text
-    + Vim
-- 自动构建任务
-    + http://www.kkh86.com/it/code-standard/guide-phpcs-ci.html
-- Composer & Git hooks
-    + http://tech.zumba.com/2014/04/14/control-code-quality/
-- gitlab ci
-- docker
+
+## 一般来说
+1. 为每个项目增加 `composer require phpcs/phpmd` 依赖
+2. 使用 composer 的 `post-install-cmd` 配合 `setup.sh` 和 `composer install` 添加 `pre-commit` 挂钩
+3. 提交时自动运行 md/cs 检测
+4. 服务端配置 CI/自动构建任务, 强制检测
+
+## 由于 `vendors/` 被 git 管理, 且没有自动构建流程:
+1. 扩展 phpcs/phpmd 并封装成 composer 包
+2. 配置 `pre-commit` 挂钩
+4. 使用服务端 `update` 挂钩强制检测
+
+
+# 项目使用
+- `api.fin` 唯一对外提供金融服务
+
+# 领域名词
+
+- yooli ul yoli? super, cr?
+- 制定流程: 产品提议 -> 开发决策 -> 文档化
+- 缩写
+
+# 数据

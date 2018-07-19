@@ -1,5 +1,8 @@
 -- update --:
-- typora/sublimetext markdown build
+- typora/sublimetext markdown build/bufferScroll
+    1. package control: no luck
+    2. no luck: https://stackoverflow.com/questions/39722289/how-to-save-collapsed-folded-code-in-sublime-text-after-removal-of-bufferscrol/45114495
+    3. https://stackoverflow.com/questions/23026201/sublime-text-3-how-to-install-plugins-from-github
 - spectacle instead of divvy
 
 今天花了一天时间重装了一下 Mac 系统, 并且用 Docker 搭建了一下 PHP 开发环境. 这篇文章记录了这一天的折腾, 以备以后参考. 想从 Windows 转到 Mac 的程序员可以看看, 可能有一些参考意义. 尤其是对于那些用 Windows 和 SublimeText 快捷键已经用成肌肉记忆, 一切换到 Mac 就感觉水土不服的程序员, 可能帮助更大一些. 因为我特意花精力找软件去缩小了这些水土差异.
@@ -16,7 +19,7 @@ __注意__: 上述操作会抹掉你 Mac 上的数据, 注意事先备份.
 
 ## Google Chrome
 
-我使用 Google Chrome 作为默认浏览器. 这也是必装的第一个应用. 
+我使用 Google Chrome 作为默认浏览器. 这也是必装的第一个应用.
 
 介绍一下我常用的一下扩展:
 
@@ -68,7 +71,7 @@ Mac 不支持写外置的 ntfs 格式的硬盘, 如果你经常在 Windows 和 M
 - cisco anyconnect: 接入公司 vpn 用的.
 - shadow socks: 接个人 vpn 用的.
 - 迅雷: 老实说我很反感迅雷, 但是也是在找不到像样且免费的下载客户端. 暂且用着吧.
-- qq, 微信: 这个不用说了. 
+- qq, 微信: 这个不用说了.
 - xchat: irc 聊天用. 见 @todo
 
 # 安装开发软件
@@ -79,7 +82,7 @@ Mac 不支持写外置的 ntfs 格式的硬盘, 如果你经常在 Windows 和 M
 
 ## sublime text3
 
-我用 sublime text 3 敲代码. 关于为什么用 sublime text 而不用其他编辑器或 IDE 其实没什么好说的. 跟浏览器一样, 大多数原因只是因为个人偏好. 
+我用 sublime text 3 敲代码. 关于为什么用 sublime text 而不用其他编辑器或 IDE 其实没什么好说的. 跟浏览器一样, 大多数原因只是因为个人偏好.
 
 装完 sublime text 3, 第一件事就是装扩展. 而装扩展的第一件事, 就是装 packageControl:
 
@@ -94,7 +97,7 @@ Mac 不支持写外置的 ntfs 格式的硬盘, 如果你经常在 Windows 和 M
 
     sublime text 3 已经内置了代码定义跳转的功能, 而且也挺好用. 但是唯一的缺憾就是不能跳过去再跳回来. 所以我得找扩展. 支持的扩展主要就是 SublimeCodeIntel 和 CTags 了. 试过 SublimeCodeIntel, 发现很多次都跳错地方, 所以还是选了 CTags.
 
-    __安装__: 
+    __安装__:
 
     1. 在终端运行 `brew install ctags` 安装 ctags 包
     2. 运行 `ctags --version` 确保正确安装了 ctags
@@ -129,7 +132,7 @@ Mac 不支持写外置的 ntfs 格式的硬盘, 如果你经常在 Windows 和 M
     这个扩展可以让我们快速的创建, 删除, 移动, 重命名文件.
 
 - easyMotion
-    
+
     通过快捷键定位目标位置并移动光标到该位置
 
 - MoveTab
@@ -137,7 +140,7 @@ Mac 不支持写外置的 ntfs 格式的硬盘, 如果你经常在 Windows 和 M
     通过快捷键移动当前 tab
 
 - Origami
-    
+
     通过快捷键创建或删除拆分视图, 并移动或复制文件到指定视图
 
 - PlainNotes

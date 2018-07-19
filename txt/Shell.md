@@ -1,4 +1,4 @@
-#shell文件头
+# shell文件头
 
 因为 shell 有多种, 所以编写 shell 要注明文件头： `#!/bin/sh`
 
@@ -6,7 +6,7 @@
 - c-shell
 - z-shell
 
-#注释
+# 注释
 
 - 单行: `#` 代表注释 如： `#这是一行注释`
 - 多行注释:
@@ -20,8 +20,8 @@
 BLOCK
 ```
 
-#变量定义
-- NOTE: 
+# 变量定义
+- NOTE:
     + 变量赋值时等号左右不允许有空格
     + 定义变量时不需要 `$`, 但读取时需要
     + 输出不存在变量时, 只输出空值, 不报错
@@ -38,7 +38,7 @@ BLOCK
         * 方式2：`pathNow=$(pwd)`
     + 用已有的变量赋值到新变量 `pathNow2=$pathNow`
 
-#变量输出
+# 变量输出
 
 ```
 name=elson
@@ -48,15 +48,15 @@ echo my name is '$name'  #my name is $name   这一个得注意
 echo my name is "$name"  #my name is elson
 ```
 
-#变量释放
+# 变量释放
 
 ```
 unset name
 echo $name
 ```
 
-#读取输入变量
-- 
+# 读取输入变量
+-
 ```
 read first second third         #暂停程序执行, 输入参数
 echo "U input string1:$first"
@@ -64,7 +64,7 @@ echo "U input string2:$second"
 echo "U input string3:$third"
 ```
 
-- 
+-
 ```
 read -p "U input string1:" first
 echo "U input string1:$first"
@@ -72,7 +72,7 @@ echo "U input string1:$first"
 
 - `echo "U input string1:$1"`   #./t3.sh sky miny  sky就是$1, miny是$2
 
-#数学计算
+# 数学计算
 -
 ```
 value1=`expr $a + $b + $c`
@@ -84,12 +84,12 @@ echo $value1                   #输出300
 
 - `echo $(($a + $b))`              #输出30
 
-#特殊变量
+# 特殊变量
 - 当前命令 `$0` 或 `${0}`: `echo "The command is ${0}"`
 - 当前命令接受的参数个数 `$#` 或 `${#}`, `read` 的输入, 不算入`$#`
 - `$?` 最近的状态码（上一条指令）,一般情况下, 直接输出 `$?`, 值为 `0`, 表示程序执行正常, 其他值表示程序错误；如果 `$?` 写在函数后面, 输出的是函数的返回值
 
-#if
+# if
 
     利用if编写一个只允许给定一个参数的shell文件
     vim if01.sh
@@ -134,13 +134,13 @@ echo $value1                   #输出300
 -t file　　　　　文件描述符(默认为1)指定的设备为终端
 -n 变量            变量有值
 
-#.for语句
+# for
     for day in Saturday Tuesday Sunday
     do
         echo "The day is : ${day}"
     done
 
-#.case语句
+# case
     echo "Please select ..."
     echo "A) Copy"
     echo "B) Delete"
@@ -161,7 +161,7 @@ echo $value1                   #输出300
         echo "invalide select"
     esac
 
-#.while语句
+# while
 
     12.1.代码1
         num=3
@@ -183,7 +183,7 @@ echo $value1                   #输出300
 
         ./while.sh david elson lamson
 
-#.1.函数定义
+# 函数定义
     #source 脚本名    //载入上个计算程序脚本
     #example1 elson lamson 写在函数会报错, 因为函数并未定义
     example1()
@@ -200,7 +200,7 @@ echo $value1                   #输出300
 
     source fun02.sh #加载程序source 文件名
 
-#.2.函数返回值
+# 函数返回值
     example2()
     {
         echo $1
@@ -218,6 +218,22 @@ echo $value1                   #输出300
     echo $?  # 9, $?此时可以输出上一个函数返回的值, 但必须要写在函数调用后的下一句
     echo $f  # 5, 输出函数在中间输出的值, 有多个值则输出多个, 以空格分隔
 
- #exit
+# exit
 exit 0：完全退出
 exit 1：退出本程序, 只退出执行中的shell文件
+
+# expansion (by order)
+- brace expansion
+- tilde expansion
+- parameter
+- variable and arithmetic expansion and
+- command substitution (done in a left-to-right fashion)
+- word splitting
+- pathname expansion
+
+# Best practice
+- You do not need to quote a string literal in bash (unless it contains metacharacters or pattern characters)
+- if you need a regular expression, you'll be using awk(1), sed(1), or grep(1) instead of Bash
+- DO NOT USE `ls`'s output for anything, Globs are much more simple AND correct
+- double-quote every expansion
+- Use single quotes when protecting complex strings

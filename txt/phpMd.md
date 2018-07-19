@@ -28,3 +28,7 @@
 - `\PHPMD\Rule\MethodAware`
 
 2. config the rule in rule set file
+
+    ```
+    ruleset:name > rule:ref > description|priority|properties|exclude
+    ```

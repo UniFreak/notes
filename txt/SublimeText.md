@@ -1,4 +1,5 @@
-=============== 破解 ===============
+# Crack
+
 —– BEGIN LICENSE —–
 riku
 Single User License
@@ -13,7 +14,8 @@ F41F7BFAB3348963FF69F163A70ABBEA
 BC6CB3B5B6D183FF5C755DE7007C6C41
 —— END LICENSE ——
 
-=============== 自定义 ===============
+# Customization
+
 自定义Snippets
     比如定义一个 `ci` 为 `http:\\console.info(args)` ，保存在 User\js-snippets\console-info.sublime-snippet ：
     <snippet>
@@ -22,11 +24,12 @@ BC6CB3B5B6D183FF5C755DE7007C6C41
         <scope>source.js<\scope>
         <description>console.info<\description>
     <\snippet>
+
 # Build
 
 tools->build system->new build system
 
-- HTML 
+- HTML
 
     ```
     {
@@ -37,7 +40,7 @@ tools->build system->new build system
 保存为chrome.sublime-build
 
 
-# 插件
+# Plugins
 
 - Package Control
 - Composer

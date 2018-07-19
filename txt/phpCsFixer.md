@@ -1,6 +1,20 @@
-# install
-1. `wget https://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -O php-cs-fixer`
-2. `sudo chmod a+x php-cs-fixer`
-3. `sudo mv php-cs-fixer /usr/local/bin/php-cs-fixer`
+# concepts
+- risky rule: which could change code behaviour
 
-or: `composer global require friendsofphp/php-cs-fixer`
+# usage
+## command
+- fix
+
+## options
+- path-mode: override/intersection
+- format: txt/json/xml/checkstyle/junit
+- verbose
+- rules
+- dry-run
+- diff
+- diff-format: udiff/sbd
+- stop-on-violation
+- show-progress: none/run-in/estimating/estimating-max/dot
+
+# available rules
+
