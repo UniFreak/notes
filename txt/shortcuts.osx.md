@@ -1,5 +1,0 @@
-- page up       Fn+up
-- page down     Fn+down
-- home          Command+a
-- end           Command+e
-- forth delete  Fn+delete

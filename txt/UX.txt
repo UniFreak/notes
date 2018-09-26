@@ -1,6 +1,0 @@
-- website compatility
-- adaptability(cell phone, screen reader)
-- usability(staging: update without gone offline: version control+auto build)
-- no unfriendly errors to users
-- don't put user's email address in plain text
-- use 'rel="nofollow"' to user-generated links

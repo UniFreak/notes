@@ -1,3 +1,0 @@
-============== HTTPERF ===============
-install:
-    on cygwin:`cyg-get httperf`

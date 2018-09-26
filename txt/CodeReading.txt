@@ -1,3 +1,0 @@
-==================== YII ====================
-toRead:
-    Components(CApplication's)
