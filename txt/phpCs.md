@@ -121,7 +121,7 @@ Usage: phpcs [-nwlsaepqvi] [-d key[=value]] [--colors] [--no-colors]
 - `jsl_path`
 - `zend_ca_path`
 
-# config 
+# config
 - `phpcs.xml` or `phpcs.xml.dist`
 
 acts as a default coding standard and configuration file for a code base, and is typically used to allow the phpcs command to be run on a repository without specifying any arguments.
@@ -131,7 +131,7 @@ and example: <https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master
 - by generate `diff` reports and use `patch` command
 - by using `phpcbf
 
-    While most of the PHPCS command line arguments can be used by PHPCBF, some are specific to reporting and will be ignored`
+    While most of the PHPCS command line arguments can be used by PHPCBF, some are specific to reporting and will be ignored
 
 # defining standards
 - by make a `.xml` file and conforming it to `ruleset.xml` format
@@ -174,7 +174,7 @@ and example: <https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master
     into your custom standard. Note that this does not work
     for config values that override command line arguments,
     such as show_warnings and report_format.
-    
+
     The following tag is equivalent to the command line argument:
     --runtime-set zend_ca_path /path/to/ZendCodeAnalyzer
  -->
@@ -196,7 +196,7 @@ and example: <https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master
     You can hard-code ignore patterns directly into your
     custom standard so you don't have to specify the
     patterns on the command line.
-    
+
     The following two tags are equivalent to the command line argument:
     --ignore=*/tests/*,*/data/*
  -->
@@ -207,7 +207,7 @@ and example: <https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master
     Patterns can be specified as relative if you would
     like the relative path of the file checked instead of the
     full path. This can sometimes help with portability.
-    
+
     The relative path is determined based on the paths you
     pass into PHP_CodeSniffer on the command line.
  -->
@@ -218,7 +218,7 @@ and example: <https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master
     You can hard-code command line values into your custom standard.
     Note that this does not work for the command line values:
     -v[v][v], -l, -d, --sniffs and --standard
-    
+
     The following tags are equivalent to the command line arguments:
     --report=summary --colors -sp
  -->
@@ -414,7 +414,7 @@ and example: <https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master
    <property name="error" value="true"/>
   </properties>
  </rule>
- 
+
 <!--
     Array values are specified by using "element" tags
     with "key" and "value" attributes.
@@ -539,3 +539,15 @@ and example: <https://raw.githubusercontent.com/squizlabs/PHP_CodeSniffer/master
 # editor plugins
 - sublime text: SublimeLinter-phpcs / PHP CodeBeautifier
 
+# Uxin
+- md:
+    - 类不超过 2000 行: LongClass
+    - 函数不超过 300 行: LongMethod
+    - 8 个参数: LongParameterList
+    - 4 层嵌套
+- N/A
+    - switch no break
+    - 2.6
+    - 2.7
+    - 7
+    - 8

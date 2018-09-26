@@ -1,41 +1,49 @@
-########################### Standard ##################################
+# Notes
+- (You can always use HTML tag&attributs in Markdown file)
 
-Markdown syntax:
-(You can always use HTML tag&attributs in Markdown file)
+# Header
 
-=============== Heading ===============
-this is an H1
+```
+header level one
 ==========
-this is an H2
+header level two
 -----------------
-# this is H1
-## this is H2
-### this is H3
-#### this is H4
-##### this is H5
-###### this is H6
 
-=============== Quoting ===============
+or:
+
+# header level one
+## header level two
+### header level three
+#### header level four
+##### header level five
+###### header level six
+```
+
+# Quoting
+
 > this is a blockquote with two paragraphs
 >
 > the second paragraph
 >> blcokquote also can be *nested*
 
-=============== Listing ===============
-* li1
-* li2
-* li3
-+ li1
-+ li2
-+ li3
-- li1
-- li2
-- li3
-1. li1
-2. li2
-3. li3
+# Listing
 
-=============== Horizontal Ruling ===============
+* unordered list item 1
+* unordered list item 2
+* unordered list item 3
++ unordered list item 1
++ unordered list item 2
++ unordered list item 3
+- unordered list item 1
+- unordered list item 2
+- unordered list item 3
+
+1. unordered list item 1
+2. unordered list item 2
+3. unordered list item 3
+
+# Horizontal Ruling
+
 hr1
 * * *
 hr2
@@ -45,44 +53,35 @@ hr3
 hr4
 - - -
 
-=============== Coding ===============
+# Coding
+
 `code fragment`
 ``code fragment if you wanna encode a ` in fragment``
 
-=============== Emphasising ===============
+# Emphasising
+
 *emphasis*
 _emphasis_
 **strong**
 __strong__
 
+# Linking
 
-=============== Linking ===============
 [link](http://sample.com/ "Title") with title
-- - -
 [link](http://sample.com/) without title
-- - -
 <http://autolink.com>
-- - -
 <fanghao90s@gmail.com>
-- - -
-[reference link1] [num1] and [reference link2] [num2] defined by the following(see bottom)
-- - -
-![Alt text](/path/to/img.jpg "Optional title")
-- - -
-![Alt text][id]reference img defined by the following(seebottom)
+[reference link1][num1] and [reference link2][num2] defined by the following(see bottom)
+[Alt text](/path/to/img.jpg "Optional title")
+[Alt text][id] reference img defined by the following(seebottom)
 
-=============== Tabling ===============
-| Year | Temperature (low) | Temperature (high) |  
-| ---- | ----------------- | -------------------|  
-| 1900 |               -10 |                 25 |  
-| 1910 |               -15 |                 30 |  
-| 1920 |               -10 |                 32 | 
+# Table
 
-
-
-#######################Kramdown######################
-
-
+| Year | Temperature (low) | Temperature (high) |
+| ---- | ----------------- | -------------------|
+| 1900 |               -10 |                 25 |
+| 1910 |               -15 |                 30 |
+| 1920 |               -10 |                 32 |
 
 
 [num1]: http://sample1.com/ 		"reference link1"

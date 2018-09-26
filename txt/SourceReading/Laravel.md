@@ -28,68 +28,77 @@
     + command?
     + autoload_real::getLoader() 工厂, 单例
 - coodie:
-    ```
-    if (file_exists($file = ...)) {
-        return $file;
+
+```
+// init a variable while passing it as parameter, use it later in function block
+if (file_exists($file = ...)) {
+    return $file;
+}
+```
+
+```
+// @?
+return \Closure::bind(function () use ($loader) {
+    ...
+}, null, ClassLoader::class)
+```
+
+```
+public function addOptions($options = array())
+{
+    foreach ($options as $option) {
+        $this->addOption($option);
     }
-    ```
+}
+```
 
-    ```
-    // @?
-    return \Closure::bind(function () use ($loader) {
-        ...
-    }, null, ClassLoader::class)
-    ```
+```
+// 1. read like prose, 2. 客制化是否抛异常 (GuzzleHttp)
+// @throws \Exception When running fails. Bypass this when {@link setCatchExceptions()}.
+```
 
-    ```
-    public function addOptions($options = array())
-    {
-        foreach ($options as $option) {
-            $this->addOption($option);
-        }
-    }
-    ```
+```
+if(true === $input->hasParameterOption(array('--ansi'))) {}
+```
 
-    ```
-    // 1. read like prose, 2. 客制化是否抛异常 (GuzzleHttp)
-    // @throws \Exception When running fails. Bypass this when {@link setCatchExceptions()}.
-    ```
+```
+// @see: https://stovepipe.systems/post/using-bitwise-instead-of-booleans
+$types = self::OUTPUT_NORMAL | self::OUTPUT_RAW | self::OUTPUT_PLAIN;
+$type = $types & $options ?: self::OUTPUT_NORMAL;
+```
 
-    ```
-    if(true === $input->hasParameterOption(array('--ansi'))) {}
-    ```
+```
+composer: run() -> doRun() -> doRunCommand()
+dventDispathcer: dispatch() -> doDispatch()
+output: writeln() -> write() -> doWrite()
+```
 
-    ```
-    // @see: https://stovepipe.systems/post/using-bitwise-instead-of-booleans
-    $types = self::OUTPUT_NORMAL | self::OUTPUT_RAW | self::OUTPUT_PLAIN;
-    $type = $types & $options ?: self::OUTPUT_NORMAL;
-    ```
+```
+list($res, $devPackages) = $this->doInstall()
+```
 
-    ```
-    composer: run() -> doRun() -> doRunCommand()
-    dventDispathcer: dispatch() -> doDispatch()
-    output: writeln() -> write() -> doWrite()
-    ```
+```
+const STABILITY_STABLE = 0;
+const STABILITY_RC = 5;
+const STABILITY_BETA = 10;
+const STABILITY_ALPHA = 15;
+const STABILITY_DEV = 20;
 
-    ```
-    list($res, $devPackages) = $this->doInstall()
-    ```
+public static $stabilities = array(
+    'stable' => self::STABILITY_STABLE,
+    'RC' => self::STABILITY_RC,
+    'beta' => self::STABILITY_BETA,
+    'alpha' => self::STABILITY_ALPHA,
+    'dev' => self::STABILITY_DEV,
+);
+```
 
-    ```
-    const STABILITY_STABLE = 0;
-    const STABILITY_RC = 5;
-    const STABILITY_BETA = 10;
-    const STABILITY_ALPHA = 15;
-    const STABILITY_DEV = 20;
-
-    public static $stabilities = array(
-        'stable' => self::STABILITY_STABLE,
-        'RC' => self::STABILITY_RC,
-        'beta' => self::STABILITY_BETA,
-        'alpha' => self::STABILITY_ALPHA,
-        'dev' => self::STABILITY_DEV,
-    );
-    ```
+```php
+// the way to do cross-line ?:
+return isset($fetchArgument) ?
+    $statement->fetchAll($me->getFetchMode(), $fetchArgument, $me->getFetchConstructorArgument()) :
+    $statement->fetchAll($me->getFetchMode());
+```
 
 # 路由
 - 为什么用引用 event? 何时用到?

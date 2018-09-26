@@ -60,6 +60,7 @@ Sublime Text
 - Emmet
 - PlainTask 
 - MarkdownEditing
+- Linter
 - ...
 
 # Conclusion

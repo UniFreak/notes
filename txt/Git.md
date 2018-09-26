@@ -27,7 +27,7 @@ if you want commit changes, you must firstly add the changes to stage using `add
     + 最后一次提交: `git commit --amend` (不要在你最后一次提交被推送后还去修改它)
     + 最后 n 次提交: `git rebase -i HEAD~<n>` (利用此也可以删除, 压制, 拆分提交)
     + 已经暂存的文件: `git reset HEAD <fileName>`
-    + 对文件的修改: `git checkout -- <fileNam>`
+    + 对文件的修改: `git checkout -- <fileName>`
     + 大面积分支修改: `git filter-branch`
 
 - 远程仓库可用种协议
@@ -74,7 +74,7 @@ toSolve
 <something like: cb926e7ea50ad11b8f9e909c05226233bf755030>
 HEAD        current version
 HEAD^       last version
-HEAD^^  last two version
+HEAD^^      last two version
 <and so on...>
 HEAD~100    last 100 version
 
@@ -282,6 +282,7 @@ git submodule
     update
 git read-tree
 git diff-tree
+
 # Other thing
 set colorful output(this is default since 1.8.4)
     git config --global color.ui auto
@@ -301,7 +302,13 @@ ignore mode changes?
 how to rename local and remote branch
     1. enter target branch: `git checkout <oldName>`
     2. rename local branch: `git branch -m <newName>`
-    3. delete the old remote branch: `git push origin :<oldName> <newName>`
+    3. delete the old remote branch: ` git push --delete <remoteName> <branchName>`
     4. reset the upstream branch: `git push origin -u <newName>`
 
 # Alias config
+
+# Coodie
+- show log of a deleted file: `git log -- <fileName>`
+- find out which commit deleted a line: `git blame --reverse START.. <fileName>`
+- delete local tag: `git tag --delete tagname`
+- delete remote tag: `git push --delete origin tagname`

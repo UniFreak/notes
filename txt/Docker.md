@@ -294,4 +294,3 @@ see: https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practice
 # bump
 - access multiple site via domain in host: jwilder/nginx-proxy
 - container be accessible for each other by domain name: net-alias
-

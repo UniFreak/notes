@@ -86,10 +86,10 @@ xdebug.remote_autostart=1
 xdebug.remote_port=9000
 ```
 
-and subime's xdebug extension setting:
+and sublime's xdebug extension setting:
 
 ```json
-    "path_mapping": {
+    path_mapping : {
         "/var/www/html/": "/Users/fanghao/Projects/",
     },
 ```
@@ -101,3 +101,14 @@ so I can use `getent hosts host.docker.internal | awk '{ print $1 }'` to get ip
 see: <https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds>
 
 then change the xdebug config
+
+other traps: 
+
+- error while installing php extension: remember to trim \
+- error while `run pecl install`: use a vpn(like xin)
+- xdebug not working unless in company network, even with vpn @?
+- domain not working in browser unless in company network, even with vpn @?
+- **notice this**
+    + in company docker subnet: 172.16.24.0/24, xdebug remote_host=172.16.24.2
+    + in home 192.168.65.0/24, xdebug remote_host=192.168.65.2
+    + try configure only path_mappin of `Project` dir and make sure workspace folder dragged from `Project dir`
