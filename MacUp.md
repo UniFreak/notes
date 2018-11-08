@@ -1,3 +1,6 @@
+# quirks
+- install old php & package(php56, php56-xdebug...): https://stackoverflow.com/questions/49649693/install-php-extension-for-php-5-6-on-osx-with-deprecated-homebrew-php
+
 # common utils
 - QQ
 - Chrome
@@ -18,6 +21,8 @@
 - Python 调试
 - nodejs
 - git with git-completion.bash
+
+# xdebug
 
 # debug
 
@@ -112,3 +117,4 @@ other traps:
     + in company docker subnet: 172.16.24.0/24, xdebug remote_host=172.16.24.2
     + in home 192.168.65.0/24, xdebug remote_host=192.168.65.2
     + try configure only path_mappin of `Project` dir and make sure workspace folder dragged from `Project dir`
+- postman respond to api call fine, but site can not be access via browser: no response --> turn off all vpns

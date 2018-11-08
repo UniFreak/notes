@@ -1,4 +1,4 @@
-#安装
+# 安装
 - install dependencies
     + `apt-get install libxml2 libxml2-dev`
     + `apt-get install libcurl4-openssl-dev pkg-config`
@@ -36,9 +36,9 @@
 - `/usr/local/bin/php-fpm`
 
 
-#特点
+# 特点
 
-##安全模式
+## 安全模式
 
 __Note__:已于 5.3 废弃, 5.4 移除
 

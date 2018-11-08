@@ -1,0 +1,22 @@
+# 概念
+- SK8: skateboarding
+- SK8ER: skater
+- S.K.A.T.E(SK): Game Of Skate
+- BATB: S.K.A.T.E 大战
+- 趴: 单位, 滑板平躺地面的高度
+- 立: 单位, 滑板侧放地面的高度
+- 过立: 动作, 跳过障碍
+- 劈级: 动作, 下台阶
+- Pop: 水平旋转
+- Flip: 垂直旋转
+- Treflip(360 flip): pop360 + flip360
+- Impossible: 板面围绕后脚旋转 360
+- HardFlip: ...
+- Regular: 左脚滑手
+- Goofy: 右脚滑手
+- Normal: 脚位, 正脚正滑
+- Fakie: 正脚倒滑
+- Switch: 反脚正滑
+- Nollie: 反脚倒滑
+- 分类: 长板, 双翘, 小鱼板
+- 

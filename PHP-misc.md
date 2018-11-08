@@ -1,5 +1,5 @@
-form action为空时,默认是本页面php代码执行
-setsession()和setcookie()必须位于<html>标签之前
+form action为空时, 默认是本页面php代码执行
+setsession() 和setcookie() 必须位于 <html> 标签之前
 
 基于 Unix 的系统使用 \n 作为行结束字符, 基于 Windows 的系统使用 \r\n 作为行结束字符, 基于 Macintosh 的系统使用 \r 作为行结束字符
 
