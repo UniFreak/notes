@@ -48,7 +48,7 @@ composer config -g repo.packagist composer https://packagist.phpcomposer.com
 - version like `dev-<branchName>` will be solved as branch, and package downloaded as `--prefer-source` style
 - In the case of a branch with a version-like name, you append `-dev` as a suffix
 
-#composer.json
+# composer.json
 
 json schema: https://github.com/composer/composer/blob/master/res/composer-schema.json
 属性
@@ -104,7 +104,7 @@ json schema: https://github.com/composer/composer/blob/master/res/composer-schem
     archive
     non-feature-branches
 
-#CLI
+# CLI
 
 Global options(every command can use)
     --verbose (-v)
@@ -261,7 +261,7 @@ Enviroment variables
     COMPOSER_DISCARD_CHANGES
     COMPOSER_NO_INTERACTION
 
-==================== Config ====================
+# Config
 process-timeout
 use-include-path
 preferred-install
@@ -297,5 +297,6 @@ discard-changes
 archive-format
 archive-dir
 
-==================== Tips ====================
-you probably want to add vendor/ in your .gitignore. You really don't want to add all of that code to your repository.
+# Tips
+- you probably want to add vendor/ in your .gitignore. You really don't want to add all of that code to your repository.
+- to remove tests/ folder when prefer-dist: use a .gitattributes config file
