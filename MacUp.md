@@ -10,6 +10,7 @@
 - PS
 - typora
 - office for Mac
+- MollyGuard
 
 # dev utils
 - @see: http://www.josebrowne.com/open/from-windows-to-mac-dev

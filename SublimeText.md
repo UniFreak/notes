@@ -1,5 +1,6 @@
 # Crack
 
+```
 —– BEGIN LICENSE —–
 riku
 Single User License
@@ -13,37 +14,57 @@ F41F7BFAB3348963FF69F163A70ABBEA
 2526B73B523AA28BF66AFEF3ED3D1D21
 BC6CB3B5B6D183FF5C755DE7007C6C41
 —— END LICENSE ——
+```
 
-# Customization
-
-自定义Snippets
-    比如定义一个 `ci` 为 `http:\\console.info(args)` ，保存在 User\js-snippets\console-info.sublime-snippet ：
-    <snippet>
-        <content><![CDATA[console.info(${1})]]><\content>
-        <tabTrigger>ci<\tabTrigger>
-        <scope>source.js<\scope>
-        <description>console.info<\description>
-    <\snippet>
 
 # Build
 
 tools->build system->new build system
 
-- HTML
+- Open by default app(typora): md, html...
 
-    ```
-    {
-        "C:\Program Files\Google\Chrome\Application\chrome.exe"
-    }
-    ```
+```json
+{
+    "cmd": ["open", "$file"],
+    "file_regex": ".md$"
+}
+```
 
-保存为chrome.sublime-build
+- php
+
+```json
+{
+    "shell_cmd": "/usr/local/opt/php@5.6/bin/php -f $file",
+    "selector": "source.php"
+}
+```
+
+- python
+
+```json
+{
+    "shell_cmd": "python -u \"$file\"",
+    "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+    "selector": "source.python",
+
+    "env": {"PYTHONIOENCODING": "utf-8"},
+
+    "variants":
+    [
+        {
+            "name": "Syntax Check",
+            "shell_cmd": "python -m py_compile \"${file}\""
+        }
+    ]
+}
+```
 
 
 # Plugins
 
+Basic: 
+
 - Package Control
-- Composer
 - ColorHelper
 - ColorSublime
 - PlantUML/Diagram
@@ -51,60 +72,42 @@ tools->build system->new build system
 - Origami
 - BufferScroll
 - EasyMotion
-- Emmet(需要Pyv8插件)&Emmet CSS Snippet
 - ProjectManager
 - CodeFormatter
-- DocBlockr
 - MoveTab
+- Synced Sidebar
+- AdvancedNewFile
+- GitGutter
+
+
+Coding:
+
+- Composer
+- Anaconda
+- Python Debugger
+- Emmet & Emmet CSS Snippet
+- DocBlockr
 - MarkdownExtends & MarkdownEditing
 - Sublime Linter
     + SublimeLinter-PHP
     + SublimeLinter-JsHint
     + SublimeLinter-cssLint
     + SublimeLinter-Html-tidy
-- PHPCS
+    + SublimeLinter-pycodestyle
 - BracketHighlighter
-- Synced Sidebar
-- Goto Documentation
-- Text Pastry
 - CTags
-- AdvancedNewFile
-- Bootstrap 3 Snippet
-- Emoji
-- SASS
-- HexViewer
-- AlignTab
-- TabsExtra
-- FTPSync
 - Plainnote
 - Prefixr
 - Code Alignment
-- FindKeyConflict
 - FileDiffs/Sublimerge/Meld
-- View in browsers
 - SideBarEnhancements
-- LiveRelaod
 - GBK Encoding Support
-- ColorPicker
-- Markdown Preview
-- YUI Compressor/Minify/Minifier/ClentSide
-- ES6-Toolkit
-- JavascriptNext
-- JSLint
-- PackageResourceViewer
-- SublimeGDB
-- Open URL
-- jQuery
 - Sublime Tmpl
-- Stackoverflow search
-- PHPUnit
-- PHPUnit Snippets
-- Soda Theme/Phoenix Theme/sunnyvale
-- Sublime FTP
 - Xdebug
-- File Navigator
 
-# 自定义插件
+# Write your own plugin
+
+```python
     open_browser:
         import sublime, sublime_plugin
         import webbrowser
@@ -112,3 +115,4 @@ tools->build system->new build system
            def run(self,edit):
               url = self.view.file_name()
               webbrowser.open_new(url)
+```

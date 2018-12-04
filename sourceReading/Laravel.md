@@ -37,6 +37,11 @@ if (file_exists($file = ...)) {
 ```
 
 ```
+call_user_func(Class::getIniter());
+// and getIniter() will return a Closure
+```
+
+```
 // @?
 return \Closure::bind(function () use ($loader) {
     ...
