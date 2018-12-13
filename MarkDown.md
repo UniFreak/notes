@@ -72,8 +72,8 @@ __strong__
 <http://autolink.com>
 <fanghao90s@gmail.com>
 [reference link1][num1] and [reference link2][num2] defined by the following(see bottom)
-[Alt text](/path/to/img.jpg "Optional title")
-[Alt text][id] reference img defined by the following(seebottom)
+![Alt text](/path/to/img.jpg "Optional title")
+![Alt text][id] reference img defined by the following(seebottom)
 
 # Table
 

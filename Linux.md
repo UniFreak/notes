@@ -15,3 +15,6 @@
 
 # useful utils
 - `tree`: output directory tree
+
+# Coodie:
+- find out whether port 80 is in use: `sudo lsof -i:80 | grep LISTEN`

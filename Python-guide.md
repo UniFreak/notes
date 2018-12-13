@@ -1,6 +1,7 @@
 # Referece
 - https://docs.python-guide.org
 - https://python-packaging-user-guide.readthedocs.io/
+- https://packaging.python.org/guides/distributing-packages-using-setuptools/
 
 # Interpreter
 - CPython: 官方, 用 C 编写
@@ -10,23 +11,26 @@
 - IronPython: 基于 .Net, 编译成 .Net 字节码
 
 # Concepts
+- `PyPA`: Python Packaging Authority, a working group that maintains many of the relevant projects in Python packaging
+- `PyPI`: Python Package Index
 - `Virtual Environment`: keep the dependencies required by different projects in separate places
 
 # Packaging
 
-for libaray (and developers):
+libirary distribution formats:
 
 - `.py`: standalong module (single file, pure python)
-- `sdist`: pure-python package (multiple file, pure python)
-- `wheel`: python package (multiple file, not pure-python)
-- tutorial:
-    1. make sure `setup.py` is created correctly, and you have `setuptools` installed
-    2. run `python3 setup.py sdist bdist_wheel` to generate `dist/pkg.whl` and `dist/pkg.tar.gz`
-    3. make sure you have PyPI account, and `twine` installed
-    4. run `twine upload --repository-url https://pypi.org/legacy/ dist/*` to push to repo
-    5. run `python3 -m pip install --index-url https://pypi.org/simple/ pkgname` to install
+- source distribution: provides metadata and the essential source files needed for installing by a tool like pip, or for generating a Built Distribution.
+    + `sdist`
+- built distribution: containing files and metadata that only need to be moved to the correct location on the target system
+    + `binary distribution`
+    + `egg`: introduced by `setuptools`
+    + `wheel`: to replace `egg`.
+        * `universal wheel`: pure Python(i.e. contain no compiled extension), support 2 and 3
+        * `pure python wheel`: pure Python
+        * `plateform wheel`: non-pure Python
 
-for complete application:
+complete application distribution:
 
 - PEX: libraries included
 - anaconda: Python ecosystem
@@ -36,10 +40,20 @@ for complete application:
 - virtual machine: kernel included
 - hardware: plug and play
 
+# Distribute a wheel
+
+1. make sure `setup.py` is created correctly, and you have `setuptools` installed
+2. run `python3 setup.py sdist bdist_wheel` to generate `dist/pkg.whl` and `dist/pkg.tar.gz`
+3. make sure you have PyPI account, and `twine` installed
+4. run `twine upload --repository-url https://pypi.org/legacy/ dist/*` to push to repo
+5. run `python3 -m pip install --index-url https://pypi.org/simple/ pkgname` to install
+
+
+
 # Installer
 
-- `pip`: 
-    + install from: index(`PyPI`(Python Package Index, default) or others), VSC, local src
+- `pip`:
+    + install from: pypi.org or others, VSC, local src
     + can install pre-built bianry archive: `sdist` or `wheels`(preferred)
     + will locally build a wheel and cache it for future installs
 - `setuptools` & `wheel`: install from source archives
@@ -69,9 +83,10 @@ for complete application:
 # Dependeny management
 
 - `pipenv`: install dependencies and manage virtual environments (wrap pip and virutalenv)
+    + `pipenv shell --python <version>`
     + `pipenv install <package>`
+    + `pipenv lock`
     + `pipenv run python <script>`
-    + `pipenv shell`
 
 # Linter
 - sublime text: sublimeLinter & sublimeLinter-pycodestyle
@@ -83,6 +98,11 @@ for complete application:
 - GUI: Cocoa, GTk, PyQt, Qt, Tk...
 - Web: Django, Flask, Falcon, Tornado, Masonite...
 - Cli: Clint, Click, docopt, Plac, Cliff, Cement...
+
+# Hosting Pypi
+- devpi
+- pypiserver
+- warehouse
 
 # @?
 - pythone-config
@@ -119,14 +139,14 @@ for complete application:
     + add suffixes `_co` or `_contra` to the variables used to declare covariant or contravariant behavior
     + suffix `Error` on your exception names
     + Class names should normally use the CapWords convention
-    + Function, Method, Instance variables should be lowercase, with words separated by underscores 
+    + Function, Method, Instance variables should be lowercase, with words separated by underscores
     + Cosntants should be all capital letters with underscores separating word
     + Always use `self` for the first argument to instance methods
     + Always use `cls` for the first argument to class methods
 - coding
     + modules should explicitly declare the names in their public API using the `__all__` attribute.
     + use `'.join()` instead of `a += b` or `a = a + b`
-    + use `is` or `is not` to do comparisons to singletons like `None` 
+    + use `is` or `is not` to do comparisons to singletons like `None`
     + Use `is not` operator rather than `not ... is`
     + beware of writing `if x` when you really mean `if x is not None`
     + When implementing ordering operations with rich comparisons, it is best to implement all six operations
@@ -141,6 +161,27 @@ for complete application:
     + Don’t compare boolean values to True or False using `==`, do `if greeting:`
 
 # Structure
+
+Cli app:
+
+- One-off script: for your own
+
+```
+cmd.py
+```
+
+- One-off script: need distribute
+
+```
+cmd/
+|- .gitignore
+|- cmd.py
+|- LICENSE
+|- README.md
+|- requirements.txt
+|- setup.py
+|- tests.py
+```
 
 - sample Repository
 
@@ -189,7 +230,7 @@ samplesite/sampleapp/models.py
 
 # Best practice
 
-- you should always install Setuptools, Pip, and Virtualenv 
+- you should always install Setuptools, Pip, and Virtualenv
 - don’t namespace with underscores, use submodules instead
 
 ```python
@@ -200,7 +241,7 @@ import library.foo_plugin # not OK
 - you need to understand the import mechanism in order to use this concept properly and avoid some issues
 - Using properly mutable types for things that are mutable in nature and immutable types for things that are fixed in nature helps to clarify the intent of the code
 - avoid using the same variable name for different things or assigning to a variable more than once
-- using properly mutable types for things that are mutable in nature and immutable types for things that are fixed in nature 
+- using properly mutable types for things that are mutable in nature and immutable types for things that are fixed in nature
 - discourages the usage of the` %` operator in favor of the `str.format()` method
 - one of the secrets of becoming a great Python programmer is to read, understand, and comprehend excellent code
     + Howdoi
@@ -209,6 +250,7 @@ import library.foo_plugin # not OK
     + Werkzeug
     + Requests
     + Tablib
+    + @see: https://click.palletsprojects.com/en/7.x/quickstart Screencast and Examples
 - use `sphinx` and `read the doc` to doc your project
 - use `Numpy style` doc string
 
@@ -232,7 +274,7 @@ def append_to(element, to=None):
         to = []
     to.append(element)
     return to
-# but sometimes you can specifically “exploit” (read: use as intended) this behavior 
+# but sometimes you can specifically “exploit” (read: use as intended) this behavior
 ```
 
 # Codie & Idioms
@@ -282,3 +324,6 @@ four_lists = [[] for __ in range(4)]
 - find out user base binary directory: `python -m site --user-base`
 
 # debug @?
+
+# Notes
+- Pipfile (and requirements.txt) is for applications; setup.py is for packages. They serve different purposes. If you need to sync them, you’re doing it wrong (IMO)
