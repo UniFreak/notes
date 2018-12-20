@@ -84,7 +84,7 @@ complete application distribution:
 
 - `pipenv`: install dependencies and manage virtual environments (wrap pip and virutalenv)
     + `pipenv shell --python <version>`
-    + `pipenv install <package>`
+    + `pipenv install <package> [--dev]`
     + `pipenv lock`
     + `pipenv run python <script>`
 

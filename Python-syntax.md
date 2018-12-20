@@ -1,6 +1,119 @@
-# language
-- no attribute is really private in Python 
+# TODO
+- with & context manager
+- ~~OOP~~
+- pytest
+- nested method
+- decrator
+
+# data types
+- no attribute is really private in Python
 - `dunders`: names like `__this__`
+
+## basic
+- bool: True, False
+- numeric: int, float, complex
+- str: '' (also an immutable sequence)
+
+## data structure
+sequence:
+- list: []
+- tuple: ()
+- range: range()
+
+text sequence:
+- str: ' ', " ", """ """
+
+binary:
+- bytes
+- betearray
+- memoryview
+
+- set: unique, unordered: `set()`
+- dict: {}
+
+# errors
+- syntax error: happen at the token processing
+- exception: error detected during execution, all derived from `BaseException` class
+
+When creating a module that can raise several distinct errors, a common practice is to create a base class for exceptions defined by that module, and subclass that to create specific exception classes for different error conditions
+
+```python
+try:
+    raise SomeError1 # can raise by class name or instance like `raise SomeError1('message')`
+    # do something
+except SomeError1: # can catch mutliple Error like `except (SomeError1, SomeError2)`
+    # do something
+    raise # will re-raise catched exception
+except SomeError2 as err2: # can also chain the `except` clause
+    # do something
+else: # executed if try clause does not raise an exception
+    # do something
+finally: # always execute
+    # do something
+```
+
+# namespacing
+- module is a namespacing machanism
+- top level code is in `__main__` namesapce
+
+# variable
+- `del`
+- `nonlocal`, `global`
+
+# OOP
+
+- in python, everything is an object
+- but python does not impose object-oriented programming as the main programming paradigm
+- using stateless functions is a better programming paradigm
+
+## class definition
+
+```python
+class Dog(Animal, Friend): #  inherit by (), support multi-inheritance
+                           #  can also be `module.ClassName`
+    kind = 'canine' #  class variable shared by all instance
+    _age #  underscore prefixed attributes should be considered non-public
+    __mangle #  `name mangling` to _Dog__mangle @?
+
+    def __init__(self, name):
+        self.name = name #  unique to each instance
+        Animal.do() #  call Base class method
+```
+
+## three new objects
+
+**class object**: wrapper around the contents of the namespace created by the class definition
+- attribute:
+    + `__doc__`: return docstring
+
+- methods
+    + `__init__()` called when do instantiating **instance object**(by calling a **class object**)
+    + `__del__()`
+    + `__str__()`, `__byte__()`
+    + `__iter()__` and `__next()__` to add iterator bahavior
+
+**instance object**: instantiated by calling a class object (`obj = Cls()`)
+
+- attribute
+    + `__class__`
+- methods (see method object)
+
+**method object**: all attributes of a class that are function objects define corresponding methods of its instances. when a non-data attribute of an instance is referenced, the instance’s class is searched. If the name denotes a valid class attribute that is a function object, a method object is created by packing (pointers to) the instance object and the function object just found together in an abstract object: this is the method object
+
+- attribute
+    + `__self__`: return the instance object
+    + `__func__`: return the function object defined in class
+
+## some remarks
+
+- data attributes override method attributes with the same name, use naming convention to avoid conflicts
+- nothing in Python makes it possible to enforce data hiding — it is all based upon convention
+- `self` is also an convention
+
+
+## related functions
+- isinstance()
+- issubclass()
 
 # module
 - module name can be accessed via `__name__`
@@ -30,19 +143,13 @@ if __name__ == "__main__":
 - when do `import pack.modu`:
 1. look for `__init__.py` in `pack`, execute its top-level statements
 2. look for `pack/modu.py`, execute its top-level statements
-3. any varialbe, function or class in `modu.py` is available in 
+3. any varialbe, function or class in `modu.py` is available in
 
 # import:
 - `from modu import func [as alias]`: import `func` into global
 - `from modu import *`: import all funcitons except those beging with `__` into global
 - `import modu [as alias]`: import `modu` under `modu` namespace
 - `from [. | .. | ..modu] import item`: relative import
-
-
-# OOP
-- in python, everything is an object
-- but python does not impose object-oriented programming as the main programming paradigm
-- using stateless functions is a better programming paradigm
 
 # decorators
 - a decorator is a function or a class that wraps (or decorates) a function or a method
