@@ -16,11 +16,11 @@
 - `wget http://jp2.php.net/distributions/php-5.6.17.tar.bz2 &&`
 - `tar xvf php-5.6.17.tar.bz2 &&`
 - `cd php-5.6.17 &&`
-- 
+-
     ```
-    ./configure 
-    --enable-fpm 
-    --with-mysql 
+    ./configure
+    --enable-fpm
+    --with-mysql
     --with-ldap
     --with-openssl
     --enable-mbstring
@@ -84,3 +84,19 @@ __Note__:已于 5.3 废弃, 5.4 移除
 - 相关函数
     + is_uploaded_file()
     + move_uploaded_file()
+
+# ENV
+
+`getenv()` will read from:
+
+1. what inside shell `env`: `$ env`
+2. exported env: `$ export YOLO`
+2. passed into cli `php` command on the fly: `$ YOLO=covfefe php -r 'echo getenv("YOLO");'`
+
+locally defined, can not be access via another terminal
+
+NOTE:
+
+- Always run processes you do not trust in a restricted environment.
+- Never prefix your env variable with `HTTP_` (used by PHP)
+- Affected by `varialbe_order` ini setting (EGPCS)

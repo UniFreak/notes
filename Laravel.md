@@ -33,7 +33,7 @@
 - before middleware
 
     ```php
-    <?php 
+    <?php
         // perform task
         return `$next`($requeset);
      ?>
@@ -42,7 +42,7 @@
 - after middleware
 
     ```php
-    <?php 
+    <?php
         $response = $next($request);
         // perform task
         return $request;
@@ -56,7 +56,7 @@
 - to register middleware in controller/action, use controller's `middleware()`  method in its constructor like this:
 
     ```php
-    <?php 
+    <?php
     public function __construct()
     {
         $this->middleware('auth');
@@ -74,10 +74,10 @@
 
 - controllers are resided in `app/Http/Controllers`
 - use `action('controller@action')` to generate URL
-- use `Route::currentRouteAction()` to obtain current CA 
+- use `Route::currentRouteAction()` to obtain current CA
 - use `artisan make:controller PhotoController` will create a Restful resource controller
     + resource controller have those actions
-    
+
         |Verb|Path|Action|Routename|
         |----|----|------|---------|
         |GET|/photo|index|photo.index|
@@ -92,7 +92,7 @@
     + `Route::resource()` can also define a partial resource routes, this should be under other related route definitions
 
         ```php
-        <?php 
+        <?php
         Route::resource('photo', 'PhotoController',
                         ['only' => ['index', 'show']]);
 
@@ -104,7 +104,7 @@
     + use `.` to define nested resource routes(say comments to photos), like `Route::resource('photos.comments', 'PhotoCommentController');`, then you can access it via URL `photos/{photos}/comments/{comments}`
 - implicit controllers
     ```php
-    <?php 
+    <?php
     // in routes.php:
     Route::controller('users', 'UserController');
 
@@ -138,11 +138,11 @@
 - use `->only([])` or `->except([])` to filter as you like
 - if you need to restore users old input, you may checkout Laravel's `validation service`, or use `flash`:
     + use `->flash()` or `->flashOnly()` or `->flashExcept()` to flash request data into session
-    + if you then need to redirect use something like `return redirect('form')->withInput()` 
+    + if you then need to redirect use something like `return redirect('form')->withInput()`
     + get the old data by `->old('name')` or helper `{{ old('name') }}`
 - use `->cookie('name')` to access cookie data, all cookie data are encrypted and signed by Laravel, if you don't want that, add an entry into middleware `EncryptCookies::$except`
 - obtain a `SplFileInfo` object from request by `->file('photo')`, use `->hasFile('photo')` to determine its presence
-- use `$file->isValid()` to determine whether there is problem uploading the file, and `$file->move($path, $name)` to move it. check [Symfony UploadedFile][symfonyFile] for more file operations 
+- use `$file->isValid()` to determine whether there is problem uploading the file, and `$file->move($path, $name)` to move it. check [Symfony UploadedFile][symfonyFile] for more file operations
 
 ## Response
 
@@ -150,10 +150,10 @@
 - chain up `->header()` to add headers into response
 - you can response with cookie by `->withCookie('name', 'value')` or `->withCookie(cookie('name', 'value', $minutes))` or `->withCookie(cookie()->forever('name', 'value'))` for long lived cookie data
 - other response types
-    + view: 
+    + view:
 
         ```php
-        <?php 
+        <?php
         // you need to control over headers (use response() helper)
         return response()->view('hello', $data)->header('Content-Type', $type);
         // you don't need, then simply
@@ -165,7 +165,7 @@
     + jsonp:
 
         ```php
-        <?php 
+        <?php
         return response()->json(['name' => 'Abigail', 'state' => 'CA'])
                          ->setCallback($request->input('callback'));
          ?>
@@ -175,7 +175,7 @@
 - redirect
 
     ```php
-    <?php 
+    <?php
     // use helper:
     return redirect('home/dashboard');
     // to previous location:
@@ -201,7 +201,7 @@
 - if you want to share view data across app, use `view()->share()` inside a `ServiceProvider`
 - If you have data that you want to be bound to a view each time that view is rendered, a `view composer` can help you organize that logic into a single location
     1. register view composer in a new created service provider
-    
+
         ```php
         <?php
 
@@ -239,7 +239,7 @@
 
     2. add the service provider to the providers array in `config/app.php`
     3. define the composer class
-    
+
         ```php
         <?php
 
@@ -323,7 +323,7 @@
 - inject service by `@inject('asName', 'App\Services\MetricsService')`
 - create your own directives
     1. define
-    
+
         ```php
         <?php
 
@@ -372,7 +372,7 @@
     1. define
 
         ```php
-        <?php 
+        <?php
         namespace App\Providers;
 
         use Riak\Connection;
@@ -382,14 +382,14 @@
         class RiakServiceProvider extends ServiceProvider
         {
             /**
-             * - service providers extend the 
+             * - service providers extend the
              *   `Illuminate\Support\ServiceProvider` class
              * - you should at least provide a `register()` method
-             * - whthin the `register()` method, you should only bind things into the 
-             *   service container. You should never attempt to register any event 
-             *   listeners, routes, or any other piece of functionality within 
-             *   the register method. Otherwise, you may accidently use a 
-             *   service that is provided by a service provider which 
+             * - whthin the `register()` method, you should only bind things into the
+             *   service container. You should never attempt to register any event
+             *   listeners, routes, or any other piece of functionality within
+             *   the register method. Otherwise, you may accidently use a
+             *   service that is provided by a service provider which
              *   has not loaded yet
              * - use `artisan make:provider` to generate a template
              */
@@ -401,9 +401,9 @@
             }
 
             /**
-             * - the boot method is called after all other service providers have been 
-             *   registered,  meaning 
-             * - you have access to all other services that have been registered by 
+             * - the boot method is called after all other service providers have been
+             *   registered,  meaning
+             * - you have access to all other services that have been registered by
              *   the framework
              * - and able to type-hint dependencies for our boot method
              */
@@ -419,7 +419,7 @@
 
     2. register: add it into `config/app.php`
     3. if you want to defer provider
-        
+
         ```php
         <?php
 
@@ -457,7 +457,7 @@
 -  there is no need to bind classes into the container if they do not depend on any interfaces
 -  bind class into container
 -  Binding(within a service provider)
-    
+
     ```php
     <?php
     // - resolve with Closure
@@ -494,7 +494,7 @@
 - Tagging
 
     ```php
-    <?php 
+    <?php
     $this->app->bind('SpeedReport', function () {
     });
 
@@ -512,7 +512,7 @@
 - Resolving
 
     ```php
-    <?php 
+    <?php
     // - use `make()`
     $fooBar = $this->app->make('FooBar');
 
@@ -531,7 +531,7 @@
 - container will fire an event each time it resolves an object
 
     ```php
-    <?php 
+    <?php
     $this->app->resolving(function ($object, $app) {
         // Called when container resolves object of any type...
     });
@@ -649,7 +649,7 @@
 - you can splite read/write connection config in the config file like this:
 
     ```php
-    <?php 
+    <?php
     'mysql' => [
         'read' => [
             'host' => '192.168.1.1',
@@ -687,7 +687,7 @@
     + auto transactioin
 
         ```php
-        <?php 
+        <?php
         /**
          * - If an exception is thrown within the transaction Closure, the transaction will automatically be rolled back
          * - If the Closure executes successfully, the transaction will automatically be committed
@@ -702,7 +702,7 @@
     + manual transaction
 
         ```php
-        <?php 
+        <?php
         // control rollback and commit yourself
         DB::beginTransaction();
         DB::rollBack();
@@ -713,10 +713,10 @@
 - listen for query events, You may register your query listener in a service provider
 
 ```php
-<?php 
+<?php
 // in AppServiceProvider.php
 
-// codes... 
+// codes...
     public function boot()
         {
             DB::listen(function($sql, $bindings, $time) {
@@ -740,7 +740,7 @@
     + `->chunk()`: chunk big result
 
         ```php
-        <?php 
+        <?php
         DB::table('users')->chunk(100, function($users) {
             foreach ($users as $user) {
                 // return flase if you want to stop furthur chunk
@@ -748,7 +748,7 @@
         });
          ?>
         ```
-    
+
     + `->lists($colName, $keyAs)`: get a list of column values
     + aggregates: `count()`, `max($colName)`, `min()`, `avg()`, `sum()`
 
@@ -761,9 +761,9 @@
     + `->join('contacts', 'users.id', '=', 'contacts.user_id')`: inner join
     + `->leftJoin('posts', 'users.id', '=', 'posts.user_id')`: left join
     + advanced join
-    
+
         ```php
-        <?php 
+        <?php
         DB::table('users')
                 ->join('contacts', function ($join) {
                     /**
@@ -782,7 +782,7 @@
 - union: `union()` or `unionAll()`
 
     ```php
-    <?php 
+    <?php
     $first = DB::table('users')
                 ->whereNull('first_name');
 
@@ -793,7 +793,7 @@
      ?>
     ```
 
-- where: 
+- where:
     + `where()` and `orWhere()`
     + `whereBetween()` and `whereNotBetween()`
     + `whereIn()` and `whereNotIn()`
@@ -801,7 +801,7 @@
     + advanced where
 
         ```php
-        <?php 
+        <?php
         // parameter grouping, produce:
         // select * from users where name = 'John' or (votes > 100 and title <> 'Admin')
         DB::table('users')
@@ -833,9 +833,9 @@
     + `skip()`, `take()`
 
 - insert
-    
+
     ```php
-    <?php 
+    <?php
     // insert
     DB::table('users')->insert([
         ['email' => 'taylor@example.com', 'votes' => 0],
@@ -870,7 +870,7 @@
 - use `artisan make:model ModelName` to create a model
 
     ```php
-    <?php 
+    <?php
     namespace App;
 
     use Illuminate\Database\Eloquent\Model;
@@ -880,7 +880,7 @@
         /**
          * default is the snake case plural name of `Flight`: flights
          */
-        protected $table; 
+        protected $table;
         /**
          * default is `id`
          */
@@ -909,7 +909,7 @@
     + chunk:
 
         ```php
-        <?php 
+        <?php
         Flight::chunk(200, function ($flights) {
             foreach ($flights as $flight) {
             }
@@ -921,9 +921,9 @@
     + `::find($id)`, `->first()`
     + `::findOrFail($id)`, `->firstOrFail()`: will throw exception if not found
     + aggregates: see also chapter `Query Builder`
-        
+
         ```php
-        <?php 
+        <?php
         $count = App\Flight::where('active', 1)->count();
         $max = App\Flight::where('active', 1)->max('price');
          ?>
@@ -936,7 +936,7 @@
         *  use `update()`
 
             ```php
-            <?php 
+            <?php
             App\Flight::where('active', 1)
                       ->where('destination', 'San Diego')
                       ->update(['delayed' => 1]);
@@ -963,7 +963,7 @@
 
             class Flight extends Model
             {
-                // 1. use the `SoftDelete` trait 
+                // 1. use the `SoftDelete` trait
                 use SoftDeletes;
 
                 // 2. add `deleted_at` into `$dates`s
@@ -973,9 +973,9 @@
             ```
 
         2. add the `deleted_at` column into your table, the Laravel schema builder can help you:
-    
+
             ```php
-            <?php 
+            <?php
             Schema::table('flights', function ($table) {
                 $table->softDeletes();
             });
@@ -990,7 +990,7 @@
     1. define
 
         ```php
-        <?php 
+        <?php
         namespace App;
 
         use Illuminate\Database\Eloquent\Model;
@@ -1021,7 +1021,7 @@
     2. usage:
 
     ```php
-    <?php 
+    <?php
     $users = App\User::ofType('admin')->popular()->get();
      ?>
     ```
@@ -1039,9 +1039,9 @@
         * `restoring`
         * `restored`
     + to listen to the event:
-    
+
         ```php
-        <?php 
+        <?php
         // inside a ServieProvider
         public function boot()
         {
@@ -1068,7 +1068,7 @@
 ### defining
 
 - one to one
-    
+
     ```php
     <?php
     // in User Model...
@@ -1081,7 +1081,7 @@
     {
         /**
          * first argument: the name of the related model
-         * second argument: foreign key, here default is user_id, you can 
+         * second argument: foreign key, here default is user_id, you can
          *                 override it as bellow
          * third argument: local key, default is id, you can override it as
          *                 bellow
@@ -1125,21 +1125,21 @@
     public function roles()
     {
         /**
-         * second argument: the join table name, default is ordered by 
+         * second argument: the join table name, default is ordered by
          *                 alphabetical: `role_user`, you can override it
          * third argument: foreign key of current model
          * fourth argument: foreign key of joining model
-         * 
-         * pivot: the joining table model 
-         * by default, only the model keys will be present on the pivot 
+         *
+         * pivot: the joining table model
+         * by default, only the model keys will be present on the pivot
          * object. If your pivot table contains extra attributes, you must
          * specify them when defining the relationship, use
-         * 
+         *
          * `->withPivot('column1', 'column2', ...)`
-         * 
-         * if you want your pivot table to have automatically maintained 
+         *
+         * if you want your pivot table to have automatically maintained
          * `created_at` and `updated_at` timestamps, use:
-         * 
+         *
          * `->withTimestamps()`
          */
         return $this->belongsToMany('App\Role', 'user_roles', 'user_id', 'role_id');
@@ -1237,7 +1237,7 @@
     // USAGE
     // - retrieve by dynamic property
     App\Staff::find(1)->photos
-    // - retrive the owner of the polymorphic relation, this will return 
+    // - retrive the owner of the polymorphic relation, this will return
     //   either Staff or Product instance
     App\Photo::find(1)->imageable()
      ?>
@@ -1318,7 +1318,7 @@
     <?php
     $user = App\User::find(1)->posts
     foreach ($user->posts as $user) {
-        // 
+        //
     }
      ?>
     ```
@@ -1345,7 +1345,7 @@
     // Retrieve all posts that have at least one comment with votes...
     $posts = Post::has('comments.votes')->get();
 
-    // Retrieve all posts with at least one comment containing words like foo% 
+    // Retrieve all posts with at least one comment containing words like foo%
     // or...
     $posts = Post::whereHas('comments', function ($query) {
         $query->where('content', 'like', 'foo%');
@@ -1356,7 +1356,7 @@
     ```
 
 - eager loading: alleviates the N + 1 query problem, use `with()`
-    
+
     ```php
     <?php
     /**
@@ -1457,12 +1457,12 @@
     $user = App\User::find(1);
 
     /**
-     * attach a role to a user by inserting a record in the intermediate table 
+     * attach a role to a user by inserting a record in the intermediate table
      * that joins the models
      */
     $user->roles()->attach($roleId);
     /**
-     * you may also pass an array of additional data to be inserted into the 
+     * you may also pass an array of additional data to be inserted into the
      * intermediate table
      */
     $user->roles()->attach($roleId, ['expires' => $expires]);
@@ -1476,7 +1476,7 @@
     $user->roles()->detach([1, 2, 3]);
     $user->roles()->attach([1 => ['expires' => $expires], 2, 3]);
 
-    // after sync, only the IDs in the array will exist in the intermediate 
+    // after sync, only the IDs in the array will exist in the intermediate
     // table
     $user->roles()->sync([1, 2, 3]);
     $user->roles()->sync([1 => ['expires' => true], 2, 3]);
@@ -1542,7 +1542,7 @@
 - if you need to use a custom Collection object with your own extension methods, you may override the newCollection method on your model
 - all collections also serve as iterators
 - an example to show the power of collections:
-    
+
     ```php
     <?php
     $users = App\User::where('active', 1)->get();
@@ -1562,7 +1562,7 @@
 -  accessor: format value when retrieving Eloquent attributes
 -  for example, encrypted in DB but auto decrypted when accessing it in Eloquent model
 - define
-    
+
     ```php
     <?php
     // in User Model
@@ -1581,7 +1581,7 @@
      ?>
     ```
 
-- date mutator 
+- date mutator
     + by default, Eloquent will convert the `created_at` and `updated_at` columns to instances of `Carbon`
     + customize which fields are automatically mutated, and even completely disable this mutation, by overriding the `$dates` property of your model
     + timestamps are formatted as `'Y-m-d H:i:s'`. If you need to customize the timestamp format, set the `$dateFormat` property on your model
@@ -1594,13 +1594,13 @@
     ```php
     <?php
     // in User Model
-    
+
     protected $casts = [
         'is_admin' => 'boolean',
         /**
-         * options JSON text in db will automatically be deserialized into a 
+         * options JSON text in db will automatically be deserialized into a
          * PHP array when you access it
-         * 
+         *
          * automatically serialized into JSON when you store options
          */
         'options' => 'array',
@@ -1646,7 +1646,7 @@ Route::get('users', function () {
         ```php
         <?php
         // in User Model
-        
+
 
         // 1. define an accesor for the value
         public function getIsAdminAttribute()
@@ -1655,7 +1655,7 @@ Route::get('users', function () {
         }
 
         // add the attribute name to the appends property on the model
-        // appends attributes also respect the visible and hidden settings 
+        // appends attributes also respect the visible and hidden settings
         protected $appends = ['is_admin'];
          ?>
         ```
@@ -1682,16 +1682,16 @@ class SendEmails extends Command
 {
     /**
      * `$signature` allows you to define the name, arguments, and options
-     * 
+     *
      * - name: `email:send`
-     * - argument: 
+     * - argument:
      *     + required: {user}
      *     + optional: {user?}
      *     + with default value: {user=foo}
      *     + with description: {user : The ID of the user}
      * - options(prefixed with `--`)
      *     + boolean option: {--queue}
-     *     + user provided value option: {--queue=} 
+     *     + user provided value option: {--queue=}
      *     + with default value: {--queue=default}
      *     + with shortcut: {--Q|queue}
      *     + with description: {--queue= : whether the job should be queued}
@@ -1741,7 +1741,7 @@ class SendEmails extends Command
         /**
          * table layout
          */
-        $this->table($header, $data); 
+        $this->table($header, $data);
         /**
          * progress bar
          */
@@ -1929,7 +1929,7 @@ __note__: pagination operations that use a `groupBy` statement cannot be execute
 
 - use `csrf_token()` to generate a csrf token
 - use `csrf_filed()` to generate a csrf hidden input filed
-- use `VerifyCsrfToekn::$except` property to exclude URIs from auto 
+- use `VerifyCsrfToekn::$except` property to exclude URIs from auto
   CSRF protection
 
 # Testing

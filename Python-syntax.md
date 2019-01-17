@@ -31,6 +31,22 @@ binary:
 - set: unique, unordered: `set()`
 - dict: {}
 
+# operator
+- arithmetic: +  -  *  /  %  //  **
+- comparison: ==  !=  <  >  <=  >=
+- logical: and  or  not
+- bitwise: &  |  ~  ^  >>  <<
+- assignment: =  +=  -=  *=  /=  %=  //=  **=  &=  |=  ^=  >  <<=
+- identity: is      is not (the only common use in practice is `is None` or `is not None`)
+- membership: in    not in
+
+# flow control
+- if  elif  else
+- while
+- break  continue
+- for in
+- <this> if <condition> else <that>
+
 # errors
 - syntax error: happen at the token processing
 - exception: error detected during execution, all derived from `BaseException` class
@@ -60,9 +76,26 @@ finally: # always execute
 - `del`
 - `nonlocal`, `global`
 
+# function
+user-defined function has those special attributes:
+- `.__doc__`
+- `.__name__`
+- `.__qualname__`
+- `.__module__`
+- `.__defaults__`
+- `.__code__`
+- `.__globals__`
+- `.__dict__`
+- `.__closure__`
+- `.__annotations__`
+- `.__kwdefaults__`
+
 # OOP
 
 - in python, everything is an object
+- each object has an identity (`id()`), a type (`type()`) and a value
+- objects are never destroyed, only garbage-collected when they are unreachable(CPython: reference-counting)
+- objects contain references to other objects are called containers
 - but python does not impose object-oriented programming as the main programming paradigm
 - using stateless functions is a better programming paradigm
 
@@ -85,17 +118,29 @@ class Dog(Animal, Friend): #  inherit by (), support multi-inheritance
 **class object**: wrapper around the contents of the namespace created by the class definition
 - attribute:
     + `__doc__`: return docstring
-
+    + `__name__`
+    + `__module__`
+    + `__dict__`
+    + `__bases__`
+    + `__annotations__`
 - methods
+    + `__new__()`: when create
+    + `__call__()`: after create
     + `__init__()` called when do instantiating **instance object**(by calling a **class object**)
-    + `__del__()`
-    + `__str__()`, `__byte__()`
-    + `__iter()__` and `__next()__` to add iterator bahavior
+    + `__del__()`: when destroy
+    + `__str__()`, `__bytes__()`, `__repr__()`, `__format__()`
+    + `__lt__()`, `__le__()`, `__eq__()`, `__ne__()`, `__gt__()`, `__ge__()`
+    + `__getattr__()`, `__setattr__()`, `__delattr__()`
+    + `__get__()`, `__set__()`, `__delete__()`
+    + `__hash__()`, `__bool__()`, `__dir__()`
+    + `__getitem__()`: [] operation
+    + `__iter__()` and `__next__()` to add iterator bahavior
 
 **instance object**: instantiated by calling a class object (`obj = Cls()`)
 
 - attribute
     + `__class__`
+    + `__dict__`
 - methods (see method object)
 
 **method object**: all attributes of a class that are function objects define corresponding methods of its instances. when a non-data attribute of an instance is referenced, the instance’s class is searched. If the name denotes a valid class attribute that is a function object, a method object is created by packing (pointers to) the instance object and the function object just found together in an abstract object: this is the method object
@@ -116,8 +161,14 @@ class Dog(Animal, Friend): #  inherit by (), support multi-inheritance
 - issubclass()
 
 # module
-- module name can be accessed via `__name__`
 - bug if run module with `python modu.py <arguments>`, module name will be `__main__`. so to make module as a script(for testing or provide a user interface) as well as importable module, add following codes at the end:
+
+special atributes:
+- `__name__`
+- `__doc__`
+- `__annotation__`
+- `__file__`
+- `__dict__`
 
 ```python
 if __name__ == "__main__":

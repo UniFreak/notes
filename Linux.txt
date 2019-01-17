@@ -1,89 +1,99 @@
-=============== Install ===============
-分区
-	要放在 / 分区的目录: /etc, /sbin, /bin, /dev, /lib, 因为这些目录包含了系统启动要用到的命令和函数
-	建议独立分区的目录: /home, /usr, /var, /tmp 等
+# Install
 
-=============== Basic ===============
+- 分区
+
+要放在 / 分区的目录: /etc, /sbin, /bin, /dev, /lib, 因为这些目录包含了系统启动要用到的命令和函数
+建议独立分区的目录: /home, /usr, /var, /tmp 等
+
+# Basic
+
 FHS 仅定义了了最上层(/) 和子层(/usr, /var) 的目录内容应该要防止的文件数据, 其他子目录层内可有开发人员自行配置
 
-Linux 常见目录结构
-	/
-		/bin
-		/boot
-			grub
-		/dev
-		/etc
-			init.d	sysconfig
-		/home
-		/lib
-			modules
-		/mnt
-		opt
-		/proc									// 在内存中, 不占用硬盘空间
-		/root
-		/sbin
-		/srv
-		/sys
-		/tmp
-		/usr
-			bin		X11R6		share	local
-		/var
-			log		lib		spool	run
+Linux 常见目录结构:
 
+```
+/
+    /bin
+    /boot
+        grub
+    /dev
+    /etc
+        init.d  sysconfig
+    /home
+    /lib
+        modules
+    /mnt
+    opt
+    /proc                                   // 在内存中, 不占用硬盘空间
+    /root
+    /sbin
+    /srv
+    /sys
+    /tmp
+    /usr
+        bin     X11R6       share   local
+    /var
+        log     lib     spool   run
+```
 
 manpage sections
-1				User Commands
-2				System Calls
-3				LIbrary functions
-4				Devices
-5				File formats
-6				Games and Amusements
-7				Conventions and Miscellany
-8				System Administration and Priviledged Commands
-9				Linux kernel documentation
-L				Local
-N				TCL Commands
 
-.				本目录
-..				上级目录
-.+文件名		            隐藏目录/文件
-~				家目录
--				原目录
+1: User Commands
+2: System Calls
+3: LIbrary functions
+4: Devices
+5: File formats
+6: Games and Amusements
+7: Conventions and Miscellany
+8: System Administration and Priviledged Commands
+9: Linux kernel documentation
+L: Local
+N: TCL Commands
 
-r				可读(4)
-w				可写(2)
-x				可执行(1), 如果是目录则决定是否可进入
-SUID			             set uid : 在执行时, 暂时具有该程序拥有者的权限(4)
-SGID			             set gid : 在执行时, 暂时具有该程序用户组的权限(2)
-SBit				Sticky Bit : 只有文件拥有者和 root 可以删除该文件(1)
--				无权限
+路径
 
-mtime			modify time
-ctime			change time
-atime			access time
+. 本目录
+.. 上级目录
+~ 家目录
+- 原目录
+.+文件名 隐藏目录/文件
 
-d				文件夹
--				文件
-l				链接
-c				串设备
-b				块设备
-s				套接字
-p				管道(FIFO, pipe)
+文件权限
 
-0				标准输入(键盘)
-1				标准输出(屏幕)
-2				标准错误
+r   可读(4)
+w   可写(2)
+x   可执行(1), 如果是目录则决定是否可进入
+SUID    set uid : 在执行时, 暂时具有该程序拥有者的权限(4)
+SGID    set gid : 在执行时, 暂时具有该程序用户组的权限(2)
+SBit    Sticky Bit : 只有文件拥有者和 root 可以删除该文件(1)
+-   无权限
+
+mtime           modify time
+ctime           change time
+atime           access time
+
+d               文件夹
+-               文件
+l               链接
+c               串设备
+b               块设备
+s               套接字
+p               管道(FIFO, pipe)
+
+0               标准输入(键盘)
+1               标准输出(屏幕)
+2               标准错误
 
 常见压缩格式
-.Z				compress 压缩
-.bz2			bzip2 压缩
-.gz				gzip 压缩
-.tar				tar 打包
-.tar.gz			tar 打包然后 gzip 压缩
+.Z              compress 压缩
+.bz2            bzip2 压缩
+.gz             gzip 压缩
+.tar                tar 打包
+.tar.gz         tar 打包然后 gzip 压缩
 
-标准输入stdin		0
-标准输出stdout		1
-标准错误stderr		2
+标准输入stdin       0
+标准输出stdout      1
+标准错误stderr      2
 
 
 柱面*磁头*扇区*512字节=磁盘容量
@@ -92,42 +102,42 @@ MBR 最多可以记录四条分区, 所以一个磁盘最多能分4个分区(主
 扇区是磁盘的最小存储单位(512字节); 逻辑块是文件系统指定的最小存储单位
 ext2 文件系统将文件分为两部分存放: 属性放在 inode 中, 内容放在块区域中
 读取文件过程:
-	1. 通过一层层目录获取文件相关的关联数据
-	2. 到对应的 inode 获取文件属性以及文件内容数据所在快
-	3 .到对应块区域获取文件内容
+    1. 通过一层层目录获取文件相关的关联数据
+    2. 到对应的 inode 获取文件属性以及文件内容数据所在快
+    3 .到对应块区域获取文件内容
 元数据存储在
-	超级块(SuperBlock): 即分区中的一个逻辑块, 记录本分区信息. 包括:
-		块与 inode 的总量和使用量, 大小
-		文件系统载入时间, 最后写入时间, 最后一次磁盘检验时间等
-		有效位(已载入为0, 未载入为1)
-	块位图 : 记录块是否可用
-	inode 位图 : 记录 inode 是否可用
+    超级块(SuperBlock): 即分区中的一个逻辑块, 记录本分区信息. 包括:
+        块与 inode 的总量和使用量, 大小
+        文件系统载入时间, 最后写入时间, 最后一次磁盘检验时间等
+        有效位(已载入为0, 未载入为1)
+    块位图 : 记录块是否可用
+    inode 位图 : 记录 inode 是否可用
 数据存储在
-	inode 表是每个 inode 的数据存放区
-	数据块(Data Block) 是每个块的数据存放区
+    inode 表是每个 inode 的数据存放区
+    数据块(Data Block) 是每个块的数据存放区
 载入点就是该文件系统的入口
 连接文件
-	硬连接 : 在某个目录下的块多写入一个关联数据, 所以不占用 inode 与磁盘空间
-	符号链接 : 相当于快捷方式, 是个独立文件, 会占用 inode 与块
+    硬连接 : 在某个目录下的块多写入一个关联数据, 所以不占用 inode 与磁盘空间
+    符号链接 : 相当于快捷方式, 是个独立文件, 会占用 inode 与块
 
 
 =============== Files ===============
-/usr/share/misc 	about jargon
+/usr/share/misc     about jargon
 
-/etc/passwd	记录帐号信息
-/etc/shadow	记录密码信息
-/etc/group		记录用户组信息
+/etc/passwd 记录帐号信息
+/etc/shadow 记录密码信息
+/etc/group      记录用户组信息
 
-/etc/fstab		分区自动载入配置文件
-/etc/issue		终端登录消息配置文件
-/etc/motd		message of today 配置文件
+/etc/fstab      分区自动载入配置文件
+/etc/issue      终端登录消息配置文件
+/etc/motd       message of today 配置文件
 
-/etc/sysconfig/i18n		语系配置文件
+/etc/sysconfig/i18n     语系配置文件
 /etc/profile
 /etc/bashrc
 /etc/profile.d/*.sh
-/etc/man.config			man 查找路径配置
-/etc/updatedb.conf		locate 用的 updatedb 配置文件
+/etc/man.config         man 查找路径配置
+/etc/updatedb.conf      locate 用的 updatedb 配置文件
 
 ~/.bash_profile
 ~/.bash_login
@@ -136,292 +146,292 @@ ext2 文件系统将文件分为两部分存放: 属性放在 inode 中, 内容�
 ~/.bashrc
 ~/.bash_history
 
-/dev/null					空设备
+/dev/null                   空设备
 
-/proc/stat 				contains system statistics.
-/proc/uptime 			contains system uptime.
-/proc/partitions 		contains disk statistics (for pre 2.5 kernels that have been patched).
-/proc/diskstats 		contains disks statistics (for post 2.5 kernels).
-/sys 					contains statistics for block devices (post 2.5 kernels).
-/proc/self/mountstats 	contains statistics for network filesystems.
-/dev/disk 				contains persistent device 2s.
+/proc/stat              contains system statistics.
+/proc/uptime            contains system uptime.
+/proc/partitions        contains disk statistics (for pre 2.5 kernels that have been patched).
+/proc/diskstats         contains disks statistics (for post 2.5 kernels).
+/sys                    contains statistics for block devices (post 2.5 kernels).
+/proc/self/mountstats   contains statistics for network filesystems.
+/dev/disk               contains persistent device 2s.
 
 
 ================ Command ===============
-;				连续命令
-|				管道
->				导出
->>				追加导出
-&				后台执行
-&&				成功则执行
-||				失败则执行
-\				转义/断行
-``				先执行的命令
-()				子 shell
-[]				字符组合
-{}				命令区块组合
+;               连续命令
+|               管道
+>               导出
+>>              追加导出
+&               后台执行
+&&              成功则执行
+||              失败则执行
+\               转义/断行
+``              先执行的命令
+()              子 shell
+[]              字符组合
+{}              命令区块组合
 
 
-!!				重复上次命令
-!$				重复上次命令的参数
-!<num>			执行第 <num> 条历史命令
-!<search>		搜索历史命令开头为 <search> 并执行
+!!              重复上次命令
+!$              重复上次命令的参数
+!<num>          执行第 <num> 条历史命令
+!<search>       搜索历史命令开头为 <search> 并执行
 
-man				查找 man 帮助
-	k				通过关键字查找
-apropos, man -k	查找 whatis 帮助
-whatis, man -f		查找 whatis 帮助
-info				查找 info 帮助
+man             查找 man 帮助
+    k               通过关键字查找
+apropos, man -k 查找 whatis 帮助
+whatis, man -f      查找 whatis 帮助
+info                查找 info 帮助
 help
 which
 
-date			当前日期和时间
-cal				本月日历
-uptime			运行时长
-w				在线用户
-whoami			自己用户名
-finger			用户信息
-uname			内核信息
-df				磁盘使用信息
-du				目录空间信息
-free			内存/交换区使用信息
-vmstat			show system process, memory, swap, I/O and CPU statistics
-iostat			CPU 和硬盘 IO 数据
-mpstat			multiprocessor usage
-lsof			list open files
-lscpu			cpu info
-pmap			process memory usage
-sar				collect, report or save sytem activity information
-netstat			网络状态
-ss				TCP/UDP network and socket information
-iptraf			IP LAN Monitor
-tcpdump		detailed network traffic analysis
-strace 			trace system call and signals
+date            当前日期和时间
+cal             本月日历
+uptime          运行时长
+w               在线用户
+whoami          自己用户名
+finger          用户信息
+uname           内核信息
+df              磁盘使用信息
+du              目录空间信息
+free            内存/交换区使用信息
+vmstat          show system process, memory, swap, I/O and CPU statistics
+iostat          CPU 和硬盘 IO 数据
+mpstat          multiprocessor usage
+lsof            list open files
+lscpu           cpu info
+pmap            process memory usage
+sar             collect, report or save sytem activity information
+netstat         网络状态
+ss              TCP/UDP network and socket information
+iptraf          IP LAN Monitor
+tcpdump     detailed network traffic analysis
+strace          trace system call and signals
 </proc>file system
 
 
-chkconfig		检查系统服务运行级别
-service			启动或关闭服务
+chkconfig       检查系统服务运行级别
+service         启动或关闭服务
 
-ifconfig		网络接口配置
-iwconfig		无线配置
-setup			运行配置
-whois			域名信息
-dig				dns 信息
-wget			下载
+ifconfig        网络接口配置
+iwconfig        无线配置
+setup           运行配置
+whois           域名信息
+dig             dns 信息
+wget            下载
 
-ssh				运行 ssh
+ssh             运行 ssh
 
-cd				进入目录
-pwd				显示当前工作目录
-ln				链接
-mkdir			创建文件夹
-rmdir			删除文件夹
-ls				列出文件列表
-ll				ls -l 别名
-cp				复制
-mv				移动/重命名
-rm				删除
-basename		获取路径中的文件名
-dirname			获取路径中的目录名
-chgrp			更改文件所属用户组
-chown			更改权限
+cd              进入目录
+pwd             显示当前工作目录
+ln              链接
+mkdir           创建文件夹
+rmdir           删除文件夹
+ls              列出文件列表
+ll              ls -l 别名
+cp              复制
+mv              移动/重命名
+rm              删除
+basename        获取路径中的文件名
+dirname         获取路径中的目录名
+chgrp           更改文件所属用户组
+chown           更改权限
 disown
-cat				由第一行开始显示文件内容
-tac				有最后一行开始显示文件内容
-nl				带行号的显示文件内容
-more			逐页显示
-less			比 more 强大, 可以前翻页
-head			显示文件前几行
-tail			显示文件后几行
-od				以二进制方式读取文件内容
-touch			创建文件或修改文件时间属性
-umask			指定默认文件权限掩码
-chattr			设置文件隐藏属性
-lsattr			显示文件隐藏属性
-file			获取文件类型
-stat			获取文件详情
-which			定位可执行文件/命令
-whereis		寻找特定文件
-locate			定位文件
-find			查找文件
-	-maxdepth
-	-mindepth
-	-not, !
-	-inum
-	-user
-	-group
-	-name
-	-iname
-	-type
-	-empty
-	-perm
-	-mtime
-	-atime
-	-cmin
-	-mmin
-	-amin
-	-size
-	-exec
-echo			显示一行文本
-grep			查找文件内容
-	-i, --ignore-case
-	-v, --invert-match
-	-w, --word-regexp
-	-x, --line-regexp
-	-A NUM, --after-context=NUM
-	-B NUM, --before_context=NUM
-	-C NUM, --context=NUM
-	-c, --count
-	-n, --line-number
-	-r,  --recursive
-	-l, --files-with-matches
-	-L, --files-without-matches
-	-o, --only-matching
+cat             由第一行开始显示文件内容
+tac             有最后一行开始显示文件内容
+nl              带行号的显示文件内容
+more            逐页显示
+less            比 more 强大, 可以前翻页
+head            显示文件前几行
+tail            显示文件后几行
+od              以二进制方式读取文件内容
+touch           创建文件或修改文件时间属性
+umask           指定默认文件权限掩码
+chattr          设置文件隐藏属性
+lsattr          显示文件隐藏属性
+file            获取文件类型
+stat            获取文件详情
+which           定位可执行文件/命令
+whereis     寻找特定文件
+locate          定位文件
+find            查找文件
+    -maxdepth
+    -mindepth
+    -not, !
+    -inum
+    -user
+    -group
+    -name
+    -iname
+    -type
+    -empty
+    -perm
+    -mtime
+    -atime
+    -cmin
+    -mmin
+    -amin
+    -size
+    -exec
+echo            显示一行文本
+grep            查找文件内容
+    -i, --ignore-case
+    -v, --invert-match
+    -w, --word-regexp
+    -x, --line-regexp
+    -A NUM, --after-context=NUM
+    -B NUM, --before_context=NUM
+    -C NUM, --context=NUM
+    -c, --count
+    -n, --line-number
+    -r,  --recursive
+    -l, --files-with-matches
+    -L, --files-without-matches
+    -o, --only-matching
 
-df				磁盘信息
-du				磁盘用量信息
-ln				创建连接文件
-fdisk			分区
-mkfs			格式化磁盘
-mke2fs			格式化磁盘为 ext2/ext3 格式
-mkswap		格式化为 swap 格式
-swapon		启动 swap
-swapoff		关闭 swap
-mkbootdisk	制作启动软盘
-fdformat		软盘低级格式化
-fsck			检查/修正磁盘错误
-	如发现任何错误文件, 会放入 lost+found 目录
-	必须卸载分区后再执行此命令
-badblocks		检查坏轨
-sync			将异步的内存数据写入硬盘
-mount			挂载分区
-umount		卸载分区
-mknod			修改磁盘信息(卷标, 日志等)
-e2label			修改卷标
-tune2fs			转换文件系统/读取超级块内容/修改卷标
-hdparm		修改磁盘高级参数
-	一般最多用来启动 DMA 模式, 不要随意用其修改参数, 除非你知道自己在做什么
+df              磁盘信息
+du              磁盘用量信息
+ln              创建连接文件
+fdisk           分区
+mkfs            格式化磁盘
+mke2fs          格式化磁盘为 ext2/ext3 格式
+mkswap      格式化为 swap 格式
+swapon      启动 swap
+swapoff     关闭 swap
+mkbootdisk  制作启动软盘
+fdformat        软盘低级格式化
+fsck            检查/修正磁盘错误
+    如发现任何错误文件, 会放入 lost+found 目录
+    必须卸载分区后再执行此命令
+badblocks       检查坏轨
+sync            将异步的内存数据写入硬盘
+mount           挂载分区
+umount      卸载分区
+mknod           修改磁盘信息(卷标, 日志等)
+e2label         修改卷标
+tune2fs         转换文件系统/读取超级块内容/修改卷标
+hdparm      修改磁盘高级参数
+    一般最多用来启动 DMA 模式, 不要随意用其修改参数, 除非你知道自己在做什么
 
-compress		压缩/解压
-gzip			压缩/解压
-gcat			读取压缩文件内容
-bzip2			压缩/解压
-bzcat			读取压缩文件内容
-tar				打包/压缩/解压文件
-dd				读取设备内容并备份成文件
-cpio			适合备份使用
+compress        压缩/解压
+gzip            压缩/解压
+gcat            读取压缩文件内容
+bzip2           压缩/解压
+bzcat           读取压缩文件内容
+tar             打包/压缩/解压文件
+dd              读取设备内容并备份成文件
+cpio            适合备份使用
 
-useradd		    增加或更改用户
+useradd         增加或更改用户
 
-yum			    包管理
-make			编译
+yum             包管理
+make            编译
 
-curl			传输一个 url
+curl            传输一个 url
 
-ps				查看活动进程
-jobs			显示作业
-nohup			运行一个关机免疫进程
-top				查看正在运行的进程
-kill			清除指定进程
-killall			清除指定进程树
-bg				查看背景进程
-fg				转到前景进程
+ps              查看活动进程
+jobs            显示作业
+nohup           运行一个关机免疫进程
+top             查看正在运行的进程
+kill            清除指定进程
+killall         清除指定进程树
+bg              查看背景进程
+fg              转到前景进程
 
 unix2dos
 dos2unix
 
-init				初始化
-shutdown		关机
-halt			同上
-reboot			重启
-startx			开启图形界面
+init                初始化
+shutdown        关机
+halt            同上
+reboot          重启
+startx          开启图形界面
 
-type			查看命令类型/查找命令
-echo			获取变量
-export			转换为环境变量
-source			读取到环境变量
-env				列出所有环境变量
-set				列出所有变量(环境+自定义)/设置输入输出环境
+type            查看命令类型/查找命令
+echo            获取变量
+export          转换为环境变量
+source          读取到环境变量
+env             列出所有环境变量
+set             列出所有变量(环境+自定义)/设置输入输出环境
 
-cut				剪切命令输出
-grep			搜索命令输出
-sort			排序命令输出
-wc				计算命令输出数据
-uniq			去除重复的命令输出
+cut             剪切命令输出
+grep            搜索命令输出
+sort            排序命令输出
+wc              计算命令输出数据
+uniq            去除重复的命令输出
 
-locale			显示支持的语系
-alias			设置命令别名
-unalias			取消命令别名
-history			显示历史命令
-compgen			显示可用命令
+locale          显示支持的语系
+alias           设置命令别名
+unalias         取消命令别名
+history         显示历史命令
+compgen         显示可用命令
 
-ulimit			限制用户资源使用
+ulimit          限制用户资源使用
 
 
 =============== Viriable ===============
 
 =============== Problem ===============
 忘记 root 密码
-	进入单人维护模式, 运行 passwd 命令
+    进入单人维护模式, 运行 passwd 命令
 扇区错乱
-	运行 fsck 命令
+    运行 fsck 命令
 etc/fstab 配置错误而无法正常启动
-	mount -n -o remount,rw /
+    mount -n -o remount,rw /
 
 ====================== Snippets =======================
 find 'word' recusively in file:
-	find . -type f -exec grep -l "word" {} +
-	find -name '*.php' -exec grep 'word' {} +
-	grep 'word' * -r .
+    find . -type f -exec grep -l "word" {} +
+    find -name '*.php' -exec grep 'word' {} +
+    grep 'word' * -r .
 find files whose last modified time is more recentely than a.php
-	find -newer a.php
+    find -newer a.php
 check out the distribution version
-	cat /etc/*-release
-	uname -a
+    cat /etc/*-release
+    uname -a
 check the memory info
-	cat /proc/meminfo
-	vmstat
-	top
+    cat /proc/meminfo
+    vmstat
+    top
 see connected ftp user:
-	pure-ftpwho
+    pure-ftpwho
 back up web
-	- use tar
-		tar -czf /where/you/want/to/save.tar.gz /path/to/your/web
-	- use rsync
-		...
+    - use tar
+        tar -czf /where/you/want/to/save.tar.gz /path/to/your/web
+    - use rsync
+        ...
 back up database
-	mysqldump < dbName -u user -p pwd | gzip > /where/you/want/to/save.gz
+    mysqldump < dbName -u user -p pwd | gzip > /where/you/want/to/save.gz
 cp and change all *.php to *.m.php
-	for script in *.php;
-		do cp -- "$script" "${script%.php}.m.php";
-	done
+    for script in *.php;
+        do cp -- "$script" "${script%.php}.m.php";
+    done
 after adding a alias into /root/.bashrc, let the alias take effect immediately:
-	source /root/.bashrc
+    source /root/.bashrc
 configure ssh from host(win7) to vbox centOS
     1. create new port forwarding rule in vbox->setting->network->port forwarding
         name:ssh, host port:3022, guest port 22
     2. in putty, ssh to root@127.0.0.1:3022
 display largest size file/folder:
-	ls -lSh | head -20
+    ls -lSh | head -20
 show folder/file size in current folder
-	du -sh --max-depth 1
+    du -sh --max-depth 1
 list group
-	cat /etc/group
+    cat /etc/group
 run httpd, mysqld at startup
-	chkconfig --level 235 httpd on
-	chkconfig --level 2345 mysqld on
+    chkconfig --level 235 httpd on
+    chkconfig --level 2345 mysqld on
 open port for httpd
-	iptables -I INPUT 5 -i eth1 -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
-	service iptables save
+    iptables -I INPUT 5 -i eth1 -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+    service iptables save
 solve `this account is currently not available` error when su apache
-	@/etc/passwd:
-	change apache's shell from /sbin/nologin to /bin/bash
+    @/etc/passwd:
+    change apache's shell from /sbin/nologin to /bin/bash
 tar
-	tar -czvf		// tar and zip
-	tar -xzvf		// untar and unzip
-	tar -xzvkf		// untar and unzip, without override existing files
-	tar -tf			// see the tarball file list
+    tar -czvf       // tar and zip
+    tar -xzvf       // untar and unzip
+    tar -xzvkf      // untar and unzip, without override existing files
+    tar -tf         // see the tarball file list
 change prompt color:
     `export PS1="\e[0;36m[\u@\h \W]\$\e[m"`
 
@@ -447,4 +457,4 @@ user time, nice time, system time, stolen time
 
 ============== Quote on IRC ===============
 synapt:
-	- technically www.neejolie.fr and neejolie.fr could have different IP addresses because www.* is nothing but a subdomain record
+    - technically www.neejolie.fr and neejolie.fr could have different IP addresses because www.* is nothing but a subdomain record

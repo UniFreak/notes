@@ -1,28 +1,15 @@
 # Core concept
-- `Logger`
-- `channel`
 
-a great way to identify to which part of the application a record is related
+## logger
 
-- `record`
+every Logger instance has a `channel` (name) and a stack of `handlers`
 
-    understand this is essential to extend Monolog
+## channel
 
-    log message structure:
-    
-    + message
-    + level
-    + level_name
-    + context
-    + channel
-    + datetime
-    + extra
+ a great way to identify to which part of the application a record is related. like `db`, `request`, `router`...
 
-    The main difference is that context can be supplied in user land (it is the 3rd parameter to Logger::addRecord()) whereas extra is internal only and can be filled by processors. The reason processors write to extra and not to context is to prevent overriding any user provided data in context
-    
+## handler
 
-- `handler`
-        
     file&syslog
 
     + `StreamHandler`:
@@ -93,7 +80,26 @@ a great way to identify to which part of the application a record is related
     + `TestHandler`
     + `HandlerWrapper`
 
-- `formatter`
+## record
+
+    understand this is essential to extend Monolog
+
+    log message structure:
+
+    + message
+    + level
+    + level_name
+    + context
+    + channel
+    + datetime
+    + extra
+
+    The main difference is that context can be supplied in user land (it is the 3rd parameter to Logger::addRecord()) whereas extra is internal only and can be filled by processors. The reason processors write to extra and not to context is to prevent overriding any user provided data in context
+
+
+
+
+## formatter
 
     + `LineFormatter`
     + `HtmlFormatter`
@@ -109,9 +115,9 @@ a great way to identify to which part of the application a record is related
     + `FlowdockFormatter`
     + `MongoDBFormatter`
     + `LogmaticFormatter`
-    
 
-- `processor`
+
+## processor
 
     + `PsrLogMessageProcessor`
     + `IntrospectionProcessor`
@@ -128,7 +134,7 @@ a great way to identify to which part of the application a record is related
 
 # Adding extra data in the record
 - by using the logging context
-- or using processor
+- or using processor: can be registered on a specific handler instead of the logger to apply only for this handler
 
 # Utilities
 

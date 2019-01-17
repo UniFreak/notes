@@ -1,5 +1,8 @@
 # 命名
 - `callbacksPerType`: `per` 用于指示数组键名
+- `nomalizeSomething`: 标准化数据
+- `sanitiseSomething`: 净化数据
+- `resolveSomething`: 解析数据
 
 # 模式
 - Factory
@@ -11,7 +14,7 @@
     + composer install/update 或手动 composer dump-autoload 的时候
     + psr-0/4 方便, classmap 性能高. 会自动转换为 classmap
     + psr0 -> autoload_namespaces.php
-    + psr4 -> autoload_psr4.php 
+    + psr4 -> autoload_psr4.php
     + classmap -> autoload_classmap.php
 - 如何生成: Installer:290 -> AutoloadGenerator:388
 - composer.json 为什么 psr4 只有 app 这个, 但是其他空间都能正常加载
@@ -28,6 +31,21 @@
     + command?
     + autoload_real::getLoader() 工厂, 单例
 - coodie:
+
+```
+$regexPattern = sprintf('/^
+    %1$s          # match a quote at the start of the value
+    (             # capturing sub-pattern used
+     (?:          # we do not need to capture this
+      [^%1$s\\\\] # any character other than a quote or backslash
+      |\\\\\\\\   # or two backslashes together
+      |\\\\%1$s   # or an escaped quote e.g \"
+     )*           # as many characters that match the previous rules
+    )             # end of the capturing sub-pattern
+    %1$s          # and the closing quote
+    .*$           # and discard any string after the closing quote
+    /mx', $quote);
+```
 
 ```
 // init a variable while passing it as parameter, use it later in function block
@@ -79,7 +97,8 @@ output: writeln() -> write() -> doWrite()
 ```
 
 ```
-list($res, $devPackages) = $this->doInstall()
+list($res, $devPackages) = $this->doInstall();
+// and doInstall() will returan an array [$res, $devPackages]
 ```
 
 ```

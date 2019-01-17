@@ -1,7 +1,7 @@
 # concepts
 - package
 
-    package can be served from 
+    package can be served from
     + dist: a packaged version of the package data, stable, released
     + source: used for development
 
@@ -162,7 +162,7 @@ Commands
         --with-dependencies
         --prefer-stable
         --prefer-lowest
-    require
+    require <vendor>/<name>:<version>
         --prefer-source
         --prefer-dist
         --ignore-platform-reqs
