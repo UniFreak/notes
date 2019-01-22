@@ -1,122 +1,93 @@
-# Crack
+# Basic
 
-```
-—– BEGIN LICENSE —–
-riku
-Single User License
-EA7E-806996
-60C55C64D0195F15A118D93ECE0849B3
-30C432F529F7BFAAF6568C6BFDDA1868
-D6DF14D0464281D64A7E2EBB32558D84
-148EF8041694AC00B9FA17D6119A6286
-611D11E26BB48DCF19F76CB1CC7B995E
-F41F7BFAB3348963FF69F163A70ABBEA
-2526B73B523AA28BF66AFEF3ED3D1D21
-BC6CB3B5B6D183FF5C755DE7007C6C41
-—— END LICENSE ——
-```
+Customization types
 
+- plugins
+- packages
+- syntax hilighting definitions
+- menus
+- snippets
 
-# Build
+Package can be stored as
 
-tools->build system->new build system
+- zipped .sublime-package
+- unzipped within a directory (can overwrite zipped .sublime-package)
 
-- Open by default app(typora): md, html...
+Can be stored in
+
+- `<executable_path>/Packages/` for built-in
+- `<data_path>/Installed Packages/` is for user
+
+`Default` and `User. Default` is always ordered first, and `User` is always ordered last. Package ordering comes into effect when merging files between packages
+
+To create new package, create a new directory under `<data_path>/Installed Packages/`
+
+To override a file in an existing package, just create a file with the same name under the `Packages/<Package Name>/` directory
+
+# Concepts
+
+`token` (like `if` keyword) can be in multiple scope
+
+`scopes` are named like `keywork.control.php`, and assigned to the text by the syntax
+
+`color scheme` assigns colors and font styles to scopes
+
+`theme` controls such elements as buttons select lists, the sidebar and tabs
+
+`selectors` are means to match scope names
+
+# Selector
+
+match sequence:
+
+- hierachy: <selector> <selector>
+- OR: <selector> | <selector>
+- OR: <selector> , <selector>
+- AND: <selector> & <selector>
+- NOT: - <selector>
+- grouping: (<selector> <ops> <selector>)
+
+# Color Scheme
+
+use `.sublime-color-scheme` json file
+
+example:
 
 ```json
 {
-    "cmd": ["open", "$file"],
-    "file_regex": ".md$"
-}
-```
-
-- php
-
-```json
-{
-    "shell_cmd": "/usr/local/opt/php@5.6/bin/php -f $file",
-    "selector": "source.php"
-}
-```
-
-- python
-
-```json
-{
-    "shell_cmd": "python -u \"$file\"",
-    "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
-    "selector": "source.python",
-
-    "env": {"PYTHONIOENCODING": "utf-8"},
-
-    "variants":
+    "name": "Example Color Scheme",
+    "globals":
+    {
+        "background": "rgb(34, 34, 34)",
+        "foreground": "#EEEEEE",
+        "caret": "white"
+    },
+    "rules":
     [
         {
-            "name": "Syntax Check",
-            "shell_cmd": "python -m py_compile \"${file}\""
+            "name": "Comment",
+            "scope": "comment",
+            "foreground": "#888888"
+        },
+        {
+            "name": "String",
+            "scope": "string",
+            "foreground": "hsla(50, 100%, 50%, 1)"
+        },
+        {
+            "name": "Number",
+            "scope": "constant.numeric",
+            "foreground": "#7F00FF",
+            "font_style": "italic"
         }
     ]
 }
 ```
 
-
-# Plugins
-
-Basic:
-
-- Package Control
-- ColorHelper
-- ColorSublime
-- PlantUML/Diagram
-- IntelliDocs
-- Origami
-- BufferScroll
-- EasyMotion
-- ProjectManager
-- CodeFormatter
-- MoveTab
-- Synced Sidebar
-- AdvancedNewFile
-- GitGutter
+# Themes
 
 
-Coding:
 
-- Composer
-- Anaconda
-- DocBlockr_Python
-- Python Debugger
-- Emmet & Emmet CSS Snippet
-- DocBlockr
-- MarkdownExtends & MarkdownEditing
-- Sublime Linter
-    + SublimeLinter-PHP
-    + SublimeLinter-JsHint
-    + SublimeLinter-cssLint
-    + SublimeLinter-Html-tidy
-    + SublimeLinter-pycodestyle
-- BracketHighlighter
-- CTags
-- Plainnote
-- Prefixr
-- Code Alignment
-- FileDiffs/Sublimerge/Meld
-- SideBarEnhancements
-- GBK Encoding Support
-- Sublime Tmpl
-- Xdebug
-
-# Write your own plugin
-
-```python
-    open_browser:
-        import sublime, sublime_plugin
-        import webbrowser
-        class OpenBrowserCommand(sublime_plugin.TextCommand):
-           def run(self,edit):
-              url = self.view.file_name()
-              webbrowser.open_new(url)
-```
 
 # Api
 

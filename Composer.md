@@ -297,6 +297,11 @@ discard-changes
 archive-format
 archive-dir
 
+# Autoloading
+
+## ?
+- psr 0 with \\ vs not with \\?
+
 # Tips
 - you probably want to add vendor/ in your .gitignore. You really don't want to add all of that code to your repository.
 - to remove tests/ folder when prefer-dist: use a .gitattributes config file

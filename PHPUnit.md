@@ -9,3 +9,6 @@
 
 # Rules
 - Whenever you are tempted to type something into a print statement or a debugger expression, write it as a test instead
+
+# Coodies
+- you can run with a bootstrap script specified by `bootstrap`
