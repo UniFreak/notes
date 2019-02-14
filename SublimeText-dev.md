@@ -1,3 +1,8 @@
+# Referece
+
+- <https://code.tutsplus.com/tutorials/how-to-create-a-sublime-text-2-plugin--net-22685>
+- <https://www.sublimetext.com/docs/3/>
+
 # Basic
 
 Customization types
@@ -35,6 +40,29 @@ To override a file in an existing package, just create a file with the same name
 `theme` controls such elements as buttons select lists, the sidebar and tabs
 
 `selectors` are means to match scope names
+
+# Scopes
+
+naming: see <https://macromates.com/manual/en/language_grammars#naming_conventions>
+
+built-in:
+
+- `comment.`
+- `constant.`
+- `entity.`
+- `invalid.`
+- `keyword.`
+- `markup.`
+- `meta.`
+- `punctuation.`
+- `source.`
+- `storage.`
+- `string.`
+- `support.`
+- `text.`
+- `variable.`
+
+
 
 # Selector
 
@@ -86,12 +114,121 @@ example:
 
 # Themes
 
+use `.sublime-theme` json file
+
+example:
+
+```json
+[
+    // Set up the textures for a button
+    {
+        "class": "button_control",
+        "layer0.tint": [0, 0, 0],
+        "layer0.opacity": 1.0,
+        "layer1.texture": "Theme - Example/textures/button_background.png",
+        "layer1.inner_margin": 4,
+        "layer1.opacity": 1.0,
+        "layer2.texture": "Theme - Example/textures/button_highlight.png",
+        "layer2.inner_margin": 4,
+        "layer2.opacity": 0.0,
+        "content_margin": [4, 8, 4, 8]
+    },
+    // Show the highlight texture when the button is hovered
+    {
+        "class": "button_control",
+        "attributes": ["hover"],
+        "layer2.opacity": 1.0
+    },
+    // Basic text label style
+    {
+        "class": "label_control",
+        "fg": [240, 240, 240],
+        "font.bold": true
+    },
+    // Brighten labels contained in a button on hover
+    {
+        "class": "label_control",
+        "parents": [{"class": "button_control", "attributes": ["hover"]}],
+        "fg": [255, 255, 255]
+    }
+]
+```
+
+# Menu
+
+use `.sublime-menu.` json file
+
+availabel menus:
+
+- Main.sublime-menu: Primary menu for the application
+- Side Bar Mount Point.sublime-menu: Context menu for top-level folders in the side bar
+- Side Bar.sublime-menu: Context menu for files and folders in the side bar
+- Tab Context.sublime-menu: Context menu for file tabs
+- Context.sublime-menu: Context menu for text areas
+- Find in Files.sublime-menu: Menu shown when clicking the ... button in Find in Files panel
+- Widget Context.sublime-menu: Context menu for text inputs in various panels
+
+example:
+
+```json
+[
+    {
+        "caption": "File",
+        "mnemonic": "F",
+        "id": "file",
+        "children":
+        [
+            { "command": "new_file", "caption": "New File", "mnemonic": "N" },
+
+            { "command": "prompt_open_file", "caption": "Open File…", "mnemonic": "O", "platform": "!OSX" },
+            { "command": "prompt_open_folder", "caption": "Open Folder…", "platform": "!OSX" },
+            { "command": "prompt_open", "caption": "Open…", "platform": "OSX" }
+        ]
+    }
+]
+```
 
 
+# Syntax Definition
+
+use `sublime-syntax` YAML file or `.tmLanguage ` file
+
+example:
+
+```yaml
+%YAML 1.2
+---
+name: C
+file_extensions: [c, h]
+scope: source.c
+
+contexts:
+  main:
+    - match: \b(if|else|for|while)\b
+      scope: keyword.control.c
+```
+
+# Plugin
+
+lifecycle
+
+1. importing: may not call any API functions except `sublime.version()`, `sublime.platform()`, `sublime.architecture()` and `sublime.channel()`
+2. module level `plugin_loaded()`
+3. module level `plugin_unloaded()`
+
+types
+
+- python built-in
+- `location(abs_path, rel_path, (row, col))`
+- `point`: an int represent the offset from the beginning of the editor buffer
+- `value`: any of the Python data types bool, int, float, str, list or dict
+- `dip`: a float that represents a device-independent pixel
+- `vector`: a tuple of (dip, dip) representing x and y coordinates
+- `CommandInputHandler`: a subclass of either `TextInputHandler` or `ListInputHandler`
 
 # Api
 
-## module
+## sublime module
 
 ```
 sublime.
@@ -125,13 +262,15 @@ sublime.
     version()
     platform()
     arch()
-sublime_plugin.
-    (no method)
 ```
 
-## class
+## sublime class
 
 ```
+sublime.Sheet.
+    id()
+    window()
+    view()
 sublime.View.
     id()
     buffer_id()
@@ -229,6 +368,10 @@ sublime.Region.
     intersects(region)
     contains(region)
     contains(point)
+sublime.Phantom.
+    Phantom()
+sublime.PhantomSet.
+    update()
 sublime.Edit.
     (no methods)
 sublime.Window.
@@ -265,7 +408,18 @@ sublime.Settings.
     has(name)
     add_on_change(key, on_change)
     clear_on_change(key)
+```
 
+## sublime_plugin module
+
+```
+sublime_plugin.
+    (no method)
+```
+
+## sublime_plugin class
+
+```
 sublime_plugin.EventListener.
     on_new(view)
     on_new_async(view)
@@ -291,6 +445,9 @@ sublime_plugin.EventListener.
     post_text_command(view, command_name, args)
     post_window_command(window, command_name, args)
     on_query_context(view, key, operator, operand, match_all)
+sublime_plugin.ViewEventListener
+    is_applicable(settings)
+    applies_to_primary_view_only()
 sublime_plugin.ApplicationCommand.
     run(<args>)
     is_enabled(<args>)
@@ -308,4 +465,25 @@ sublime_plugin.TextCommand
     is_visible(<args>)
     description(<args>)
     want_event()
+sublime_plugin.TextInputHandler
+    name()
+    placeholder()
+    initial_text()
+    preview(text)
+    validate(text)
+    cancel()
+    confirm(text)
+    next_input(args)
+    description(text)
+sublime_plugin.ListInputHandler
+    name()
+    list_items()
+    placeholder()
+    initial_text()
+    preview(value)
+    validate(value)
+    cancel()
+    confirm(value)
+    next_input(args)
+    description(value, text)
 ```
