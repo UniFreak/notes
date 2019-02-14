@@ -1,4 +1,5 @@
-=============== Array ===============
+# Array
+
 array()						 		创建数组
 array_change_key_case()				返回其键均为大写或小写的数组
 array_chunk()						把一个数组分割为新的数组块
@@ -74,7 +75,8 @@ uasort()							使用用户自定义的比较函数对数组中的值进行排�
 uksort()							使用用户自定义的比较函数对数组中的键名进行排序
 usort()						 		使用用户自定义的比较函数对数组中的值进行排序
 
-=============== String ===============
+# String
+
 addcslashes() 						在指定的字符前添加反斜杠
 addslashes() 						在指定的预定义字符前添加反斜杠
 bin2hex() 							把 ASCII 字符的字符串转换为十六进制值
@@ -171,7 +173,8 @@ vsprintf() 							把格式化字符串写入变量中
 wordwrap() 							按照指定长度对字符串进行折行处理
 
 
-=============== Calendar ===============
+# Calendar
+
 cal_days_in_month() 				针对指定的年份和日历，返回一个月中的天数
 cal_from_jd() 						把儒略日计数转换为指定日历的日期
 cal_info() 							返回有关给定日历的信息
@@ -191,7 +194,8 @@ JewishToJD() 						把犹太历法转换为儒略日计数
 JulianToJD() 						把儒略历转换为儒略日计数
 unixtojd() 							把 Unix 时间戳转换为儒略日计数
 
-=============== Date/Time ===============
+# Date/Time
+
 checkdate() 						验证格利高里日期
 date_default_timezone_get() 		返回默认时区
 date_default_timezone_set() 		设置默认时区
@@ -212,18 +216,20 @@ strptime() 							解析由 strftime 生成的日期／时间
 strtotime() 						将任何英文文本的日期或时间描述解析为 Unix 时间戳
 time() 								返回当前时间的 Unix 时间戳
 
-=============== Directory ===============
-chdir() 							改变当前的目录 
-chroot() 							改变当前进程的根目录 
-dir() 								打开一个目录句柄，并返回一个对象 
-closedir() 							关闭目录句柄 
-getcwd() 							返回当前目录 
-opendir() 							打开目录句柄 
-readdir() 							返回目录句柄中的条目 
-rewinddir() 						重置目录句柄 
-scandir() 							列出指定路径中的文件和目录 
+# Directory
 
-=============== Error/Logging ===============
+chdir() 							改变当前的目录
+chroot() 							改变当前进程的根目录
+dir() 								打开一个目录句柄，并返回一个对象
+closedir() 							关闭目录句柄
+getcwd() 							返回当前目录
+opendir() 							打开目录句柄
+readdir() 							返回目录句柄中的条目
+rewinddir() 						重置目录句柄
+scandir() 							列出指定路径中的文件和目录
+
+# Error/Logging
+
 debug_backtrace() 					生成 backtrace
 debug_print_backtrace() 			输出 backtrace
 error_get_last() 					获得最后发生的错误
@@ -236,7 +242,8 @@ set_exception_handler() 			设置用户自定义的异常处理函数
 trigger_error() 					创建用户自定义的错误消息
 user_error() 						trigger_error() 的别名
 
-=============== Filesystem ===============
+# Filesystem
+
 basename() 							返回路径中的文件名部分
 chgrp() 							改变文件组
 chmod() 							改变文件模式
@@ -258,7 +265,7 @@ fgetss() 							从打开的文件中读取一行并过滤掉 HTML 和 PHP 标�
 file() 								把文件读入一个数组中
 file_exists() 						检查文件或目录是否存在
 file_get_contents() 				将文件读入字符串
-file_put_contents 					将字符串写入文件。 			
+file_put_contents 					将字符串写入文件。
 fileatime() 						返回文件的上次访问时间
 filectime() 						返回文件的上次改变时间
 filegroup() 						返回文件的组 	ID
@@ -314,7 +321,8 @@ touch() 							设置文件的访问和修改时间
 umask() 							改变文件的文件权限
 unlink() 							删除文件
 
-=============== Filter ===============
+# Filter
+
 filter_has_var() 					检查是否存在指定输入类型的变量
 filter_id() 						返回指定过滤器的 ID 号
 filter_input() 						从脚本外部获取输入，并进行过滤
@@ -323,7 +331,8 @@ filter_list() 						返回包含所有得到支持的过滤器的一个数组
 filter_var_array() 					获取多项变量，并进行过滤
 filter_var() 						获取一个变量，并进行过滤
 
-=============== FTP ===============
+# FTP
+
 ftp_alloc() 						为要上传到 FTP 服务器的文件分配空间
 ftp_cdup() 							把当前目录改变为 FTP 服务器上的父目录
 ftp_chdir() 						改变 FTP 服务器上的当前目录
@@ -359,25 +368,29 @@ ftp_size() 							返回指定文件的大小
 ftp_ssl_connect() 					打开一个安全的 SSL-FTP 连接
 ftp_systype() 						返回远程 FTP 服务器的系统类型标识符
 
-=============== HTTP ===============
+# HTTP
+
 header() 							向客户端发送原始的 HTTP 报头
 headers_list() 						返回已发送的（或待发送的）响应头部的一个列表
 headers_sent() 						检查 HTTP 报头是否发送/已发送到何处
 setcookie() 						向客户端发送一个 HTTP cookie
 setrawcookie() 						不对 cookie 值进行 URL 编码，发送一个 HTTP cookie
 
-=============== LibXML ===============
+# LibXML
+
 libxml_clear_errors() 				清空 libxml 错误缓冲
 libxml_get_errors() 				检索错误数组
 libxml_get_last_error() 			从 libxml 检索最后的错误
 libxml_set_streams_context() 		libxml 文档加载或写入设置流环境
 libxml_use_internal_errors() 		libxml 错误，允许用户按需读取错误信息
 
-=============== Mail ===============
+# Mail
+
 ezmlm_hash() 						计算 EZMLM 邮件列表系统所需的散列值
 mail() 								允许您从脚本中直接发送电子邮件
 
-=============== Math ===============
+# Math
+
 abs() 								绝对值
 acos() 								反余弦
 acosh() 							反双曲余弦
@@ -427,7 +440,8 @@ srand() 							播下随机数发生器种子
 tan() 								正切
 tanh() 								双曲正切
 
-=============== MySql ===============
+# MySql
+
 mysql_affected_rows() 				取得前一次 MySQL 操作所影响的记录行数
 mysql_client_encoding() 			返回当前连接的字符集的名
 mysql_close() 						关闭非持久的 MySQL 连接
@@ -469,7 +483,8 @@ mysql_stat() 						取得当前系统状态
 mysql_thread_id() 					返回当前线程的 ID
 mysql_unbuffered_query() 			向 MySQL 发送一条 SQL 查询（不获取 / 缓存结果）
 
-=============== DOMDocument ===============
+# DOMDocument
+
 DOMDocument extends DOMNode {
 	/* 属性 */
 	readonly public string $actualEncoding ;
@@ -543,7 +558,8 @@ DOMDocument extends DOMNode {
 	public DOMNode DOMNode::replaceChild ( DOMNode $newnode , DOMNode $oldnode )
 }
 
-=============== DOMXPath ===============
+# DOMXPath
+
 DOMXPath {
 	/* 属性 */
 	public DOMDocument $document ;
@@ -555,7 +571,8 @@ DOMXPath {
 	public void registerPhpFunctions ([ mixed $restrict ] )
 }
 
-=============== SimpleXML ===============
+# SimpleXML
+
 SimpleXMLElement implements Traversable {
 	/* 方法 */
 	final public __construct ( string $data [, int $options = 0 [, bool $data_is_url = false [, string $ns = "" [, bool $is_prefix = false ]]]] )
@@ -589,7 +606,8 @@ simplexml_import_dom				Get a SimpleXMLElement object from a DOM node.
 simplexml_load_file				 	Interprets an XML file into an object
 simplexml_load_string				Interprets a string of XML into an object
 
-=============== XML Parser ===============
+# XML Parser
+
 utf8_decode() 							把 UTF-8 字符串解码为 ISO-8859-1
 utf8_encode() 							把 ISO-8859-1 字符串编码为 UTF-8
 xml_error_string() 						获取 XML 解析器的错误描述
@@ -615,7 +633,8 @@ xml_set_processing_instruction_handler()建立处理指令（PI）处理器
 xml_set_start_namespace_decl_handler() 	建立起始命名空间声明处理器
 xml_set_unparsed_entity_decl_handler() 	建立未解析实体定义声明处理器
 
-=============== XMLWriter ===============
+# XMLWriter
+
 endAttribute()							End attribute
 endCData()								End current CDATA
 endComment()							Create end comment
@@ -659,7 +678,8 @@ writeElement()							Write full element tag
 writePI()								Writes a PI
 writeRaw()								Write a raw XML text
 
-=============== Zip ===============
+# Zip
+
 zip_close() 							ZIP 文件
 zip_entry_close() 						关闭 ZIP 文件中的一个项目
 zip_entry_compressedsize() 				返回 ZIP 文件中的一个项目的被压缩尺寸
@@ -671,7 +691,8 @@ zip_entry_read() 						读取 ZIP 文件中的一个打开的项目
 zip_open() 								打开 ZIP 文件
 zip_read() 								读取 ZIP 文件中的下一个项目
 
-=============== PDO ===============
+# PDO
+
 PDO  {
 	__construct ( string $dsn [, string $username [, string $password [, array $driver_options ]]] )
 	bool beginTransaction ( void )
@@ -713,7 +734,8 @@ PDOStatement  implements Traversable  {
 	bool PDOStatement::setFetchMode ( int $mode )
 }
 
-=============== Mysqli ===============
+# Mysqli
+
 MySQLi {
 	/* 属性 */
 	int $mysqli->affected_rows;
@@ -800,7 +822,8 @@ MySQLi {
 }
 
 
-=============== Memcache ===============
+# Memcache
+
 Memcache {
 	bool add ( string $key , mixed $var [, int $flag [, int $expire ]] )
 	bool addServer ( string $host [, int $port = 11211 [, bool $persistent [, int $weight [, int $timeout [, int $retry_interval [, bool $status [, callback $failure_callback [, int $timeoutms ]]]]]]]] )
@@ -822,7 +845,8 @@ Memcache {
 	bool setServerParams ( string $host [, int $port = 11211 [, int $timeout [, int $retry_interval = false [, bool $status [, callback $failure_callback ]]]]] )
 }
 
-=============== Program Execution ===============
+# Program Execution
+
 escapeshellarg 		Escape a string to be used as a shell argument
 escapeshellcmd 		Escape shell metacharacters
 exec 					Execute an external program
@@ -835,7 +859,8 @@ proc_terminate 		Kills a process opened by proc_open
 shell_exec 				Execute command via shell and return the complete output as a string
 system 					Execute an external program and display the output
 
-====================== cURL =======================
+# cURL
+
 curl_close						关闭一个cURL会话
 curl_copy_handle				复制一个cURL句柄和它的所有选项
 curl_errno						返回最后一次的错误号

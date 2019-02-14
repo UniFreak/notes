@@ -19,3 +19,7 @@
     + install koala2 for python3.7  -> install numpy=1.14.2 -> from source or newest veresion
     + use koala2 to generate sp
     + koala2 sp.gen_graph() 报错
+    +
+
+- learing nginx
+    + fastcgi
