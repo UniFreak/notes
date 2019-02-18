@@ -9,7 +9,7 @@ Customization types
 
 - plugins
 - packages
-- syntax hilighting definitions
+- syntax highlighting definitions
 - menus
 - snippets
 
@@ -61,8 +61,6 @@ built-in:
 - `support.`
 - `text.`
 - `variable.`
-
-
 
 # Selector
 

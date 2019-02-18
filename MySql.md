@@ -6,11 +6,14 @@ RDBMS指的是关系型数据库管理系统
 可以把SQL分为两个部分:数据操作语言(DML)和数据定义语言(DDL)
 由SQL查询程序获得的结果被存放在一个结果集中
 SQL使用单引号来环绕文本值
--- 注释
+
 # 注释
+
+-- 注释
 /*注释*/
 
-============== 程序 ===============
+# 程序
+
 mysqld									MySQL服务器
 mysqld_safe, mysql.server, mysqld_multi	服务器启动脚本
 mysql_install_db						初始化数据目录和初始数据库
@@ -27,7 +30,8 @@ myisampack								产生压缩, 只读的表
 mysqlbinlog								处理二进制日志文件的实用工具
 perror									显示错误代码的含义
 
-=============== 概念 ===============
+# 概念
+
 三大范式
 	列不可再分
 	行不可再分
@@ -149,7 +153,8 @@ TEMPORARAY TABLE
 存储程序
 	被存储在服务器中的一套SQL语句
 
-=============== 列类型 ===============
+# 列类型
+
 数值
 	BIT
 	TINYINT | BOOL,BOOLEAN			1		-128~127 | 0~255
@@ -189,7 +194,8 @@ TEMPORARAY TABLE
 
 在任何情况下均应使用最精确的类型
 
-=============== 操作符 ===============
+# 操作符
+
 优先级(从高到低)
 	:=
 	||, OR, XOR
@@ -210,14 +216,16 @@ TEMPORARAY TABLE
 <=>	: 和=执行相同的比较, 不过在两个操作码均为NULL时其所得值为1而不为NULL, 而当一个操作码为NULL时, 其所得值为0而不为NULL
 DIV : 整除
 
-=============== 通配符 ===============
+# 通配符
+
 通配符必须与 LIKE 运算符一起使用
 %					一个或多个字符
 _					一个字符
 [charlist]			字符列中任一字符
 [^charlist]			不是字符列中的任一字符
 
-=============== 函数 ===============
+# 函数
+
 比较:
 	GREATEST()
 	LEAST()
@@ -340,7 +348,8 @@ _					一个字符
 
 其他:
 
-=============== SQL 语句语法 ===============
+# SQL 语句语法
+
 数据定义(DDL)
 	ALTER DATABASE
 		ALTER {DATABASE | SCHEMA} [db_name]
@@ -961,7 +970,8 @@ _					一个字符
 	EXECUTE stmt_name [USING @var_name [, @var_name] ...];
 	{DEALLOCATE | DROP} PREPARE stmt_name;
 
-=============== mysql COMMAND ===============
+# mysql COMMAND
+
 ?         (\?) Synonym for `help'.
 clear     (\c) Clear the current input statement.
 connect   (\r) Reconnect to the server. Optional arguments are db and host.
@@ -987,14 +997,16 @@ charset   (\C) Switch to another charset. Might be needed for processing binlog 
 warnings  (\W) Show warnings after every statement.
 nowarning (\w) Don't show warnings after every statement.
 
-=============== 数据库管理 ===============
+# 数据库管理
+
 备份
 	SQL级别表备份
 		1. 参见 FLUSH
 		2. 参加 SELECT INTO ... OUTFILE
 		3. 参见 BACKUP TABLE  		// 只能用于 myISAM 表(不推荐)
 
-=============== 优化 ===============
+# 优化
+
 有 WHERE 子句的话, 往往会先生成两个表行数乘积的行(笛卡尔积)的数据表然后才根据 WHERE 条件从中选择, 所以能用 ON 代替最好用 ON 代替 WHERE
 使用 explain/慢日志工具分析
 使用 limit, 避免 select *,
@@ -1005,13 +1017,15 @@ nowarning (\w) Don't show warnings after every statement.
 表定义中避免允许 NULL
 
 
-=============== 经验 ===============
+# 经验
+
 查找不为空的条件是 IS NOT NULL, 不要忘了 IS
 SELECT a.col,b.col FROM table1 a, table1 b WHERE a.col=b.col 和 SELECT a.col,b.col FROM table1 a INNER JOIN table1 b ON a.col=b.co 是一回事, 都是 self-join 查询
 IN() is not a valid condition, it must *NOT be empty*
 `mysql` 有个 `--i-am-a-dummy` 选项, 会阻止你执行任何不带 where 条件的 update 和 delete
 
-====================== Recipe =======================
+# Recipe
+
 - select multiple count:
 	SELECT sum(type=1) as type1count,
 			sum(type=2) as type2count,
