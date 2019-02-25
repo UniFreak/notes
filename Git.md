@@ -224,7 +224,7 @@ git checkout
     -b
     --track
 git stash [-u|--include-untracked] [--patch]
-    save [--keep-index] 
+    save [--keep-index]
     list [<options>]
     show [<stash>]
     pop [--index] [-q|--quiet] [<stash>]
@@ -289,17 +289,26 @@ set colorful output(this is default since 1.8.4)
     git config --global core.whitespace cr-at-eol
 
 # Questions
-why need two step: add & commit to commit? what's the difference?
-    so you have more option and be more flexible when commit
-what's the difference between `clone` and `remote add`?
-    clonw will clone the repo to your local
+- why need two step: add & commit to commit? what's the difference?
+
+    A: so you have more option and be more flexible when commit
+
+- what's the difference between `clone` and `remote add`?
+
+    A: clonw will clone the repo to your local
     remote add only add a alias to remote repo address
-what if I don't commit and don't stash then switch to other branch directly?
+
+- what if I don't commit and don't stash then switch to other branch directly?
+
     you can't, if the working directory is not clean
-add to git repo's directory from another directory? and sync the two?
+
+- add to git repo's directory from another directory? and sync the two?
 ignore mode changes?
+
     `git config --global core.filemode false`
-how to rename local and remote branch
+
+- how to rename local and remote branch
+
     1. enter target branch: `git checkout <oldName>`
     2. rename local branch: `git branch -m <newName>`
     3. delete the old remote branch: ` git push --delete <remoteName> <branchName>`
@@ -312,3 +321,7 @@ how to rename local and remote branch
 - find out which commit deleted a line: `git blame --reverse START.. <fileName>`
 - delete local tag: `git tag --delete tagname`
 - delete remote tag: `git push --delete origin tagname`
+- reset pushed commits
+    1. `git reset <previous label or sha1>`
+    2. `git commit -am "blabla"`
+    3. `git push -f <remote-name> <branch-name>`
