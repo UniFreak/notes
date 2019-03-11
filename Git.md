@@ -325,3 +325,4 @@ ignore mode changes?
     1. `git reset <previous label or sha1>`
     2. `git commit -am "blabla"`
     3. `git push -f <remote-name> <branch-name>`
+- merge newest origin/master code: `git fetch && git merge origin/master`

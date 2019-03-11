@@ -1,3 +1,10 @@
+# Warning
+
+- 所以永远不要相信浮点数结果精确到了最后一位，也永远不要比较两个浮点数是否相等
+- 可以考虑使用 bc 或 gmp
+
+# Memo
+
 form action为空时, 默认是本页面php代码执行
 setsession() 和setcookie() 必须位于 <html> 标签之前
 

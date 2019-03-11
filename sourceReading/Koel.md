@@ -29,5 +29,5 @@
 - 数据表定义的主键名不一定要是 ID, 如 settings 表的 key
 - 主键也不一定要是 integer, 如 songs 表的 id 是哈希值
 
-# codique
+# coodie
 - `$client = $client ?: new Client();`

@@ -6,7 +6,7 @@
 - PHP non-blocking event loops
 
 # pre-knowledge
-- Guzzle will, by default, store the body of a message in a stream that uses PHP temp streams. When the size of the body exceeds 2 MB, the stream will automatically switch to storing data on disk rather than in memory 
+- Guzzle will, by default, store the body of a message in a stream that uses PHP temp streams. When the size of the body exceeds 2 MB, the stream will automatically switch to storing data on disk rather than in memory
 
 # submodles
 - cookie: manipulate cookies
@@ -24,7 +24,7 @@
 - stream
 - what are docs/ and build/ folder for
 
-# codique
+# coodie
 - 多条件格式:
 
 ```php
