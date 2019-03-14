@@ -1,29 +1,32 @@
 # Referece
 
-- <https://code.tutsplus.com/tutorials/how-to-create-a-sublime-text-2-plugin--net-22685>
 - <https://www.sublimetext.com/docs/3/>
+- <https://sublime-text-unofficial-documentation.readthedocs.io/en/latest/>``
+- <https://code.tutsplus.com/tutorials/how-to-create-a-sublime-text-2-plugin--net-22685>
 
 # Basic
 
-Customization types
+Package types
 
 - plugins
-- packages
 - syntax highlighting definitions
 - menus
 - snippets
 
 Package can be stored as
 
-- zipped .sublime-package
-- unzipped within a directory (can overwrite zipped .sublime-package)
+- zipped package: `.sublime-package` file
+- loose package: unzipped within a directory (can overwrite zipped `.sublime-package`)
 
-Can be stored in
+Can be stored in:
 
-- `<executable_path>/Packages/` for built-in
-- `<data_path>/Installed Packages/` is for user
+- `<executable_path>/Packages/` (`sublime.executable_path()`)for built-in zipped package
+- `<data_path>/Installed Packages/` (`sublime.installed_packages_path()`) for zipped package installed by user
+- `<data_path>/Packages/` (`sublime.packages_path()`)is for user loose packages
 
-`Default` and `User. Default` is always ordered first, and `User` is always ordered last. Package ordering comes into effect when merging files between packages
+Package ordering comes into effect when merging files between packages
+
+`Default` and `User. Default` is always ordered first, and `User` is always ordered last. Packages other than `Default` and `User` are ordered alphabetically.
 
 To create new package, create a new directory under `<data_path>/Installed Packages/`
 
@@ -72,6 +75,52 @@ match sequence:
 - AND: <selector> & <selector>
 - NOT: - <selector>
 - grouping: (<selector> <ops> <selector>)
+
+# Setting file
+
+valid variable:
+- `${pacakges}`
+- `${platform}`
+
+priority:
+- `Packages/Default/Preferences.sublime-settings`
+- `Packages/Default/Preferences (<platform>).sublime-settings`
+- `Packages/User/Preferences.sublime-settings`
+- `<Project Settings>`
+- `Packages/<syntax>/<syntax>.sublime-settings`
+- `Packages/User/<syntax>.sublime-settings`
+- `<Buffer Specific Settings>`
+
+# Key Bindings JSON
+
+use `.sublime-keymap` json file
+
+example:
+
+```json
+[
+    {
+        "keys": ["super+shift+9"], // required
+        "command": "set_layout", // required
+        "args": // args to command
+        {
+            "cols": [0.0, 0.33, 0.66, 1.0],
+            "rows": [0.0, 0.33, 0.66, 1.0],
+            "cells":
+            [
+                [0, 0, 1, 1], [1, 0, 2, 1], [2, 0, 3, 1],
+                [0, 1, 1, 2], [1, 1, 2, 2], [2, 1, 3, 2],
+                [0, 2, 1, 3], [1, 2, 2, 3], [2, 2, 3, 3]
+            ]
+        },
+        "context": // restrict to a specific situation
+        [
+            {"key": "panel", "operand": "find"},
+            {"key": "panel_has_focus"},
+        ]
+    },
+]
+```
 
 # Color Scheme
 
@@ -225,6 +274,15 @@ types
 - `CommandInputHandler`: a subclass of either `TextInputHandler` or `ListInputHandler`
 
 # Api
+
+## types
+
+- `location`: a tuple of (str, str, (int, int)) that contains information about a location of a symbol. The first string is the absolute file path, the second is the file path relative to the project, the third element is a two-element tuple of the row and column.
+- `point`: an int that represents the offset from the beginning of the editor buffer. The View methods text_point() and rowcol() allow converting to and from this format.
+- `value`: any of the Python data types bool, int, float, str, list or dict.
+- `dip`: a float that represents a device-independent pixel.
+- `vector`: a tuple of (dip, dip) representing x and y coordinates.
+- `CommandInputHandler`: a subclass of either TextInputHandler or ListInputHandler.
 
 ## sublime module
 
@@ -447,17 +505,20 @@ sublime_plugin.ViewEventListener
     is_applicable(settings)
     applies_to_primary_view_only()
 sublime_plugin.ApplicationCommand.
+    // do not have a reference to any specific window or file/buffer and are more rarely used
     run(<args>)
     is_enabled(<args>)
     is_visible(<args>)
     is_checked(<args>)
     description(<args>)
 sublime_plugin.WindowCommand
+    // provide references to the current window via a `Window` object
     run(<args>)
     is_enabled(<args>)
     is_visible(<args>)
     description(<args>)
 sublime_plugin.TextCommand
+    // provide access to the contents of the selected file/buffer via `View` object
     run(edit, <args>)
     is_enabled(<args>)
     is_visible(<args>)
@@ -485,3 +546,64 @@ sublime_plugin.ListInputHandler
     next_input(args)
     description(value, text)
 ```
+
+# Workflow
+
+## Referecne
+
+- <https://forum.sublimetext.com/t/workflow-for-plugin-development-package-control-and-github/30156>
+
+## Q&A:
+
+- where is `Default`?
+
+see <https://stackoverflow.com/questions/18709422/where-are-the-default-packages-in-sublime-text-3-on-ubuntu>
+
+- Plugin vs Package?
+
+A `plugin` is some code that extends the editor.  A `package` is a container that is used to distribute a plugin.  A package may contain more then just the actual plugin (for example a README, a theme, a syntax file, etc.)
+
+
+## Guide line:
+
+-  `Default` package acts as a good reference for figuring out how to do things and what is possible
+- `Preferences > Key Bindings - Default` to see valid built-in commands
+-  use `PackageResourceViewer`
+- `User/` directory is protected from overwrites during upgrades, etc., and unless you're planning on creating a customized theme or color scheme for redistribution through Package Control, it's best practice to keep your files in there
+
+## Step
+0. Project structure
+- git folder <Proj>
+- ln -s <Proj> to <SublimeTestPackageDir>
+
+1. Menu `new plugin...`
+- use `self.view` to refer current view
+- consider use `threadings` to prevent user interface from freezing
+
+2. Save
+
+- default to save into `Packages/Users/`, you may want to save rather into `Pacakges/<YourPkg>/`
+- filename are not restricted to be the same with class name
+- any subclass of `sublime_plugin` classes can be run as a command
+- the created command is lowercase of the class name, say `ExampleCommand` --> `example`
+
+3. in console, run `view.run_command('example')` to run the command
+
+4. Key bindings
+
+-  are usually OS-specific, means that three key bindings files will need to be created
+-  file shoule be named as
+    + `Default (Linux).sublime-keymap`
+    + `Default (OSX).sublime-keymap`
+    + `Default (Windows).sublime-keymap`
+- ensure the key binding is not already used, use `Preferences > Key Bindings – Default` to find out
+- try and test your keybindings out on a real keyboard
+
+5. Menu
+
+6. Distribute (via packagecontrol)
+
+- host source in github
+- fork channel file and edit it
+- push merge request
+- see <https://packagecontrol.io/docs>

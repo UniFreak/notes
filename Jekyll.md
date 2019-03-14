@@ -1,39 +1,57 @@
 Jekyll is a simple, blog-aware, static site generator
 It take either markdown, textile or html files, then convert them throught a converter(like markdown) and Liquid renderer, output a static webpage
 
-Installation
-    requirement
-        Ruby, RubyGems, Linux/Unix/Mac OS X, NodeJS
-        `apt-get install ruby`
-        `apt-get install ruby-dev`
-        `apt-get install gem`
-        `gem source --add https://ruby.taobao.org --remove https://rubygems.org/`
-        `apt-get install nodejs`
+# Concepts
 
-    1. with gem
-        `gem install jekyll`
-    2. from source
-        `git clone git://github.com/jekyll/jekyll.git`
-        `cd jekyll`
-        `script/bootstrap`
-        `bundle exec rake build`
-        `ls pkg/*.gem | head -n 1 | xargs gem install -l`
-    3. if you are in Cygwin, remember to install
-        - make, automake
-        - gcc4-g++, git
-        - libffi-devel, libgmp-devel, libiconv, libiconv2, zlib
-        - curl
-        - python
+Gem: Ruby packages? jekyll is a gem, too
+RubyGems: A package management framework for Ruby, run by `gem` command
+Bundler: Dependency manager, like composer?
+Gemfile: Used by Bundler to install gems
 
-Fixation
-    - when run `jekyll serve`, see `cannot load such file --bundler`
-        try run `gem install bundler`
-    - when run `jekyll serve`, show `some gem can not be found`
-        try run `bundle install`
+# Installation
 
-Basic Usage
-    jekyll build [--source <source>] [--destination <destination>] [--watch]
-    jekyll serve [--detach] [--no-watch]
+install requirements: Ruby, RubyGems, Linux/Unix/Mac OS X, NodeJS
+
+`apt-get install ruby`
+`apt-get install ruby-dev`
+`apt-get install gem`
+`gem source --add https://ruby.taobao.org --remove https://rubygems.org/`
+`apt-get install nodejs`
+
+install jekyll
+
+- with gem: `gem install jekyll`
+- from source:
+
+`git clone git://github.com/jekyll/jekyll.git`
+`cd jekyll`
+`script/bootstrap`
+`bundle exec rake build`
+`ls pkg/*.gem | head -n 1 | xargs gem install -l`
+
+- if you are in Cygwin, remember to install
+    + make, automake
+    + gcc4-g++, git
+    + libffi-devel, libgmp-devel, libiconv, libiconv2, zlib
+    + curl
+    + python
+
+# Fixation
+
+- when run `jekyll serve`, see `cannot load such file --bundler`
+
+try run `gem install bundler`
+
+- when run `jekyll serve`, show `some gem can not be found`
+
+try run `bundle install`
+
+# Basic Usage
+
+```
+jekyll build [--source <source>] [--destination <destination>] [--watch]
+jekyll serve [--detach] [--no-watch]
+```
 
 A general jekyll project directory structure
     .
