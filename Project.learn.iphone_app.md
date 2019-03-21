@@ -12,10 +12,10 @@
     - <https://developer.apple.com/design/tips/>
 4. learn Swift
     - <https://developer.apple.com/swift/>
+5. read documentation
+    - <https://developer.apple.com/documentation>
 
 # Dev Tools
 - XCode
 - Swift
-- iOS SDK
-
-#
+- iOS SDK (XCode included already)

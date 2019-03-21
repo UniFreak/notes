@@ -40,13 +40,24 @@ composer config -g repo.packagist composer https://packagist.phpcomposer.com
 ```
 
 # Version
-- available stability: dev, alpha, beta, RC (means Release Candidates), stable
+
+## Stability
+
+- available **stability flag** (`@beta` part in ``1.0.*@beta`) are: `dev`, `alpha`, `beta`, `RC` (means Release Candidates), `stable`
+- corresponding vcs tag name maybe: `v1.1-dev`, `v1.1-alpha`, `v1.1-beta`, `v1.1-RC1`, `v1.1-stable`
+- If you are using a constraint that does not explicitly define a stability, Composer will default internally to -dev or -stable, depending on the operator(s) used
 - `minimum-stability` can be secified on per-package basis: `1.0.*@beta`
+
+## Install strategy
+
 - `--prefer-dist`: downloads the right files without actually cloning the repo
 - `--prefer-source`: clones the repo into the correct place in your `vendor` directory
-- version like `1.0.*@beta` will be solved as tags, and package downloaded as `--prefer-dist` style
-- version like `dev-<branchName>` will be solved as branch, and package downloaded as `--prefer-source` style
-- In the case of a branch with a version-like name, you append `-dev` as a suffix
+
+## Tag and branch
+
+- `1.0.*@beta` will be solved as tags, and package downloaded as `--prefer-dist` style
+- `dev-<branchName>` will be solved as branch, and package downloaded as `--prefer-source` style
+- `v1.x-dev` mean to checkout a branch `v1` or branch `v1.x` instead of tag. `.x-dev` is arbitary
 
 # composer.json
 

@@ -6,7 +6,7 @@ every Logger instance has a `channel` (name) and a stack of `handlers`
 
 ## channel
 
- a great way to identify to which part of the application a record is related. like `db`, `request`, `router`...
+a great way to identify to which part of the application a record is related. like `db`, `request`, `router`...
 
 ## handler
 
@@ -82,53 +82,49 @@ every Logger instance has a `channel` (name) and a stack of `handlers`
 
 ## record
 
-    understand this is essential to extend Monolog
+understand this is essential to extend Monolog
 
-    log message structure:
+log message structure:
+- message
+- level
+- level_name
+- context
+- channel
+- datetime
+- extra
 
-    + message
-    + level
-    + level_name
-    + context
-    + channel
-    + datetime
-    + extra
-
-    The main difference is that context can be supplied in user land (it is the 3rd parameter to Logger::addRecord()) whereas extra is internal only and can be filled by processors. The reason processors write to extra and not to context is to prevent overriding any user provided data in context
-
-
+The main difference is that context can be supplied in user land (it is the 3rd parameter to Logger::addRecord()) whereas extra is internal only and can be filled by processors. The reason processors write to extra and not to context is to prevent overriding any user provided data in context
 
 
 ## formatter
 
-    + `LineFormatter`
-    + `HtmlFormatter`
-    + `NormalizerFormatter`
-    + `ScalarFormatter`
-    + `JsonFormatter`
-    + `WildfireFormatter`
-    + `ChromePHPFormatter`
-    + `GelfMessageFormatter`
-    + `LogstashFormatter`
-    + `ElasticaFormatter`
-    + `LogglyFormatter`
-    + `FlowdockFormatter`
-    + `MongoDBFormatter`
-    + `LogmaticFormatter`
-
+- `LineFormatter`
+- `HtmlFormatter`
+- `NormalizerFormatter`
+- `ScalarFormatter`
+- `JsonFormatter`
+- `WildfireFormatter`
+- `ChromePHPFormatter`
+- `GelfMessageFormatter`
+- `LogstashFormatter`
+- `ElasticaFormatter`
+- `LogglyFormatter`
+- `FlowdockFormatter`
+- `MongoDBFormatter`
+- `LogmaticFormatter`
 
 ## processor
 
-    + `PsrLogMessageProcessor`
-    + `IntrospectionProcessor`
-    + `WebProcessor`
-    + `MemoryUsageProcessor`
-    + `MemoryPeakUsageProcessor`
-    + `ProcessIdProcessor`
-    + `UidProcessor`
-    + `GitProcessor`
-    + `MercurialProcessor`
-    + `TagProcessor`
+- `PsrLogMessageProcessor`
+- `IntrospectionProcessor`
+- `WebProcessor`
+- `MemoryUsageProcessor`
+- `MemoryPeakUsageProcessor`
+- `ProcessIdProcessor`
+- `UidProcessor`
+- `GitProcessor`
+- `MercurialProcessor`
+- `TagProcessor`
 
 # Log levels
 
