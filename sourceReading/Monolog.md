@@ -1,3 +1,16 @@
+# Question
+- mock?
+
+```php
+public function setUp()
+{
+    $this->mailer = $this
+        ->getMockBuilder('Swift_Mailer')
+        ->disableOriginalConstructor()
+        ->getMock();
+}
+```
+
 # Interest
 - how logger call handlers (handle, handleBatch)?
 
@@ -11,7 +24,6 @@ while ($handler = current($this->handlers)) {
     next($this->handlers);
 }
 ```
-
 
 - how handler use processor
 
@@ -69,5 +81,17 @@ public function pushProcessor($callback)
     array_unshift($this->processors, $callback);
 
     return $this;
+}
+```
+
+- usage of `while` & `netx`
+
+```php
+while ($handler = current($this->handlers)) {
+    if (true === $handler->handle($record)) {
+        break;
+    }
+
+    next($this->handlers);
 }
 ```

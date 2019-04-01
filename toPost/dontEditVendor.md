@@ -8,11 +8,11 @@
 
 另一个事儿:
 
-同事试图通过 composer 安装 box/spout 包, composer 会自动更新所有项目依赖的包, 但是因为有些包 (比如 elasticsearch/elasticsearch) 的源码被改动, 如果继续安装的话, 会导致这些改动被冲掉, 所以只好放弃. 不知道现在找没找到不更新其他包的解决方案.
+同事试图通过 composer 安装 box/spout 包, composer 检测到 box/spout 所依赖的 elasticsearch 包也需要更新. 但是 elasticsearch 包源码被其他同事改过, 如果更新它则会导致这些改动被冲掉, 所以只好放弃安装 box/spout.
 
 这两种问题都是因为直接改动 composer 所管理的包目录 `./vendor` 中的代码导致的.
 
-**不要直接改动 `./vendor` 下的代码, 这应是每一个 PHP 开发的共识**
+**不要直接改动 `./vendor` 下的代码, 这应是每一个 PHP 开发的共识**.
 
 # ref
 - irc
@@ -27,12 +27,13 @@
 
 先理解下典型的 composer 使用流程:
 
-1. 通过 `composer require` 来安装项目所依赖的包, 所有的 composer 包会被放到 `./vendor/` 目录中. 而这个目录应该被 vcs 忽略
-2. composer 也会生成一个 `composer.lock` 文件, 这个文件包含了所有项目所依赖的包的版本快照. 通过自动构建运行 `composer install` 来根据这个快照安装响应版本的包
-3. 假设有一个依赖的包发布了一个安全补丁, 则可以通过 `composer update` 来安装这个补丁
+1. 通过 `composer require` 来安装项目所依赖的包, 所有的 composer 包会被放到 `./vendor/` 目录中. 而这个目录应该被 vcs 忽略 (把 `./vendor` 加入到 vcs 中是另一个常见的糟糕实践)
+2. composer 也会生成一个 `composer.lock` 文件, 这个文件包含了所有项目所依赖的包的版本快照. 通过自动构建运行 `composer install` 来根据这个快照安装相应版本的包
+3. 假设有一个依赖的包发布了一个安全补丁或版本更新, 则可以通过 `composer update` 来安装这个更新
 
-这个过程中有一点需要注意: `composer require` 和 `composer update` 的时候, composer 会自动检测各包有没有可用的版本更新, 并自动更新
+这个过程中有一点需要注意: composer 无论安装还是更新包, 都会直接操作 `./vendor/` 目录, 比如要把 `monolog/monolog` 包从现有的 1.0.0 更新到 1.1.0, 则会
 
+假设你有一个项目, 指定这个项目依赖 Monolog 的 ^1.23.0 版本 (这个版本约束的意思是: 所有 >=1.23.0, <2.0.0 的版本都可接受). 当前安装的 Monolog
 
 
 

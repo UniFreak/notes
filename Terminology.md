@@ -1,3 +1,7 @@
+# Time Unit
+
+1s = 1000ms (millisecond:毫秒) = 1000,000us (microsecond:微秒) = 1000,000,000ns (nanosecond:毫微秒)
+
 # Java Card
 
 run on smart cards or similar small-memory device

@@ -317,6 +317,7 @@ ignore mode changes?
 # Alias config
 
 # Coodie
+
 - show log of a deleted file: `git log -- <fileName>`
 - find out which commit deleted a line: `git blame --reverse START.. <fileName>`
 - delete local tag: `git tag --delete tagname`
