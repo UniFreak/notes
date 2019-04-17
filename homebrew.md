@@ -1,3 +1,6 @@
+# 国内镜像
+- https://mirror.tuna.tsinghua.edu.cn/help/homebrew/
+
 # Referece
 - doc: https://docs.brew.sh/
 - `man brew`
@@ -5,8 +8,8 @@
 - `brew commands`
 
 # Other simily tools
-- MacPorts(try it) 
-    +`/opt/local`, 
+- MacPorts(try it)
+    +`/opt/local`,
     + independent of OSX built-in, safer
     + no longer slower
     + now using git(previously svn rsync)
@@ -14,7 +17,7 @@
     +`/sw`
     + pre-built, faster
     + outdated and too few packages
-- Homebrew 
+- Homebrew
     +`/usr/local`
     + depend on OSX built-in, faster
     + using git
@@ -37,7 +40,7 @@
 
 # Behavior
 - Choose `usr/local`, it's easier and safe and "just work"
-- By default, Homebrew does not uninstall old versions of a formula 
+- By default, Homebrew does not uninstall old versions of a formula
 - We aim to bottle everything
 - If you need to run Homebrew in a multi-user environment, consider creating a separate user account especially for use of Homebrew
 - Homebrew installs to the Cellar and then symlinks some of the installation into `/usr/local` so that other programs can see what’s going on

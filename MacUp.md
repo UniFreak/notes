@@ -23,6 +23,12 @@
 - nodejs
 - git with git-completion.bash
 
+# php
+
+1. tag homebrew/php
+2. brew install php56 php71
+3. switch: brew unlink php56 && brew link php71 or vice versa
+
 # xdebug
 
 pass

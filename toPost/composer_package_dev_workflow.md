@@ -36,5 +36,9 @@
 - first release: tag, version
 - push to repository
 
+# psr0 vs psr4
+- psr0: `Dotenv:src/` => `new \Dotenv()`
+- psr4: `Dotenv\\:src/` => `new \Dotenv\Dotenv()`
+
 # See
 - uxin composer package scaffold script

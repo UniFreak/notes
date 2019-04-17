@@ -39,6 +39,12 @@
 composer config -g repo.packagist composer https://packagist.phpcomposer.com
 ```
 
+- run this to restore to offical
+
+```sh
+composer config -g --unset repos.packagist
+```
+
 # Version
 
 ## Stability
@@ -312,7 +318,9 @@ archive-dir
 
 ## ?
 - psr 0 with \\ vs not with \\?
+- psr 0 vs psr 4
 
 # Tips
 - you probably want to add vendor/ in your .gitignore. You really don't want to add all of that code to your repository.
 - to remove tests/ folder when prefer-dist: use a .gitattributes config file
+- use `https://github.com/clue/graph-composer` to show dependecy
