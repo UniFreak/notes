@@ -32,6 +32,9 @@ cmd-shift-O     Documents folder
 cmd-shift-R     AirDrop folder
 cmd-shift-U     Utilities folder
 
+cmd-shift-left  show left tab
+cmd-shift-right show right tab
+
 cmd-opt-s       toggle side bar
 cmd-opt-p       toggle path bar
 
