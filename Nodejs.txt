@@ -1,5 +1,0 @@
-==================== Console ====================
-Ctrl+c, Ctrl+c to exit
-
-process.
-    exit()

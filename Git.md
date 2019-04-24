@@ -1,3 +1,6 @@
+# Refs
+- advanced topics: <https://www.atlassian.com/git/tutorials/advanced-overview>
+
 # Concept
 
 - git track changes, not files

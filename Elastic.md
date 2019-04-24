@@ -30,13 +30,14 @@
 - create index: `PUT /customer?pretty`
 - delete index: `DELETE /customer?pretty`
 - create/replace(with same id) document:
+
 ```
     PUT /customer/_doc/1?pretty
     {
       "name": "John Doe"
     }
 ```
-- update document: 
+- update document:
     + by `_update`:
     ```
     POST /customer/_doc/1/_update?pretty
