@@ -1,9 +1,9 @@
-#Proxy
+# Proxy
 
 - Ctrl+R            start recording
 - Ctrl+T            start throttling
 - Ctrl+K            enable breakpoionts
-- Ctrl+Shift+T      throttle settings 
+- Ctrl+Shift+T      throttle settings
 - Ctrl+Shift+K      breakpiont settings
 - Ctrl+Shift+P      windows proxy
 - Ctrl+Shift+F      mozilla firefox proxy
