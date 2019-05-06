@@ -24,6 +24,8 @@ controls can be **converted** to another, avoid re-typing the content
 
 **crop** (mask) a group of controls to only show a selected portion of it?
 
+mockups can be nested using tab or shift+tab
+
 you can add control by **drawing**
 
 use **alternates** when:

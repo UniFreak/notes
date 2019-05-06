@@ -15,6 +15,8 @@ cmd+p           export to pdf
 cmd+q           quit
 fn+cmd+down     next mockup
 fn+cmd+up       prev mockup
+tab             nest
+shift+tab       unnest
 
 # Edit
 enter|f2        edit
