@@ -48,3 +48,7 @@ NOTE:
 - if running into compilation issues, always try deleting `node_modules/.cache`
 
 # Development
+
+modern mode
+
+mode: development, test, production

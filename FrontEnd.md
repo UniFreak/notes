@@ -15,6 +15,8 @@
 - testing: mocha, chai, sinon
 - vue + koa2 + webpack
 
+vue + elementui + axios/proxy/cors
+
 # Jargon
 - SPA: Single-Page Application
 
