@@ -1,3 +1,35 @@
+# Install
+
+1. requirements:
+    - java
+    - graphviz
+2. download `plantuml.jar`
+3. run `java -jar plantuml.jar diagram.txt` to generate diagram
+
+[optional]: for sublime text:
+
+- install and use `PlantUmlDiagrams` package
+- or simply use build system:
+
+```json
+{
+    "shell_cmd": "java -jar /Applications/plantuml.jar $file && subl $file_base_name.png",
+    "file_regex": ".uml$"
+}
+```
+
+# Command line
+
+better alias `plantuml` to `java -jar plantuml.jar`
+
+- `plantuml file|dir...`, support wildcard
+- `-help` help
+- `-x` exclude
+- `-o` output dir
+- `-tsvg`, `-tpng`... specify output image type
+
+
+# Syntax
 <relation>:
     availabel joint point:
         <|

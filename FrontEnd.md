@@ -9,10 +9,13 @@
 # Common stacks
 - nodejs & nvm
 - npm | yarn
+- compiler (cross-browser compatibility): babel
+- build & task automation: gulp, grunt, yeoman, npm scripts
 - module loader/bundler: webpack, rollup, parcel, browserify
 - testing: mocha, chai, sinon
-- build & task automation: gulp, grunt, yeoman, npm scripts
 - vue + koa2 + webpack
+
+vue + elementui + axios/proxy/cors
 
 # Jargon
 - SPA: Single-Page Application

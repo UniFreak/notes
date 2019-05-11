@@ -1,9 +1,11 @@
+**talk notes with dongdong**
+
 # @?
 - Yarn
 - babel
 
 # TOOLs
-- Language: 
+- Language:
     + ES6 || TypeScript
     + CSS3 || SASS || Stylus
     + HTML5 || pug/jade
@@ -12,7 +14,7 @@
     + MVVM / CMD: vue, react, angular
 - Node.js: js 运行环境, js 写的工具都得靠它运行
 - 打包工具: 编译前端资源 (js, css, json, image, font...) 成 js module @?
-    + Webpack 
+    + Webpack
     + Rollup
 - Unit Test
     + karma
