@@ -25,7 +25,7 @@ cmd+enter       commit edit
 cmd+t           transform
 cmd+g           group
 cmd+shift+g     ungroup
-r+drag          draw rectangelt
+r+drag          draw rectangle
 t+drag          draw text
 y+drag          draw a line of text
 cmd+z           undo

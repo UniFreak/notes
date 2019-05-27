@@ -2,31 +2,6 @@
 - resources: <https://github.com/vuejs/awesome-vue>
 - plugin dev: <https://cli.vuejs.org/dev-guide/plugin-dev.html>
 
-# Learn steps
-- ~~read before using cli <https://vuejs.org/v2/guide/single-file-components.html>~~
-- ~~learn about npm~~
-- ~~learn es6 <https://babeljs.io/docs/en/learn>~~
-- learn node.js ?
-- ~~learn webpack <https://webpack.js.org/>~~
-- ~~learn vue cli: <https://cli.vuejs.org/>~~
-- learn some real app tuts
-    + blog: <https://vuejs.org/v2/cookbook/serverless-blog.html>
-- learn how to integret with lumen
-    + <https://github.com/albertcht/lumen-vue-starter>
-    + laravel: <https://laravel.com/docs/master/frontend>
-    + <https://vuejs-templates.github.io/webpack/backend.html>
-    + search the web: lumen+vue
-    + lumen+vue tuts found in <https://github.com/vuejs/awesome-vue>
-    + axios:
-        * official: <https://github.com/axios/axios>
-        * cookbook: <https://vuejs.org/v2/cookbook/using-axios-to-consume-apis.html>
-    + elementui: <https://element.eleme.cn/#/en-US>
-- ~~learn deploy: <https://cli.vuejs.org/guide/deployment.html>~~
-- ~~learn router: <https://router.vuejs.org/>~~
-- interesting:
-    + dockerize: <https://vuejs.org/v2/cookbook/dockerize-vuejs-app.html>
-- common lib: lodash,
-
 # Install
 - vue: `npm install vue`
 - vue-devtools: `npm install -g @vue/devtools`
@@ -68,9 +43,9 @@ must:
 - Component data must be a function, except for root Vue instance
 - Prop definitions should be as detailed as possible
 - Always use key with `v-for`
-- Never use `v-if` on the same element as `v-fo`r
+- Never use `v-if` on the same element as `v-for`
 - For applications, styles in a top-level App component and in layout components may be global, but all other components should always be scoped
-- Use module scoping to keep private functions inaccessible from the outside. If that’s not possible, always use the $_ prefix for custom private properties in a plugin, mixin, etc that should not be considered public API. Then to avoid conflicts with code by other authors, also include a named scope (e.g. $_yourPluginName_)
+- Use module scoping to keep private functions inaccessible from the outside. If that’s not possible, always use the `$_` prefix for custom private properties in a plugin, mixin, etc that should not be considered public API. Then to avoid conflicts with code by other authors, also include a named scope (e.g. `$_yourPluginName_`)
 
 better:
 
@@ -306,11 +281,58 @@ use `$emit()` to
 - listeng to child component events
 - Using `v-model` on Components
 
-`<slot>`
+`<slot>`, `v-slot`, `<template>`: see <https://vuejs.org/v2/guide/components-slots.html>
+
+slot most useful when you are designing a reusable component that encapsulates data logic while allowing the consuming parent component to customize part of its layout. to see the power of slot, view libiray like  `Vue Virtual Scroller`, `Vue Promised`, and `Portal Vue`
 
 use `is` to
+
 - do Dynamic & Async Components
 - avoid DOM nested element restriction
+
+**Async Component**:
+
+see <https://alexjover.com/blog/lazy-load-in-vue-using-webpack-s-code-splitting/>
+
+vue:
+
+```js
+Vue.component('async-example', function (resolve, reject) {
+  setTimeout(function () {
+    // Pass the component definition to the resolve callback
+    resolve({
+      template: '<div>I am async!</div>'
+    })
+  }, 1000)
+});
+```
+
+with webpack:
+
+```js
+// webpack code splitting with `require()`
+Vue.component('async-webpack-example', function (resolve) {
+  // This special require syntax will instruct Webpack to
+  // automatically split your built code into bundles which
+  // are loaded over Ajax requests.
+  require(['./my-async-component'], resolve)
+})
+
+// or do global registration with `import()`
+Vue.component(
+  'async-webpack-example',
+  // The `import` function returns a Promise.
+  () => import('./my-async-component')
+);
+
+// or do local registration with `import()`
+new Vue({
+  // ...
+  components: {
+    'my-component': () => import('./my-async-component')
+  }
+});
+```
 
 # Mixins
 
@@ -321,6 +343,134 @@ a flexible way to distribute reusable functionalities for Vue components
 `Vue.directive()`
 
 # Render Function & JSX
+
+`render` function: a closer-to-the-compiler alternative to templates
+
+```js
+render: function (createElement) {
+  return createElement()
+}
+```
+
+concepts:
+- Virtual Node: what `render` function return, descriptions of real DOM Node, aka VNode
+- Virtual DOM: the entire tree of VNodes, built by a tree of Vue components
+
+`createElement` function:
+
+```js
+// @returns {VNode}
+createElement(
+  // {String | Object | Function}
+  // An HTML tag name, component options, or async
+  // function resolving to one of these. Required.
+  'div',
+
+  // {Object}
+  // A data object corresponding to the attributes
+  // you would use in a template. Optional.
+  {
+    // Same API as `v-bind:class`, accepting either
+    // a string, object, or array of strings and objects.
+    class: {
+      foo: true,
+      bar: false
+    },
+    // Same API as `v-bind:style`, accepting either
+    // a string, object, or array of objects.
+    style: {
+      color: 'red',
+      fontSize: '14px'
+    },
+    // Normal HTML attributes
+    attrs: {
+      id: 'foo'
+    },
+    // Component props
+    props: {
+      myProp: 'bar'
+    },
+    // DOM properties
+    domProps: {
+      innerHTML: 'baz'
+    },
+    // Event handlers are nested under `on`, though
+    // modifiers such as in `v-on:keyup.enter` are not
+    // supported. You'll have to manually check the
+    // keyCode in the handler instead.
+    on: {
+      click: this.clickHandler
+    },
+    // For components only. Allows you to listen to
+    // native events, rather than events emitted from
+    // the component using `vm.$emit`.
+    nativeOn: {
+      click: this.nativeClickHandler
+    },
+    // Custom directives. Note that the `binding`'s
+    // `oldValue` cannot be set, as Vue keeps track
+    // of it for you.
+    directives: [
+      {
+        name: 'my-custom-directive',
+        value: '2',
+        expression: '1 + 1',
+        arg: 'foo',
+        modifiers: {
+          bar: true
+        }
+      }
+    ],
+    // Scoped slots in the form of
+    // { name: props => VNode | Array<VNode> }
+    scopedSlots: {
+      default: props => createElement('span', props.text)
+    },
+    // The name of the slot, if this component is the
+    // child of another component
+    slot: 'name-of-slot',
+    // Other special top-level properties
+    key: 'myKey',
+    ref: 'myRef',
+    // If you are applying the same ref name to multiple
+    // elements in the render function. This will make `$refs.myRef` become an
+    // array
+    refInFor: true
+  },
+
+  // {String | Array}
+  // Children VNodes, built using `createElement()`,
+  // or using strings to get 'text VNodes'. Optional.
+  [
+    'Some text comes first.',
+    createElement('h1', 'A headline'),
+    createElement(MyComponent, {
+      props: {
+        someProp: 'foobar'
+      }
+    })
+  ]
+);
+```
+
+aliasing `createElement` to `h` is a common convention
+
+`JSX`: a Babel plugin to use JSX with Vue, getting us back to a syntax that’s closer to templates
+
+```js
+import AnchoredHeading from './AnchoredHeading.vue'
+
+new Vue({
+  el: '#demo',
+  render: function (h) {
+    return (
+      <AnchoredHeading level={1}>
+        <span>Hello</span> world!
+      </AnchoredHeading>
+    )
+  }
+})
+```
 
 # Plugins
 
@@ -340,7 +490,11 @@ goal:
 - record all state mutations happening to the store
 - implement advanced debugging helpers
 
-the store pattern -> flux architecture -> vuex
+ways:
+1. source of truth: debug night mare
+2. the store pattern
+3. flux architecture
+4. vuex
 
 # Server-Side Rendering (SSR)
 
@@ -349,7 +503,160 @@ knowlege requirements:
 - server-side Node.js development
 - webpack
 
-go <https://ssr.vuejs.org/>
+see <https://ssr.vuejs.org/>
 
 # Reactivity in Depth
 
+# API
+
+## Config
+
+`Vue.config`:
+- `.silent`
+- `.optionMergeStrategies`
+- `.devtools`
+- `.errorHandler`, related: sentry, bugsnap
+- `.warnHandler`
+- `.ignoredElements`
+- `.keyCodes`: define custom key alias(es) for `v-on`
+- `.performance`
+- `.productionTip`
+
+## Global
+
+- `Vue.extendd()`: Create a “subclass” of the base Vue constructor
+- `Vue.nextTick()`
+- `Vue.set()`: Adds a property to a reactive object
+- `Vue.delete()`: Delete a property on an object
+- `Vue.directive()`: Register or retrieve a global directive
+- `Vue.filter()`: Register or retrieve a global filter
+- `Vue.component()`: Register or retrieve a global componen
+- `Vue.use()`: Install a Vue.js plugin
+- `Vue.mixin()`: Apply a mixin globally
+- `Vue.compile`: Compiles a template string into a render function
+- `Vue.observable()`: Make an object reactive
+
+- `Vue.version`
+
+## Options-Data
+
+- `data` -> `vm.$data` -> `vm.a`: `_` or `$` prefixed data will not be proxied to `vm`
+- `props`: accept data from the parent component
+    + type: String|Number|Boolean|Array|Object|Date|Function|Symbol
+    + default: any
+    + required: Boolean
+    + validator: Function
+- `propsData`: Pass props to an instance during its creation
+- `computed`: Computed properties to be mixed into the Vue instance
+- `methods`: Methods to be mixed into the Vue instance
+- `watch`: An object where keys are expressions to watch and values are the corresponding callbacks
+
+## Options-DOM
+
+- `el` -> `vm.$el`: existing DOM element to mount on
+- `template`: the markup for the Vue instance
+- `render`: alternative to `templates` to leverage the full programmatic power of JS
+- `renderError`: render output when the default render function encounters an error
+
+## Options-Hooks
+
+- `beforeCreate`
+- `created`
+- `beforeMount`
+- `mounted`
+- `beforeUpdate`
+- `updated`
+- `activated`
+- `deactivated`
+- `beforeDestroy`
+- `destroyed`
+- `errorCaptured`
+
+## Options-Assets
+
+- `directives`: directives to be made available to the Vue instance
+- `filters`: filters to be made available to the Vue instance
+- `components`: components to be made available to the Vue instance
+
+## Options-composition
+
+- `parent` -> `this.$parent`: Specify the parent instance for the instance to be created
+- `mixins`: accepts an array of mixin objects
+- `extends`: declaratively extending another component
+- `provide`/`inject`:  allow an ancestor component to serve as a dependency injector for all its descendants
+
+## Options-Misc
+
+- `name`
+- `delimeters`: Change the plain text interpolation delimiters
+- `functional`: Causes a component to be stateless
+- `model`: customize the prop and event used when it’s used with v-model
+- `inheritAttrs`:
+- `comments`: preserve and render HTML comments found in templates
+
+## Instance Properties
+
+- `vm.$data`
+- `vm.$props`
+- `vm.$el`
+- `vm.$options`
+- `vm.$parent`
+- `vm.$root`
+- `vm.$children`
+- `vm.$slots`
+- `vm.$scopedSlots`
+- `vm.$refs`: An object of DOM elements and component instances, registered with ref attributes
+- `vm.$isServer`
+- `vm.$attrs`
+- `vm.$listeners`
+
+## Instance Methods
+
+Data:
+
+- `vm.$watch()`
+- `vm.$set()` -> `Vue.set`
+- `vm.$delete()` -> `Vue.delete`
+
+Events:
+
+- `vm.$on()`
+- `vm.$once()`
+- `vm.$off()`
+- `vm.$emit()`
+
+Lifecycle:
+
+- `vm.$mount()`
+- `vm.$forceUpdate()`
+- `vm.$nextTick()`
+- `vm.$destroy()`
+
+## Directives
+
+- `v-text`
+- `v-html`
+- `v-show`
+- `v-if`, `v-else-if`, `v-else`
+- `v-for`
+- `v-on`
+- `v-bind`
+- `v-model`
+- `v-slot`
+- `v-pre`: Skip compilation for this element and all its children
+- `v-cloak`: used to hide un-compiled mustache bindings until the Vue instance is ready
+- `v-once`
+
+## Special Attributes
+
+- `key`
+- `ref`: register a reference to an element or a child component under parent component’s `$refs`
+- `is`
+
+## Built-In Components
+
+- `<component>`: A “meta component” for rendering dynamic components
+- `<transition>`: serve as transition effects for single element/component.
+- `<transition-group>`: serve as transition effects for multiple elements/components
+- `<keep-alive>`: caches the inactive component instances without destroying them
+- `<slot>`: serve as content distribution outlets in component templates

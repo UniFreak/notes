@@ -33,7 +33,13 @@
 
 pass
 
-# docker debug
+# traps
+
+## related knowledge
+config:
+- dns
+- extra_hosts
+- network_mode
 
 ## 1
 
@@ -93,6 +99,10 @@ E: Some index files failed to download. They have been ignored, or old ones used
 
 - use AnyConnect VPN, even if you are in company
 - use correct source.list -> mirror.163 (php7:jessie, php56:stretch)
+
+## 3.1
+
+运维迁云, 导致公司内部不能连接 AnyConnect
 
 ## 4.
 
@@ -186,3 +196,5 @@ other traps:
     + in home 192.168.65.0/24, xdebug remote_host=192.168.65.2
     + try configure only path_mappin of `Project` dir and make sure workspace folder dragged from `Project dir`
 - postman respond to api call fine, but site can not be access via browser: no response --> turn off all vpns
+
+## 运维迁云导致 docker 内部不能访问云 mysql 服务器

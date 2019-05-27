@@ -51,4 +51,16 @@ NOTE:
 
 modern mode
 
-mode: development, test, production
+|command| mode (accessed by `NODE_ENV`)| .env file|
+|----|----|----|
+|`test:unit` | test | `.env.test` |
+|`serve` | development | `.env.development`|
+|`build` | production | use `.env.` |
+
+.env file end with `.local` will only load during development, auto ignored by `.gitignore`
+
+specify mode: `--mode <mode>`
+
+access env: `process.env.ENV_VAR`
+
+cross region: use `devServer.proxy` config

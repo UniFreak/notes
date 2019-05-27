@@ -1,4 +1,4 @@
-#Six constraints
+# Six constraints
 1. Unifrom Interface
 2. Stateless
 3. Cacheable
@@ -15,7 +15,7 @@
 - The other key is to know which URL has been requested
 
 
-#URL
+# URL
 - Resources are best thought of as nouns. For example, the following is not RESTful:
 
 `/clients/add`
@@ -26,7 +26,7 @@
 - Everything needed to uniquely identify a  resource should be in the URL.
 - You should not need to include data identifying the resource in the request
 
-#HTTP methods
+# HTTP methods
 - safe methods: never modify resources, the only one is GET
 - idempotent methods:
     + achieve the same result, no matter how many times the request is repeated

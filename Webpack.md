@@ -135,7 +135,9 @@ multiple entry point?
 
 `HtmlWebpackPlugin` plugin?
 
-it's good practice to clean the /dist folder before each build: `clean-webpack-plugin` plugin
+it's good practice to clean the /dist folder before each build: use `clean-webpack-plugin` plugin
+
+webpack use `manifest` to track how all the modules map to the output bundle, use `WebpackManifestPlugin` to extract manifest to json
 
 ## Development (**NOT FOR PRODUCTION!**)
 
@@ -177,9 +179,25 @@ module.exports = {
 
 help to split your code into various bundles which can then be loaded on demand or in parallel
 
+three way to do code splitting:
+
 1. Entry Points: Manually split code using entry configuration -> can lead to duplication
-2. Prevent Duplication: Use the `SplitChunksPlugin` to dedupe and split chunks
+
+2. Prevent Duplication: Use the `SplitChunksPlugin` to dedupe and split chunks. other related plugins
+    - `mini-css-extract-plugin`: splitting CSS out from the main application
+    - `bundle-loader`: split code and lazy load the resulting bundles
+    - `promise-loader`: Similar to the bundle-loader but uses promises
+
 3. Dynamic Imports: Split code via inline function calls within modules
+
+config: `chunkFileName`
+code: `import(/* webpackChundName: "lodash" */).then()`
+
+prefetching & preload
+
+## Lazy Loading
+
+
 
 ## Tree Shaking
 

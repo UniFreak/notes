@@ -23,3 +23,14 @@
 
 - learing nginx
     + fastcgi
+
+# Vue
+- ~~render function~~
+    + ~~apis~~
+    + ~~slot~~
+    + ~~Dynamic Components~~
+- ~~vue lazing loading: import @, () => import~~
+    + ~~webpack code splitting~~
+    + ~~output management~~
+    + ~~to: caching~~
+    + ~~lazy loading~~
