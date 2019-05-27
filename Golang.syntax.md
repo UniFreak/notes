@@ -1,4 +1,6 @@
-# Package
+# Basics
+
+## Package
 Programs start running in package `main`
 
 ```go
@@ -25,7 +27,7 @@ import "math"
 
 When importing a package, you can refer only to its `exported names`. A name is exported if it begins with a capital letter
 
-# Function
+## Function
 
 arguments type comes after the variable name (why: <https://blog.golang.org/gos-declaration-syntax>)
 
@@ -67,7 +69,7 @@ first-class citizen, can be passed around
 
 can be closures: a function value that references variables from outside its body.
 
-# Varialbe
+## Varialbe
 
 types
 
@@ -105,13 +107,13 @@ func main() {
 }
 ```
 
-# Constant:
+## Constant:
 
 - declared with `const`
 - can not use `:=`
 - other things are just like variables
 
-# For loop (the only loop)
+## For loop (the only loop)
 
 ```go
 for i := 0; i < 10; i++ { } // no parentheses, always require braces
@@ -124,7 +126,7 @@ for i < 10 { }
 for { }
 ```
 
-# If else
+## If else
 
 ```go
 if x < 0 { } // like `for`, no parentheses, always rquire braces
@@ -136,7 +138,7 @@ if v := math.Pow(x, n); v < lim { // can execute a short statement before condit
 }
 ```
 
-# Switch
+## Switch
 - no `break` needed
 - cases need not be constants
 
@@ -162,7 +164,7 @@ default:
 }
 ```
 
-# Defer
+## Defer
 
 - A defer statement defers the execution of a function until the surrounding function returns
 - but arguments are evaluated immediately
@@ -179,7 +181,7 @@ for i := 0; i < 10; i++ {
 fmt.Println("done")
 ```
 
-# Pointer
+## Pointer
 
 - like C:
     + declaration use `*`: `var p *int`
@@ -187,7 +189,7 @@ fmt.Println("done")
     + dereferencing/indirecting use `*`: `*p = 21`
 - unlike C: has no pointer arithmetic
 
-# Struct: a collection of fields
+## Struct: a collection of fields
 
 ```go
 // declaration
@@ -209,7 +211,7 @@ p.Y = 5 // even for pointer, equvalent to `(*p).Y`
 fmt.Println(v.X)
 ```
 
-# Array
+## Array
 
 - fix-sized, cannot be resized
 
@@ -222,7 +224,7 @@ primes := [6]int{2, 3, 5, 7, 11, 13} // {}
 a[0] = "Hello"
 ```
 
-# Slice
+## Slice
 
 - zero value: `nil`
 - does not store any data, are like references to array
@@ -273,7 +275,7 @@ for i, _ := range a {} // or value, the same as
 for i := range a {}
 ```
 
-# Maps
+## Maps
 
 - zero value: `nil`
 
@@ -297,4 +299,300 @@ var n = map[string]Vertex{
 m["Bell Labs"] = Vertex{40.68433, -74.39967,} // set
 v, ok := m["Bell Labs"] // access: v the value, ok whether element in m
 delete(m, "BEll Labs") // delete
+```
+
+# Methods and interfaces
+
+## Methods
+
+- Go does not have classes
+- a method **is a function** with a special **receiver** argument
+- can define methods on types, struct or non-struct
+- recevier's type definition and method definition must be in the same package
+- this means you can **not** define methods on built-in types
+
+```go
+type Vertex struct {
+    X, Y float64
+}
+
+// define a Abs() method on Vertex v (the receiver)
+func (v Vertex) Abs() float64 {
+    return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+// define a Scale() method on Vertex pointer v, so to 
+// 1. modify v
+// 2. avoid copying, more efficient
+func (v *Vertex) Scale(f float64) {
+    v.X = v.X * f
+    v.Y = v.Y * f
+}
+
+// call, vs functions:
+// - functions with a pointer/value argument must take a pointer/value
+// - methods with pointer/value receivers take either a value or a pointer
+// - methods on a given type should have either value or pointer receivers, but not a mixture of both
+v.Scale(10)
+v.Abs()
+```
+
+## Interface
+
+```go
+// define interface Abser: a type defined as set of method signatures
+type Abser interface {
+    Abs() float64
+}
+
+type i interface {} // empty interface, used by code that handles values of unknown type
+
+// implement interface Abser
+// - by implementing methods
+// - no `implements` keyword requried, it's implicit
+type Vertex struct {
+    X, Y float64
+}
+func (v *Vertex) Abs() float64 {
+    // it's common to gracefully handle being called with a nil receiver
+    if v == nil { 
+        return 1.0
+    }
+    return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+// use interface Abser: a interface value holds (<concreteValue>, <concreteType>)
+func main() {
+    var a Abser
+
+    v := Vertex{3, 4}
+    a = &v
+    fmt.Printf("(%v, %T)", a, a) // interface value: (&{3 4}, *main.Vertex5)
+    fmt.Println(a.Abs()) // 5
+
+    var n *Vertex
+    a = n
+    fmt.Printf("(%v, %T)", a, a) // interface value: (<nil>, *main.Vertex<nil>)
+    fmt.Println(a.Abs()) // 1
+
+    var i Abser
+    fmt.Printf("(%v, %T)", i, i) // nil interface value: (<nil>, <nil>)
+    fmt.Println(i.Abs()) // run-time error, can not call method on a nil interface
+}
+```
+
+## Common built-in interface
+
+**Stringer**
+
+- defined by `fmt` package
+- `Stringer` is a type that can describe itself as a string
+- `fmt` package (and many others) look for this interface to print values
+
+```go
+type Stringer interface {
+    String() string
+}
+```
+
+**error**
+
+- Go programs express error state with error values
+- Functions often return an error value
+- calling code can test whether error is nil by `result, err := myFunc()`
+
+```go
+type error interface {
+    Error() string
+}
+```
+
+**Reader**
+
+- defined by `io` package
+- represents any type from which you can read bytes
+
+```go
+ type Reader interface {
+     Read(p []byte) (n int, err error)
+}
+```
+
+**Image**
+
+- defined by `image` package
+
+```go
+type Image interface {
+    ColorModel() color.Model
+    Bounds() Rectangle
+    At(x, y int) color.Color
+}
+```
+
+
+
+
+## Type assertion: `t, ok := i.(T)` and Type switch
+
+```go
+var i interface{} = "hello"
+
+// Type assertion
+s := i.(string) // assert i hold concret type `string` and assign the string value to s
+f = i.(float64) // if assertion failed, then `panic` (see )
+s, ok := i.(string) // `ok` is a boolean indicate whether assertion succeed. this mute panic if assertion failed
+
+// Type switch
+switch v := i.(type) { // `v` be the type of `i`, and hold value of `i`
+case int:
+    fmt.Printf("Twice %v is %v\n", v, v*2)
+case string:
+    fmt.Printf("%q is %v bytes long\n", v, len(v))
+default:
+    fmt.Printf("I don't know about type %T!\n", v)
+}
+```
+
+# Concurrency
+
+## Goroutines
+
+are lightweight threads managed by the Go runtime
+
+```go
+func say(s string) {
+    for i := 0; i < 5; i++ {
+        time.Sleep(100 * time.Millisecond)
+        fmt.Println(s)
+    }
+}
+
+func main() {
+    // start a goroutine
+    // - evaluation of `say("world")` happens in the current goroutine
+    // - execution of `say("world")` happens in the new goroutine
+    // - access to shared memory must be synchronized
+    go say("world")
+}
+```
+
+## Channels
+
+- typed conduit through which you can send and receive values, using channel operator `<-`
+- great for communication among goroutines
+
+**unbuffered channel**
+
+```go
+func sum(s []int, c chan int) {
+    sum := 0
+    for _, v := range s {
+        sum += v
+    }
+    c <- sum // send to channel
+}
+
+s := []int{7, 2, 8, -9, 4, 0}
+c := make(chan int) // create `unbuffered channel`: sends and receives **block** until the other side is ready
+go sum(s[:len(s)/2], c)
+go sum(s[len(s)/2:], c)
+x, y := <-c, <-c // receive from channel
+fmt.Println(x, y, x+y)
+```
+
+**buffered channel**
+
+```go
+// create `buffered channel`, by pass into `make()` buffer size 2
+// - send block only when the buffer is full
+// - receive block when the buffer is empty
+ch := make(chan int, 2) 
+ch <- 1
+ch <- 2
+fmt.Println(<-ch)
+fmt.Println(<-ch)
+```
+
+**range and close**
+
+```go
+func fibonacci(n int, c chan int) {
+    x, y := 0, 1
+    for i := 0; i < n; i++ {
+        c <- x
+        x, y = y, x+y
+    }
+    // close a channel to indicate that no more values will be sent
+    // only the sender should close a channel, never the receiver
+    // sending on a closed channel will cause a panic
+    // only necessary when the receiver must be told there are no more values coming
+    close(c)
+}
+
+c := make(chan int, 10)
+go fibonacci(cap(c), c)
+for i := range c { // `range` will receive values from channel until it is closed
+                   // can also check whether channel is close manually by `v, ok := <-ch`
+    fmt.Println(i)
+}
+```
+
+## Select
+
+- lets a goroutine wait on multiple communication operations
+- blocks until one of its cases can run, then it executes that case
+- chooses one at random if multiple are ready
+
+```go
+func fibonacci(c, quit chan int) {
+    x, y := 0, 1
+    for {
+        select {
+        case c <- x:
+            x, y = y, x+y
+        case <-quit:
+            fmt.Println("quit")
+            return
+        default:
+            // run if no other case is ready
+        }
+    }
+}
+
+c := make(chan int)
+quit := make(chan int)
+go func() {
+    for i := 0; i < 10; i++ {
+        fmt.Println(<-c)
+    }
+    quit <- 0
+}()
+fibonacci(c, quit)
+```
+
+## sync.Mutex
+
+- used to make sure only one goroutine can access a variable at a time to avoid conflicts
+- great for `mutual exclusion` among goroutines
+
+```go
+type SafeCounter struct {
+    v   map[string]int
+    mux sync.Mutex
+}
+
+func (c *SafeCounter) Inc(key string) {
+    // code between `Lock()` and `UnLock()` are executed in mutual exclusion
+    c.mux.Lock()
+    c.v[key]++
+    c.mux.Unlock()
+}
+
+func (c *SafeCounter) Value(key string) int {
+    c.mux.Lock()
+    // can use defer to ensure the mutex will be unlocked
+    defer c.mux.Unlock()
+    return c.v[key]
+}
 ```

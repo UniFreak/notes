@@ -5,6 +5,7 @@
 - https://golang.org/cmd/go/
 - https://tour.golang.org/list
 - https://play.golang.org/
+- https://golang.org/doc/effective_go.html
 
 # Pro
 - concurrency
