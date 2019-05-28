@@ -1,5 +1,6 @@
 *.ign.*
 .Ds_store
+uxin/
 *.todo
 personal/
 work/
