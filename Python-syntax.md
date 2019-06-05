@@ -25,7 +25,7 @@ text sequence:
 
 binary:
 - bytes
-- betearray
+- bytearray
 - memoryview
 
 - set: unique, unordered: `set()`
@@ -34,7 +34,7 @@ binary:
 # operator
 - arithmetic: +  -  *  /  %  //  **
 - comparison: ==  !=  <  >  <=  >=
-- logical: and  or  not
+- logical: and  not  or
 - bitwise: &  |  ~  ^  >>  <<
 - assignment: =  +=  -=  *=  /=  %=  //=  **=  &=  |=  ^=  >  <<=
 - identity: is      is not (the only common use in practice is `is None` or `is not None`)
@@ -163,18 +163,18 @@ class Dog(Animal, Friend): #  inherit by (), support multi-inheritance
 # module
 - bug if run module with `python modu.py <arguments>`, module name will be `__main__`. so to make module as a script(for testing or provide a user interface) as well as importable module, add following codes at the end:
 
+```python
+if __name__ == "__main__":
+    import sys
+    # do things
+```
+
 special atributes:
 - `__name__`
 - `__doc__`
 - `__annotation__`
 - `__file__`
 - `__dict__`
-
-```python
-if __name__ == "__main__":
-    import sys
-    # do things
-```
 
 - access module function via `modu.func`
 - access module global variable via `module.var`
@@ -190,11 +190,11 @@ if __name__ == "__main__":
 - a way of structuring Python’s module namespace by using “dotted module names”
 - any directory with an `__init__.py` file is considered a Python package
 - leaving an `__init__.py` file empty is considered normal and even a good practice
-- you can define a `__all__` variale to specify what sub-module is availabel when do `import *`
+- you can define a `__all__` variable to specify what sub-module is availabel when do `import *`
 - when do `import pack.modu`:
 1. look for `__init__.py` in `pack`, execute its top-level statements
 2. look for `pack/modu.py`, execute its top-level statements
-3. any varialbe, function or class in `modu.py` is available in
+3. any varialbe, function or class in `modu.py` is available
 
 # import:
 - `from modu import func [as alias]`: import `func` into global

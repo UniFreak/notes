@@ -67,7 +67,7 @@ complete application distribution:
     + deactivate virtual env: `deactivate`
     + delete virtual env: delete the folder
     + freeze current venv packages: `pip freeze > requirements.txt`
-    + restore old vven packages: `pip install -r requirements.txt`
+    + restore old venv packages: `pip install -r requirements.txt`
 - `virtualenvwrapper`: makes working with virtual environments much more pleasant
     + install
         1. `pip install virtualenvwrapper`
@@ -105,12 +105,12 @@ complete application distribution:
 - warehouse
 
 # @?
-- pythone-config
+- python-config
 - wheel
 - `site packages`: system-wide installed packages
 - `future imports`
 - `absolute imports`, `relative imports`
-- covariant or contravariant behavior
+- covariant or contravariant behavior -> see <https://www.python.org/dev/peps/pep-0484/>
 - `__all__`
 - rich comprison
 
@@ -239,9 +239,8 @@ import library.foo_plugin # not OK
 ```
 
 - you need to understand the import mechanism in order to use this concept properly and avoid some issues
-- Using properly mutable types for things that are mutable in nature and immutable types for things that are fixed in nature helps to clarify the intent of the code
+- use properly mutable types for things that are mutable in nature and immutable types for things that are fixed
 - avoid using the same variable name for different things or assigning to a variable more than once
-- using properly mutable types for things that are mutable in nature and immutable types for things that are fixed in nature
 - discourages the usage of the` %` operator in favor of the `str.format()` method
 - one of the secrets of becoming a great Python programmer is to read, understand, and comprehend excellent code
     + Howdoi

@@ -1998,3 +1998,5 @@ __DO REMEMBER TO CALL `parent::setUp()`!!__
     + `Model::find([$that_id])`
 
 [symfonyFile]: http://api.symfony.com/2.7/Symfony/Component/HttpFoundation/File/UploadedFile.html
+
+- 如果某个 ServiceProvider 导致 memory limit error, 尝试删除 app.php 中的手动注册, 它可能已经在 Application 中注册了, see <https://github.com/laravel/lumen-framework/issues/130>,
