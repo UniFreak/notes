@@ -171,8 +171,6 @@ assign: `identifier=data`
 - no space around `=`
 - identifier can begin with letter/underscore, can contain letter/digit/underscore
 
-expansion/substitution: `$identifier`
-
 ## Special Parameters:
 
 - `$0`: script name/path
@@ -185,6 +183,14 @@ expansion/substitution: `$identifier`
 - `$!`: PID of most recently executed background command
 - `$_`: last argument of last command
 
+## Types
+
+- integer: `declare -i var`, rarely used, better use arithmetic command `(( ))` or `let`
+- indexed array: `declare -a var`, rarely used, better use `array()`
+- associative array: `declare -A var`
+- read only: `declare -r var`
+- export: `declare -x var`, will be inherited by any child process
+
 ## Concatenate
 
 - `var=$var1$var2`: command
@@ -194,6 +200,134 @@ expansion/substitution: `$identifier`
 - `string="$string more data here"`: reassign
 - `var=( "${arr1[@]}" "${arr2[@]}" )`: array
 
+## Array
+
+- `a=(word1 word2 "$word3" ...)`: Initialize an array from a word list, indexed starting with 0 unless otherwise specified
+- `a=(*.png *.jpg)`: Initialize an array with filenames.
+- `a[i]=word`: Set one element to word, evaluating the value of i in a math context to determine the index.
+- `a[i+1]=word`: Set one element, demonstrating that the index is also a math context.
+- `a[i]+=suffix`: Append suffix to the previous value of `a[i]` (bash 3.1).
+- `a+=(word ...)`: Modify an existing array without unsetting it, indexed starting at one greater than the highest indexed element unless otherwise specified (bash 3.1).
+- `a+=([3]=word3 word4 [i]+=word_i_suffix)`
+- `unset 'a[i]'`: Unset one element. Note the mandatory quotes (`a[i]` is a valid glob).
+- `"${a[i]}"`: Reference one element.
+- `"$(( a[i] + 5 ))"`: Reference one element, in a math context.
+- `"${a[@]}"`: Expand all elements as a list of words.
+- `"${!a[@]}"`: Expand all indices as a list of words (bash 3.0).
+- `"${a[*]}"`: Expand all elements as a single word, with the first char of IFS as separator.
+- `"${#a[@]}"`: Number of elements (size, length).
+- `"${a[@]:start:len}"`: Expand a range of elements as a list of words, cf. string range.
+- `"${a[@]#trimstart}" "${a[@]%trimend}"` | `"${a[@]//search/repl}"`: Expand all elements as a list of words, with modifications applied to each element separately.
+- `declare -p a`: Show/dump the array, in a bash-reusable form.
+
+## Parameter Expansion (PE)
+
+`${parameter:-word}`:
+
+Use Default Value. If 'parameter' is unset or null, 'word' (which may be an expansion) is substituted. Otherwise, the value of 'parameter' is substituted.
+
+`${parameter:=word}`:
+
+Assign Default Value. If 'parameter' is unset or null, 'word' (which may be an expansion) is assigned to 'parameter'. The value of 'parameter' is then substituted.
+
+`${parameter:+word}`:
+
+Use Alternate Value. If 'parameter' is null or unset, nothing is substituted, otherwise 'word' (which may be an expansion) is substituted.
+
+`${parameter:offset:length}`:
+
+Substring Expansion. Expands to up to 'length' characters of 'parameter' starting at the character specified by 'offset' (0-indexed). If ':length' is omitted, go all the way to the end. If 'offset' is negative (use parentheses!), count backward from the end of 'parameter' instead of forward from the beginning. If 'parameter' is @ or an indexed array name subscripted by @ or *, the result is 'length' positional parameters or members of the array, respectively, starting from 'offset'.
+
+`${#parameter}`:
+
+The length in characters of the value of 'parameter' is substituted. If 'parameter' is an array name subscripted by @ or *, return the number of elements.
+
+`${parameter#pattern}`:
+
+The 'pattern' is matched against the beginning of 'parameter'. The result is the expanded value of 'parameter' with the shortest match deleted. 
+If 'parameter' is an array name subscripted by @ or *, this will be done on each element. Same for all following items.
+
+`${parameter##pattern}`:
+
+As above, but the longest match is deleted.
+
+`${parameter%pattern}`:
+
+The 'pattern' is matched against the end of 'parameter'. The result is the expanded value of 'parameter' with the shortest match deleted.
+
+`${parameter%%pattern}`:
+
+As above, but the longest match is deleted.
+
+`${parameter/pat/string}`:
+
+Results in the expanded value of 'parameter' with the first (unanchored) match of 'pat' replaced by 'string'. Assume null string when the '/string' part is absent.
+
+`${parameter//pat/string}`:
+
+As above, but every match of 'pat' is replaced.
+
+`${parameter/#pat/string}`:
+
+As above, but matched against the beginning. Useful for adding a common prefix with a null pattern: "${array[@]/#/prefix}".
+
+`${parameter/%pat/string}`:
+
+As above, but matched against the end. Useful for adding a common suffix with a null pattern.
+
+# Pattern
+
+Is a string with a special format designed to match filenames, or to check, classify or validate data strings
+
+Three type:
+- glob
+- extended glob
+- regular expression
+
+Glob or extended glob can be used to do filename expansions: 
+
+Bash sees the glob, for example a*. It expands this glob, by looking in the current directory and matching it against all files there. Any filenames that match the glob are gathered up and sorted, and then the list of filenames is used in place of the glob
+
+All of them can do pattern matching in `[[ ]]` or `case`
+
+## Glob
+
+Anchored at both ends
+
+Metachars:
+- `*`: Matches any string, including the null string.
+- `?`: Matches any single character.
+- `[...]`: Matches any one of the enclosed characters.
+
+## Extended Glob
+
+turn on by `shopt -s extglob`
+
+Metachars:
+- `?(list)`: Matches zero or one occurrence of the given patterns
+- `*(list)`: Matches zero or more occurrences of the given patterns
+- `+(list)`: Matches one or more occurrences of the given patterns
+- `@(list)`: Matches one of the given patterns
+- `!(list)`: Matches anything but the given patterns
+
+The list inside the parentheses is a list of globs or extended globs separated by the `|` character
+
+## Regular Expression
+
+Bash use `ERE` (Extended Regular Expression) dialect
+
+Captured stringa captured by capture groups are assigned to `BASH_REMATCH` array
+
+Syntax: `$var =~ $pattern`
+
+see <Regex.md>
+
+# Brace Expansion
+
+Not sorted
+
+- list: `{a,e}`
+- range: `{0..9}`, `{b..Y}`
 
 # 注释
 
@@ -450,6 +584,10 @@ exit 1：退出本程序, 只退出执行中的shell文件
 - Always quote sentences or strings that belong together
 - Just use function to run repeat commands
 - Put double quotes around every parameter expansion
+- PE is better then `sed` `awk` `cut`
+- Using globs to enumerate files is always a better idea than using `ls`
+- The best way to always be compatible is to put your regex in a variable and expand that variable in `[[` without quotes
+
 - if you need a regular expression, you'll be using awk(1), sed(1), or grep(1) instead of Bash
 - DO NOT USE `ls`'s output for anything, Globs are much more simple AND correct
 - double-quote every expansion
