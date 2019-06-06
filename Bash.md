@@ -1,4 +1,4 @@
-# see
+# See
 - #bash channel topics
 - <https://wiki.bash-hackers.org/scripting/tutoriallist>
 - <http://mywiki.wooledge.org/BashGuide>
@@ -6,6 +6,8 @@
 # Concepts
 
 BASH: Bourne Again Shell
+
+Bash is written in C
 
 merely a layer between system function calls and the user
 
@@ -16,7 +18,12 @@ Types of commands:
 - functions: a name mapped to a set of commands, more powerful alias
 - builtins: functions already provided, like `[]`
 - keywords: like builtin, but with special parsing rule apply to them, like `[[ ]]`
-- executable/external/application:
+- executable/external/application
+
+String VS Stream:
+- stream is read sequentially (you usually can't jump around)
+- stream is unidirectional (you can read from them, or write to them, but typically not both)
+- stream can contain NUL bytes
 
 # Get Help
 
@@ -200,26 +207,6 @@ assign: `identifier=data`
 - `string="$string more data here"`: reassign
 - `var=( "${arr1[@]}" "${arr2[@]}" )`: array
 
-## Array
-
-- `a=(word1 word2 "$word3" ...)`: Initialize an array from a word list, indexed starting with 0 unless otherwise specified
-- `a=(*.png *.jpg)`: Initialize an array with filenames.
-- `a[i]=word`: Set one element to word, evaluating the value of i in a math context to determine the index.
-- `a[i+1]=word`: Set one element, demonstrating that the index is also a math context.
-- `a[i]+=suffix`: Append suffix to the previous value of `a[i]` (bash 3.1).
-- `a+=(word ...)`: Modify an existing array without unsetting it, indexed starting at one greater than the highest indexed element unless otherwise specified (bash 3.1).
-- `a+=([3]=word3 word4 [i]+=word_i_suffix)`
-- `unset 'a[i]'`: Unset one element. Note the mandatory quotes (`a[i]` is a valid glob).
-- `"${a[i]}"`: Reference one element.
-- `"$(( a[i] + 5 ))"`: Reference one element, in a math context.
-- `"${a[@]}"`: Expand all elements as a list of words.
-- `"${!a[@]}"`: Expand all indices as a list of words (bash 3.0).
-- `"${a[*]}"`: Expand all elements as a single word, with the first char of IFS as separator.
-- `"${#a[@]}"`: Number of elements (size, length).
-- `"${a[@]:start:len}"`: Expand a range of elements as a list of words, cf. string range.
-- `"${a[@]#trimstart}" "${a[@]%trimend}"` | `"${a[@]//search/repl}"`: Expand all elements as a list of words, with modifications applied to each element separately.
-- `declare -p a`: Show/dump the array, in a bash-reusable form.
-
 ## Parameter Expansion (PE)
 
 `${parameter:-word}`:
@@ -244,7 +231,7 @@ The length in characters of the value of 'parameter' is substituted. If 'paramet
 
 `${parameter#pattern}`:
 
-The 'pattern' is matched against the beginning of 'parameter'. The result is the expanded value of 'parameter' with the shortest match deleted. 
+The 'pattern' is matched against the beginning of 'parameter'. The result is the expanded value of 'parameter' with the shortest match deleted.
 If 'parameter' is an array name subscripted by @ or *, this will be done on each element. Same for all following items.
 
 `${parameter##pattern}`:
@@ -284,7 +271,7 @@ Three type:
 - extended glob
 - regular expression
 
-Glob or extended glob can be used to do filename expansions: 
+Glob or extended glob can be used to do filename expansions:
 
 Bash sees the glob, for example a*. It expands this glob, by looking in the current directory and matching it against all files there. Any filenames that match the glob are gathered up and sorted, and then the list of filenames is used in place of the glob
 
@@ -329,239 +316,382 @@ Not sorted
 - list: `{a,e}`
 - range: `{0..9}`, `{b..Y}`
 
-# 注释
+# Test And Conditional
 
-- 单行: `#` 代表注释 如： `# 这是一行注释`
-- 多行注释:
+## Exit Code
 
-把输入重定义到前面的命令, 但是 `:` 是空命令, 所以就相当于注释了
+`exit` command, Range from 0~255, typically 0 indicate success
 
-如果注释中有反引号的命令就会报错. 反引号部分没被注释掉, 例如 ab=`ls -l abc`就不会被注释掉.
+## Control Operator
 
-```
-:<<BLOCK
-　　....注释内容
-BLOCK
-```
+only for simple cases:
+- <if success> `&&` <then do this>
+- <if failed> `||` <then do this>
 
-# 变量定义
-- NOTE:
-    + 变量赋值时等号左右不允许有空格
-    + 定义变量时不需要 `$`, 但读取时需要
-    + 输出不存在变量时, 只输出空值, 不报错
-    + 单引号不解析变量
-    + 在字符串中, 建议变量加上 `{}` 如 `${name}`
-    + 定义字符串, 可以没有 `''` 或 `""`
-    + 拼接字符串时, 不需要加上任何辅助符号, 直接拼接
-    + `:` 表示分隔符
-    + ``` 执行一条命令
-- 赋值
-    + 直接赋值 `name=elson`
-    + 使用命令返回值赋值, 例如：用 pwd 命令获取当前路径, 并赋值
-        * 方式1：`pathNow=`pwd``
-        * 方式2：`pathNow=$(pwd)`
-    + 用已有的变量赋值到新变量 `pathNow2=$pathNow`
+## Grouping Statement
 
-# 变量输出
+`{ }`, you need a semicolon or newline before the closing curly brace.
 
-```
-name=elson
-echo my name is $name    #my name is elson
-echo my name is ${name}  #my name is elson   推荐方式
-echo my name is '$name'  #my name is $name   这一个得注意
-echo my name is "$name"  #my name is elson
-```
-
-# 变量释放
-
-```
-unset name
-echo $name
-```
-
-# 读取输入变量
--
-```
-read first second third         #暂停程序执行, 输入参数
-echo "U input string1:$first"
-echo "U input string2:$second"
-echo "U input string3:$third"
-```
-
--
-```
-read -p "U input string1:" first
-echo "U input string1:$first"
-```
-
-- `echo "U input string1:$1"`   #./t3.sh sky miny  sky就是$1, miny是$2
-
-# 数学计算
+grouping conditional operator:
 
 ```sh
-value1=`expr $a + $b + $c`
-echo $value1                   #输出60
-
-value1=`expr $c \* $a`         #*表示任意字符
-echo $value1                   #输出300
-
-echo $(($a + $b))              #输出30
+cd "$appdir" || { echo "Please create the appdir and try again" >&2; exit 1; }
 ```
 
-
-# if
-
-利用if编写一个只允许给定一个参数的shell文件: `vim if01.sh`
-
-内容：
+or redirect to group of statements:
 
 ```sh
-#!/bin/sh
+{
+    read firstLine
+    read secondLine
+    while read otherLine; do
+        something
+    done
+} < file
+```
 
-if [ $# -eq 0 ]
-then
-  echo "Too few"
-  exit 1
-elif [ $# -gt 1 ]
-then
-  echo "Too many"
-  exit 1
-else
-  echo "well"
+## Conditional Blocks
+
+`true`|`false` **is command** that always exit success|fail
+
+### Choices
+
+if:
+
+```sh
+if COMMANDS; then
+    OTHER COMMANDS
+elif COMMANDS; then
+    OTHER COMMANDS
+else; then
+    OTHER COMMANDS
 fi
 ```
 
-保存并退出, 赋予if01.sh文件可执行权限: `chmod +x ./if01.sh`
-
-分别三种情况执行：
-
-- `./if01.sh`              输出 Too few
-- `./if01.sh elson`        输出 well
-- `./if01.sh elson 24`     输出 Too many
-
-- `-eq` (==) -比较两个参数相等
-- `-ne` (!=) —比较两个参数是否不相等
-- `-lt` (\<) —参数1是否小于参数2
-- `-le`  —参数1是否小于等于参数2
-- `-gt` (\>) —参数1是否大于参数2
-- `-ge`  —参数1是否大于等于参数2
-
-- `-r file`           用户可读
-- `-w file`           用户可写
-- `-x file`           用户可执行
-- `-f file`           文件为正规文件
-- `-d file`           文件为目录
-- `-c file`           文件为字符特殊文件
-- `-b file`           文件为块特殊文件
-- `-s file`           文件大小非 0
-- `-t file`           文件描述符(默认为1)指定的设备为终端
-- `-n 变量`            变量有值
-
-# for
+case:
 
 ```sh
-for day in Saturday Tuesday Sunday
-do
-    echo "The day is : ${day}"
-done
-```
-
-# case
-
-```sh
-echo "Please select ..."
-echo "A) Copy"
-echo "B) Delete"
-echo "C) Backup"
-
-read op
-case $op in
-A)
-    echo "select A"
-;;
-B)
-    echo "select B"
-;;
-C)
-    echo "select C"
-;;
-*)
-    echo "invalide select"
+case $LANG in
+    en*) echo 'Hello!' ;;
+    fr*) echo 'Salut!' ;;
+    de*) echo 'Guten Tag!' ;;
+    nl*) echo 'Hallo!' ;;
+    it*) echo 'Ciao!' ;;
+    es*) echo 'Hola!' ;;
+    C|POSIX) echo 'hello world' ;;
+    *)   echo 'I do not speak your language.' ;;
 esac
 ```
 
-# while
+select:
 
 ```sh
-    num=3
-    while [ $num -gt 0 ]
-    do
-        echo $num
-        num=`expr $num - 1`
-    done
-```
-
-特殊的shift:
-
-```sh
-num=1
-while [ $# -gt 0 ]
-do
-    echo '$num='${num} ', $#='$# ', $1='${1}
-    num=`expr $num + 1`
-    shift                         # 参数列表往左移一位
-                                  # sky jim lamson elson->左移->jim lamson elson
+echo "Which of these does not belong in the group?"; \
+select choice in Apples Pears Crisps Lemons Kiwis; do
+if [[ $choice = Crisps ]]
+then echo "Correct!  Crisps are not fruit."; break; fi
+echo "Errr... no.  Try again."
 done
 ```
 
-运行: `./while.sh david elson lamson`
+### `test`/`[`/`[[`
 
-# 函数定义
+`[` **is a command** alias to `test`, that receive four arguments, so `[ "$a" = "$b" ]` means run `[` with argument `$a`, `=`, `$b` and required `]`
+
+`[[` is **a shell keyword**, it parse its arguments before bash expand them
+
+when not quoting right-hand side, `[[` do pattern matching
 
 ```sh
-source 脚本名    #加载程序source 文件名
-#example1 elson lamson 写在函数会报错, 因为函数并未定义
-example1()
-{
-    name1=david
-    echo '$name='${name1}
+$ foo=[a-z]* name=lhunath
+$ [[ $name = $foo   ]] && echo "Name $name matches pattern $foo"
+Name lhunath matches pattern [a-z]*
+$ [[ $name = "$foo" ]] || echo "Name $name is not equal to the string $foo"
+Name lhunath is not equal to the string [a-z]*
+```
 
-    echo '$arg1='${1}
-    echo '$arg2='${2}
+all supported operators:
+
+- `=`, `!=`: string comparision
+- `-eq`, `-ne`, `-lt`, `-gt`, `-le`, `-ge`: number comparision
+- `z`, `-n`: empty test
+- `! EXPR`: logical NOT
+- files:
+    + `-e FILE`: True if file exists
+    + `-f FILE`: True if file is a regular file
+    + `-d FILE`: True if file is a directory
+    + `-h FILE`: True if file is a symbolic link
+    + `-p PIPE`: True if pipe exists
+    + `-r FILE`: True if file is readable by you
+    + `-s FILE`: True if file exists and is not empty
+    + `-t FD` : True if FD is opened on a terminal.
+    + `-w FILE`: True if the file is writable by you.
+    + `-x FILE`: True if the file is executable by you.
+    + `-O FILE`: True if the file is effectively owned by you.
+    + `-G FILE`: True if the file is effectively owned by your group.
+    + `FILE -nt FILE`: True if the first file is newer than the second.
+    + `FILE -ot FILE`: True if the first file is older than the second.
+
+`[` only operators:
+
+- `\(`, `\)`: expression group
+- `\<`, `\>`: string lesser, greater
+- `-a`, `-o`: logical AND, OR
+
+`[[` only operators:
+
+- `()`: expression group
+- `<`, `>`: string lesser, greater
+- `&&`, `||`: logical AND, OR
+- `= PATTERN`, `== PATTERN`, `!= PATTERN`, `=~ REGEX`: pattern matching
+- `FILE -ef FILE`: files are the same
+
+## Conditional Loop
+
+while:
+
+```sh
+while COMMAND; do
+    OTHER COMMAND
+done
+```
+
+until (in practice, most people simply use `while !`)
+
+```sh
+until COMMAND; do
+    OTHER COMMAND
+done
+```
+
+for:
+
+```sh
+for (( INIT; EVALUATE; STEP )); do
+    OTHER COMMAND
+done
+```
+
+for-in:
+
+```sh
+for ITEM in WORDS; do
+    OTHER COMMAND
+done
+```
+NOTE: a simple `for ITEM` is equivalent to `for ITEM in "$[@]"`
+
+`continue` or `break` can be used in all of them
+
+# Array
+
+Zero-based index
+
+It's important to keep our data safely contained in the array as long as possible
+
+Associative array since after Bash 4
+
+Create:
+
+- `a=(word1 word2 "$word3" ...)`: from a word list
+- `a=(*.png *.jpg)`: with glob
+- `a=([0]="Bob" [1]="Peter" [20]="$USER" [21]="Big Bad John")`: sparsed
+- from command output: `NUL` byte is very often the best choice for delimiter, like below
+
+```sh
+files=()
+while read -r -d ''; do
+    files+=("$REPLY")
+done < <(find /foo -print0)
+```
+
+Use:
+
+- `declare -p a`: Show/dump the array, in a bash-reusable form
+- `"${a[i]}"`: Reference one element
+- `"$(( a[i] + 5 ))"`: Reference one element, in a math context
+- `a[i+1]=word`: Set one element, note the index is in a math context
+- `a[i]+=suffix`: Append suffix to one element
+- `a+=(word ...)` | `a+=([3]=word3 word4 [i]+=word_i_suffix)`: Append more elements
+- `unset 'a[i]'`: Unset one element. Note we use quotes to avoid `a[i]` intepreted as glob
+- `"${#a[@]}"`: Number of elements (size, length)
+
+Expand:
+
+- `"${a[@]}"`: Expand all elements as a list of words
+- `"${!a[@]}"`: Expand all indices as a list of words (bash 3.0)
+- `"${a[*]}"`: Expand all elements as a single word, with the first char of IFS as separator
+- `"${a[@]:start:len}"`: Expand a range of elements as a list of words, cf. string range
+- `"${a[@]#trimstart}" "${a[@]%trimend}"` | `"${a[@]//search/repl}"`: Expand all elements as a list of words, with modifications applied to each element separately.
+
+# Input And Output
+
+input can come from:
+- Command-line arguments (which are placed in the positional parameters)
+- Environment variables, inherited from whatever process started the script
+- Files
+- Anything else a File Descriptor can point to (pipes, terminals, sockets, etc.)
+
+output can go to:
+- Files
+- Anything else a File Descriptor can point to
+- Command-line arguments to some other program
+- Environment variables passed to some other program
+
+## Command-line Arguments
+
+see <#Special Parameters>
+
+## Enviroment
+
+Can be set
+- in user dot files: affect every program
+- on the fly: affect only current typed commmand: `$ LANG=C ls /tpm`
+- export: affect only child process: `export ENV=val`
+
+## File Descriptors(FDs)
+
+are the way programs refer to files, or to other resources that work like files (such as pipes, devices, sockets, or terminals). FDs are kind of like pointers to sources of data, or places data can be written. When something reads from or writes to that FD, the data is read from or written to that FD's resource
+
+By default, every new process starts with three open FDs:
+- Standard Input (`stdin`): File Descriptor 0
+- Standard Output (`stdout`): File Descriptor 1
+- Standard Error (`stderr`): File Descriptor 2
+
+## Redirection
+
+The practice of changing a FD to read its input from, or send its output to, a different location
+
+Redirection apply only to one command/**loop**, and occurs before the command/loop is executed
+
+Syntax:
+- change target FD location: `>` or `<` preceded by FD number(default to `stdout` or `stdin`)
+- appending: `>>` or `<<`
+- duplicate target FD: `&` followed by FD number
+- space between redirection operator and file is optional, means `2>error` is okay
+
+Examples:
+- `>` | `1>`: changes the `stdout` FD destination
+- `<` | `0<`: changes the `stdin` FD destination
+- `2> error`: change the `stderr` FD destination to file `error`
+- `2> /dev/null`: change the `stderr` FD destination to file `/dev/null` -> silent error
+- `> logfile 2>&1`: change `stdout` to logfile, then duplicate `stdout` and put it in `stderr`
+- `&> logfile`: same as above, redirecting both stdout and stderr to logfile, **not portable**
+
+## Heredocs And Herestrings
+
+Heredocs and Herestrings are themselves redirects just like any other, so additional redirections can occur on the same line
+
+**Heredoc**
+
+basic: with indentation, and Bash substitution
+
+```sh
+level=1
+cat <<END # sentinel
+    indented by "${level}"
+END
+#   indented by "1"
+```
+
+use `-END` to auto-remove `tab` (but **not space**)
+
+use `'END'` to avoid Bash substitution
+
+use `-'END'` to do both
+
+**Herestring**
+
+Less portable, with Bash institution
+
+```sh
+grep proud <<<"$USER sits proudly on his throne in $HOSTNAME."
+```
+
+## Pipes
+
+`|`: Connects the stdout of one process to the stdin of another
+
+`FIFOs` aka `named pipes` accomplish the same but through a filename
+
+The pipe operator creates a subshell environment for each command. This is important to know because any variables that you modify or initialize inside the second command will appear unmodified outside of it
+
+## Process Substitution
+
+Convenient way to use named pipes without having to create temporary files. Whenever you think you need a temporary file to do something, process substitution might be a better way to handle things
+
+`<()`: put command output in a named pipe
+
+```sh
+$ diff -y <(head -n 1 .dictionary) <(tail -n 1 .dictionary)
+```
+
+`>()`: redirect the file to the command's input
+
+```sh
+$ tar -cf >(ssh host tar xf -) .
+```
+
+# Compound Commands
+
+`if`, `for`, `[[`... are all compound commands, others are
+- subshell
+- command grouping
+- arithmetic evaluation
+
+`function` and `alias` are not compund commands, but works similar
+
+## Subshell
+
+Similar to a child process, except that more information is inherited
+
+When the subshell terminates, the cd command's effect is gone
+
+Created
+- implicitly for each command in pipeline
+- explicitly by using `()` around a command
+
+## Command grouping
+
+`{}`: Allow a collection of commands to be considered as a whole with regards to redirection and control flow
+
+## Arithmetic Evaluation
+
+Ways to do arithmetic:
+
+use `let`: `let a=4+5`, `let a='(5+2)*3'`
+
+or use compound command `(())`: `((a=(5+2)*3))`. this way:
+- can be used as command in `[[`
+- can do arithmetic substitution: `echo "There are $(($rows * $columsn)) cells`
+- can do ternary: `((abs= (a >= 0) ? a : -a))`
+- can use integer as truth value: `if ((flag)); then echo "uh oh, our flag is up"; fi`, NOTE that `flag` don't even need `$`
+
+## Function
+
+```sh
+dummy() {
+    local i # local variable
+    echo "$1" # use parameter
+    return 9 # return code
 }
+
+# call
+dummy one
+r=dummy
+t=$(dummy "two")
+echo "$r" "$t" "$?"
+
+# outputs:
+# one
+# dummy two 9
 ```
 
-# 函数返回值
+## Alias
 
-```sh
-example2()
-{
-    echo $1
-    return 9  #return的只能是一个整数
-}
-```
+If you need complex behavior, use a function instead
 
-调用函数:
-
-```sh
-f=example2
-echo $f #结果：example2
-```
-
-```sh
-    f=example2 5 #报错
-```
-
-```sh
-f=$(example2 5) #正确调用
-echo $?  # 9, $?此时可以输出上一个函数返回的值, 但必须要写在函数调用后的下一句
-echo $f  # 5, 输出函数在中间输出的值, 有多个值则输出多个, 以空格分隔
-```
-
-# exit
-
-exit 0：完全退出
-exit 1：退出本程序, 只退出执行中的shell文件
+`alias`, `unalias`
 
 # expansion (by order)
 
@@ -577,16 +707,51 @@ exit 1：退出本程序, 只退出执行中的shell文件
 - `set -o xtrace`
 - see <https://www.shellcheck.net/>
 
+# Tricks
+
+use Heredoc to dump documentation:
+
+```sh
+usage() {
+    cat <<EOF
+usage: foobar [-x] [-v] [-z] [file ...]
+A short explanation of the operation goes here.
+It might be a few lines long, but shouldn't be excessive.
+EOF
+}
+```
+
+# Pitfalls
+
+```sh
+$ myname='Greg Wooledge' yourname='Someone Else'
+$ [ $myname = $yourname ]
+-bash: [: too many arguments
+```
+
+why: `[` was executed with the arguments `Greg`, `Wooledge`, `=,` `Someone`, `Else` and `]`. That is 6 arguments, not 4
+
+fix: `[ "$myname" = "$yourname" ]` or use `[[`
+
 # Best practice
 
 - Avoid `.sh` file name extension
 - Don't use `#!/bin/sh`, it's `bash`, not `sh`
-- Always quote sentences or strings that belong together
+- Always quote sentences or strings that belong together, omit only when the specific situation requires unquoted behavior, like in `[[`
 - Just use function to run repeat commands
 - Put double quotes around every parameter expansion
 - PE is better then `sed` `awk` `cut`
 - Using globs to enumerate files is always a better idea than using `ls`
 - The best way to always be compatible is to put your regex in a variable and expand that variable in `[[` without quotes
+- Never use `[`'s `-a` (use multiple `[` instead) or `-o`, always prefer `[[` if you can
+- If you have a list of things, you should always put it in an array
+- Change `IFS` in subshell to avoid change current shell's default
+- Don't use all-capital variable names in your scripts, unless they are environment variables
+- Send your custom error messages to the `stderr` FD
+- DO NOT use `cat` to pipe files to commands in your scripts, use redirection instead
+- You should keep your logic (your code) and your input (your data) separated
+- Herestrings should be preferred over pipes when sending output of a variable as stdin into a command
+- If you end up making a pipeline that consists of three or more applications, it is time to ask yourself whether you're doing things a smart way
 
 - if you need a regular expression, you'll be using awk(1), sed(1), or grep(1) instead of Bash
 - DO NOT USE `ls`'s output for anything, Globs are much more simple AND correct
