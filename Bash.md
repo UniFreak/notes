@@ -454,4 +454,4 @@ exit 1：退出本程序, 只退出执行中的shell文件
 - DO NOT USE `ls`'s output for anything, Globs are much more simple AND correct
 - double-quote every expansion
 - Use single quotes when protecting complex strings
--
+- always return a non-zero exit code if something unexpected happened
