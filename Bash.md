@@ -737,11 +737,17 @@ fix: `[ "$myname" = "$yourname" ]` or use `[[`
 
 - Avoid `.sh` file name extension
 - Don't use `#!/bin/sh`, it's `bash`, not `sh`
+- Always use `[[` instead of `[`
+- Always use `$()` instead of \`\`
+- Always use built-int math instead of `expr`
 - Always quote sentences or strings that belong together, omit only when the specific situation requires unquoted behavior, like in `[[`
 - Just use function to run repeat commands
 - Put double quotes around every parameter expansion
 - PE is better then `sed` `awk` `cut`
-- Using globs to enumerate files is always a better idea than using `ls`
+- DON'T EVER parse the output of `ls`, use globs instead
+- DON'T EVER test or filter filenames with grep, use globs and path expansion
+- Don't use cat to feed a single file's content to a filter, pass file name as parameter or use redirection
+- Use while loop to read the lines of file instead of for loop
 - The best way to always be compatible is to put your regex in a variable and expand that variable in `[[` without quotes
 - Never use `[`'s `-a` (use multiple `[` instead) or `-o`, always prefer `[[` if you can
 - If you have a list of things, you should always put it in an array
@@ -752,9 +758,3 @@ fix: `[ "$myname" = "$yourname" ]` or use `[[`
 - You should keep your logic (your code) and your input (your data) separated
 - Herestrings should be preferred over pipes when sending output of a variable as stdin into a command
 - If you end up making a pipeline that consists of three or more applications, it is time to ask yourself whether you're doing things a smart way
-
-- if you need a regular expression, you'll be using awk(1), sed(1), or grep(1) instead of Bash
-- DO NOT USE `ls`'s output for anything, Globs are much more simple AND correct
-- double-quote every expansion
-- Use single quotes when protecting complex strings
-- always return a non-zero exit code if something unexpected happened
