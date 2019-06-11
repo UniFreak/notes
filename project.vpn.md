@@ -10,7 +10,6 @@
 
 # VPS
 - DigitalOcean
-- 
 
 # Software
 - Google Outline
