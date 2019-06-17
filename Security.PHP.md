@@ -1,4 +1,4 @@
-#Installation
+# Installation
 
 - keep versions up to date, and make sure all server(production, test, dev) on same version
 
@@ -11,7 +11,7 @@
 - don't user `phpinfo` and `phpMyAdmin` on production server, if you must, then
 
 - turn off `register_global`(<4.2:defualt on; 4.2-5.4:default off; >5.4:removed)
-    
+
     __why harmful__: consider this code
 
         if (checkPassword($username, $password)) {
@@ -38,7 +38,7 @@
     - error_log
 
     during development:
-    
+
         error_reporting = E_ALL
         display_errors = On
 
@@ -61,7 +61,7 @@
     So, just turn it off:
 
         ; gpc means Get/Post/Cookie
-        magic_quotes_gpc = Off 
+        magic_quotes_gpc = Off
         ; runtime are broader than gpc, data like from files, database...
         magic_quotes_runtime = Off
 
@@ -97,15 +97,15 @@
     + Place a `index.html` file in every folder
 
 
-#Coding
+# Coding
 
-##Validating input
+## Validating input
 
 - when using 3rd party validator, know that
     + the 3rd party self maybe unsafe, check them if you use them
     + the may not contain our web-app-specific required validation
 
-##Sanitizing data:render data harmless
+## Sanitizing data:render data harmless
 
 - Use type casting, not type juggling
 - Don't use custom sanitization methods
@@ -138,12 +138,12 @@
 
 _*note_: filter_var and the old way functions are not replacement for each others. the old way functions may have feature that filter_var don't have.
 
-##MISC
+## MISC
 
 - Properly setting character encodings at all stages of the process and specifying character encoding for functions where possible
 
 
-#Privacy
+# Privacy
 
 - Code
     + Public directory/Libraries directory
@@ -162,7 +162,7 @@ _*note_: filter_var and the old way functions are not replacement for each other
     + log IP both failed and succeed, spot those suspicous IP and block it
 
 
-#Database
+# Database
 
 - least privilege principle(minimize damage even database got hacked)
 - implement false deletion, and disable all user's deletion privilege

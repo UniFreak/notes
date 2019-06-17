@@ -361,6 +361,12 @@ config set <configName> <configValue>
     SYNC
     TIME
 
+# GUI Client?
+- redis commander
+    1. check requirement node.js
+    2. run `npm install redis-commander`
+    3. run `redis-commander --open`
+
 # PHPSpec Reference
 open/connect(host,port,timeout)
 popen/pconncet(host,prot,timeouet)/(persistent_id)

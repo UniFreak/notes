@@ -1,4 +1,4 @@
-#Risks
+# Risks
 
 Malicious software:
 
@@ -18,7 +18,7 @@ Black hat hackers:
 - Political activists
 - Professionals
 
-#Mindset
+# Mindset
 
 - 100% of security is not possible
 - security level is determined by the weakest link
@@ -26,12 +26,12 @@ Black hat hackers:
 - re-evaluate periodically
 - Be completely and utterly paranoid
 - All web application are vulnerable
-- Trust nobody and nothing(including ourown database)
+- Trust nobody and nothing(including our own database)
 - Assuming everyone or thing is tring to breach your app
 - Validat input, Escape output
 
 
-#Principle
+# Principle
 
 - Least privilege
     + User/account
@@ -62,16 +62,16 @@ Black hat hackers:
 
 - Security through obscurity
     + Limit exposed information
-    + Limit feeback
+    + Limit feedback
     + Don't use any default username & password
     + Don't be predictable(use admin/ folder)
-    
+
 
 - Prefer whitelisting
 
 - Map exposure points and data passageways
 
-#Filter inputs & Control output
+# Filter inputs & Control output
 
 - Regulating request
     + only accept expected request methods
@@ -119,7 +119,7 @@ Black hat hackers:
     + Configure web server to use same error pages
 
 - Smart logging
-    + Types: 
+    + Types:
         * Errors
         * Sensitive actions/Audit trail
         * Possible attacks
@@ -134,15 +134,15 @@ Black hat hackers:
     + Keep old content: versioning, Paranoid delete
     + Review log routinely
 
-#Attacks
+# Attacks
 
-##Cross-site scripting(XSS)
+## Cross-site scripting(XSS)
 
 Hackers can inject javascript into a web page, to trick users into running javascript code or steal cookies
 
 To prevent XSS, you must sanitize dynamic text that get output to browser.
 
-##Cross-site reqeust forgery(CSRF)
+## Cross-site reqeust forgery(CSRF)
 
 Hackers tricks users into making a request to your server
 
@@ -160,7 +160,7 @@ To prevent CSRF:
 - Only use POST requests for making changes
 - Use better form: form token, token generation time
 
-##SQL injection
+## SQL injection
 
 Hacker is able to execute arbitary SQL request
 
@@ -174,7 +174,7 @@ Example:
     // pass username as `jsmith' OR 1=1; --`:
     SELECT * FROM users WHERE username='${username}' AND password='${password}';
 
-    // pass title as 
+    // pass title as
     // - `q' OR 1=(SELECT COUNT(*) FROM tblAdminLogins); --`
     // - `q' UNION SELECT username, password FROM users; --`
     // - `q'; DROP table customers; --`
@@ -187,7 +187,7 @@ To prevent SQL injection
 - sanitize input, escape for SQL, or
 - use prepared statement
 
-##URL manipulation
+## URL manipulation
 
 Hackers edit the URL to probe the site
 
@@ -210,9 +210,9 @@ To prevent
 - be conscious that URL are exposed and editable
 - don't use obscurity for access control
 - keep error message vague
-- GET should be idempotent, POST should be used for making changes 
+- GET should be idempotent, POST should be used for making changes
 
-##Faked reqeust/Faked forms
+## Faked reqeust/Faked forms
 
 Hackers use plugins or tools to manipulate request headers or forms
 
@@ -222,7 +222,7 @@ To repevent
 - don't rely on client side data validation
 - use CSRF protection (form token, timestamp)
 
-##Cookie theft
+## Cookie theft
 
 Hacker can sniff and steal cookies by XSS or observing network traffic(snooping)
 
@@ -234,14 +234,14 @@ To prevent
 - encrypt cookie data
 - use session instead of cookie
 
-##Session hijacking
+## Session hijacking
 
 Similar to cookie theft, Hacker use network eavesdropping to steal your session ID and fake your identity
 
 To prevent
 
 - save user agent in session and confirm it
-    
+
     it's weak, because user agent can be faked
 
 - check IP address
@@ -253,7 +253,7 @@ To prevent
 - expire/remove old session files regularly
 - use SSL and secure cookies
 
-##Session fixation
+## Session fixation
 
 Hacker trick a user into using a hecker-provided session identifier and wait user to authenticate himself, then they can share the same logged in state. say they can trick you to click:
 
@@ -265,7 +265,7 @@ To prevent
 - regenerate session identifier periodically, at key point(such as after login)
 - expire/remove old session files regularly
 
-##Remote system execution
+## Remote system execution
 
 The most powerful attack, and hardest to achieve. Hacker can run operating system command on a webserver
 
@@ -276,7 +276,7 @@ To prevent
 - sanitize any dynamic data carfully
 - understand the commands and their syntax completely
 
-##File upload abuse
+## File upload abuse
 
 Hacker abuse the file upload feature to upload too much, or upload malicious files
 
@@ -287,7 +287,7 @@ To prevent
 - be cautious when opening uploaded files
 - don't host uploaded files which have not been verified
 
-##Denial of servie(DoS)
+## Denial of servie(DoS)
 
 Hacker use varies ways to make a website not function anymore, such as overloading with request, DNS and routing disuption or using up server resource(disk space, processor power or bandwidth), usually performed by distributed network(DDoS)
 
@@ -304,9 +304,9 @@ To prevent
 - "black hole" or "null route" traffic
 - be nice
 
-#Encryption and authentication
+# Encryption and authentication
 
-##Availabel hashing algorithms
+## Availabel hashing algorithms
 
 - --MD5--
 - SHA-1
@@ -316,7 +316,7 @@ To prevent
 - AES
 - Blowfish(preferred: secure, free, easy, slow)
 
-##Salting(make rainbow table almost useless)
+## Salting(make rainbow table almost useless)
 
 salt mean additional data added to password before encryption, it need to be stored
 
@@ -324,7 +324,7 @@ salt mean additional data added to password before encryption, it need to be sto
 - unique salt: `salt{$password}for{$user}`
 - random salt: `salt{$password}at{$time}`
 
-##Password requirement
+## Password requirement
 
 - require length, but do not limit length(the encrypted length is always the same)
 - require non-alphanumeric characters
@@ -332,7 +332,7 @@ salt mean additional data added to password before encryption, it need to be sto
 - report password strength to user
 - do not record a password hint
 
-##Brute force attack
+## Brute force attack
 
 Hacker systematically trying all possbile input combinations until the corrent solution is found
 
@@ -348,19 +348,19 @@ To prevent
 - logging
 - blacklisting
 
-##SSL login
+## SSL login
 
 SSL stands for Secure Socket Layer, it provide communication security by 1) verifies authenticity of remote server and 2) encrypts all data exchanged with server. It can prevent snooping and session hijacking with some performance penalty due to encryption/decryption time, and it's only secure when all assets in a page is secure.
 
 - At a minimum, you must encrypt all credit card transactions and username/password sent to the server
-- Best to use SSL for all password-protected areas 
+- Best to use SSL for all password-protected areas
 
 
-##Protect cookies
+## Protect cookies
 
 see section `cookie theft`, `session hijacking` and `session fixation`
 
-##Regulate access privileges
+## Regulate access privileges
 
 - lease privileges principle
 - be orgnized
@@ -372,7 +372,7 @@ see section `cookie theft`, `session hijacking` and `session fixation`
     + publisher, writer, editor, designer, graphics
     + level of paying customers
 
-##Forgotten passwords
+## Forgotten passwords
 
 the main question is: how to prove someone's identity:
 
@@ -383,10 +383,10 @@ the main question is: how to prove someone's identity:
     + request the username to reset
     + always repond positively(never say account don't exists)
     + generate a unique token store it plus the generation time(to expire)
-    + email a URL that includes token 
+    + email a URL that includes token
     + URL grant access, allow setting password
 
-##Multi-factor authentication(MFA)
+## Multi-factor authentication(MFA)
 
 Authentication requires two (or more) factors:
 
@@ -404,9 +404,9 @@ Example:
     + send SMS message(passcode, require SMS response) to mobile phone on file(similar as above)
     + call phone on file with recorded message(passcode, voice response)
 
-#MISC
+# MISC
 
-##Credit card security
+## Credit card security
 
 - PCI(Payment Card industry) Compliance: http://pcisecuritystandards.org
 - transmit all payment information over SSL
@@ -415,14 +415,14 @@ Example:
 - store card branch and last four digits of card number
 - use credit card vaults
 
-##Regular expression flaws
+## Regular expression flaws
 
->Some people, when confronted with a problem, think "I know, I'll use regular expression." Now they have two problems  
+>Some people, when confronted with a problem, think "I know, I'll use regular expression." Now they have two problems
 >-- _Jamie Zawinski_
 
 Every regular expression is suspect, treat them as weak points, and the more complicated it is, the weaker it is. But, it doesn't have to be complicated to be flawd
 
-##Data conversion and transformation
+## Data conversion and transformation
 
 - be careful when converting data between formats
 - be careful when transforming data
@@ -430,7 +430,7 @@ Every regular expression is suspect, treat them as weak points, and the more com
 - reserved, meta, and escape characters are differenct
 - re-sanitize after transition
 
-##Buffer overflow
+## Buffer overflow
 
 Happens when more data is written to a block of memory(buffer) than it can hold. Can be used to crash systems, to change a program's behavoir or execute system-level commands(remote system execution). This is problem for low-level languages(C, C++, Objective-C), but any language could have flaws
 
@@ -440,7 +440,7 @@ To prevent:
 - use safe string functions
 - validate data
 
-##Database 
+## Database
 
 ###Access security
 
@@ -457,7 +457,7 @@ To prevent:
 - security policy for handling backups
 - some ISPs automatically back up entire server
 
-##Server security
+## Server security
 
 - secure or disable root login
 - access privileges; superusers

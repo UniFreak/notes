@@ -1,16 +1,20 @@
+# See
+- <https://www.moesif.com/blog/api-guide/getting-started-with-apis/#>
+- <https://softwareengineering.stackexchange.com/questions/233164/how-do-searches-fit-into-a-restful-interface>
+- related design: Graphql: <https://graphql.org/>
+
 # Six constraints
 1. Unifrom Interface
 2. Stateless
 3. Cacheable
 4. Client-Server
 5. Layered System
-6. code on Demand(optional)
+6. Code on Demand(optional)
 
 
-- REST is completely backend agnostic
-- there is nothing in the request that informs the server how the data should be operated. just that it should
+REST is completely backend agnostic, there is nothing in the request that informs the server how the data should be operated. just that it should
 
-- There are two keys to processing requests the REST way.
+There are two keys to processing requests the REST way.
 - The first key is to initiate different processing, depending on the HTTP method, even when the URLs are the same
 - The other key is to know which URL has been requested
 
@@ -23,7 +27,7 @@
 - This is because it uses a URL to describe an action.
 - This is a fairly fundamental point in distinguishing RESTful from non-RESTful systems.
 - URLs should be as precise as needed
-- Everything needed to uniquely identify a  resource should be in the URL.
+- Everything needed to uniquely identify a resource should be in the URL.
 - You should not need to include data identifying the resource in the request
 
 # HTTP methods
@@ -50,3 +54,6 @@ Should be used when you want to delete the resource identified by the URL
 
 Is used when the processing you wish to happen on the server should be repeated
 POST requests should cause processing of the request body as a subordinate of the URL you are posting to
+
+# Best Practice
+- Maximum nesting depth of two, three is also okay if IDs are short
