@@ -3,6 +3,7 @@
 
 # Translation:
 - <http://mywiki.wooledge.org/BashGuide>
+- <https://curl.haxx.se/>
 
 # App
 
