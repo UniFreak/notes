@@ -1,25 +1,21 @@
 # Web
 - Personal Blog: Vultr
 
+# Blog
+- VPN
+
 # Translation:
 - <http://mywiki.wooledge.org/BashGuide>
 - <https://curl.haxx.se/>
 
 # App
 
-## LifeMap
-
-see <lifeMap.md>
+- <lifeMap.md>
 
 # Automation
 
-## 北语自动刷课时
-
-自动播放下一个? 或者当前播放完后提醒自己?
-
 # Composer Pakcage
 
-## time convertor
 
 ## cors
 1. read cors config if exists
@@ -30,7 +26,8 @@ see <lifeMap.md>
 
 # Sublime Text Plugin
 
-## convertor
+## text convertor
+- to time
 - to json
 - to date
 - to postman
