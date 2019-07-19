@@ -26,7 +26,7 @@ Can be stored in:
 
 Package ordering comes into effect when merging files between packages
 
-`Default` and `User. Default` is always ordered first, and `User` is always ordered last. Packages other than `Default` and `User` are ordered alphabetically.
+`Default` and `User.Default` is always ordered first, and `User` is always ordered last. Packages other than `Default` and `User` are ordered alphabetically.
 
 To create new package, create a new directory under `<data_path>/Installed Packages/`
 
@@ -263,7 +263,7 @@ lifecycle
 2. module level `plugin_loaded()`
 3. module level `plugin_unloaded()`
 
-types
+Types
 
 - python built-in
 - `location(abs_path, rel_path, (row, col))`
@@ -275,7 +275,7 @@ types
 
 # Api
 
-## types
+## Types
 
 - `location`: a tuple of (str, str, (int, int)) that contains information about a location of a symbol. The first string is the absolute file path, the second is the file path relative to the project, the third element is a two-element tuple of the row and column.
 - `point`: an int that represents the offset from the beginning of the editor buffer. The View methods text_point() and rowcol() allow converting to and from this format.

@@ -17,16 +17,18 @@
 # Composer Pakcage
 
 
-## cors
+## CORS
 1. read cors config if exists
 2. in production ? according to config : *
-3. see <<https://github.com/palanik/lumen-cors/blob/master/LumenCors.php>
+3. see <https://github.com/palanik/lumen-cors/blob/master/LumenCors.php>
 
 ## vue-cli like env (mode, local)
 
-# Sublime Text Plugin
+# SublimeText Plugins
 
-## text convertor
+## Lyric editor
+
+## TextConvertor
 - to time
 - to json
 - to date

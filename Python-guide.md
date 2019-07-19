@@ -326,3 +326,6 @@ four_lists = [[] for __ in range(4)]
 
 # Notes
 - Pipfile (and requirements.txt) is for applications; setup.py is for packages. They serve different purposes. If you need to sync them, you’re doing it wrong (IMO)
+
+>>quote
+>>quote

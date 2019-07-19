@@ -1,6 +1,11 @@
 Jekyll is a simple, blog-aware, static site generator
 It take either markdown, textile or html files, then convert them throught a converter(like markdown) and Liquid renderer, output a static webpage
 
+# See
+
+- official: <https://jekyllrb.com/>
+- talk: IRC:#jekyll@freenode / gitter:jekyll/jekyll
+
 # Concepts
 
 Gem: Ruby packages? jekyll is a gem, too
@@ -20,7 +25,7 @@ install requirements: Ruby, RubyGems, Linux/Unix/Mac OS X, NodeJS
 
 install jekyll
 
-- with gem: `gem install jekyll`
+- with gem: `gem install jekyll bundler`
 - from source:
 
 `git clone git://github.com/jekyll/jekyll.git`
@@ -38,19 +43,19 @@ install jekyll
 
 # Fixation
 
-- when run `jekyll serve`, see `cannot load such file --bundler`
+- when run `bundle exec jekyll serve`, see `cannot load such file --bundler`
 
 try run `gem install bundler`
 
-- when run `jekyll serve`, show `some gem can not be found`
+- when run `bundle exec jekyll serve`, show `some gem can not be found`
 
 try run `bundle install`
 
 # Basic Usage
 
 ```
-jekyll build [--source <source>] [--destination <destination>] [--watch]
-jekyll serve [--detach] [--no-watch]
+bundle exec jekyll build [--source <source>] [--destination <destination>] [--watch]
+bundle exec jekyll serve [--detach] [--no-watch]
 ```
 
 A general jekyll project directory structure
