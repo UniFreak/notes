@@ -24,6 +24,8 @@ function validateDate($date) {
 /**
  * same as foreach($products as $option => $value) { }
  * more readable
+ *
+ * NOTE: each is deprecated in 7.2.0
  */
 while (list($option, $value) = each($products)) { }
 ```
