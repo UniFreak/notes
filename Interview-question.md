@@ -7,7 +7,8 @@
 5. 项目的用户量, PV, 吞吐量, 难点和解决方法
 
 # TODO
-CI, ThinkPHP, Laravel, Yaf, Phalcon 优缺点, 如何载入类
+
+简述三大范式
 
 DDOS
 
@@ -68,7 +69,8 @@ If you are defining a single string and not trying to concatenate values or anyt
 
 If you are concatenating multiple strings of any type, or interpolate values into a double quoted string, then the results can vary. If you are working with a small number of values, concatenation is minutely faster. With a lot of values, interpolating is minutely faster
 
-# 多表查询 复合查询 联合查询 关联查询
+# 多表查询 vs 复合查询 vs 联合查询 vs 关联查询
+
 多表查询: 从多个表中查询
 
 复合查询: 使用多个查询条件(AND | OR)
@@ -124,65 +126,6 @@ PHP: Hypertext Preprocessor
             success: function(){}
         })
 
-# session vs cookie
-
-Session 工作原理: Session 储存于服务器端( 默认以文件方式存储 session ),  并通过 session id 标识这个 session
-
-Cookie 工作原理: Cookie 存储于客户端, 通过页面 HTTP 头传给 php 页面并自动生成为 $_COOKIE 超全局数组. Cookie 可分为非持久(内存) Cookie 和持久(硬盘) Cookie 两种
-
-联系: Session 在默认情况下是使用客户端的 Cookie 来保存 session id 的, 所以当客户端的 Cookie 出现问题的时候就会影响 session 了. 但是 Session 不一定必须依赖 Cookie, 当客户端的 Cookie 被禁用或出现问题时, PHP会自动把 session id 附着在 URL 中, 这样再通过 session id 就能跨页使用 session 变量了. 但这种附着也是有一定条件的, 即 php.ini 中的 session.use_trans_sid = 1 或者编译时打开打开了--enable-trans-sid 选项
-
-# 简述 session 生存时间机制
-`session.gc_maxlifetime` 配置决定 session 数据过多久之后会被当做垃圾, 以便被垃圾回收器回收
-
-`session.gc_probability` 和 `session.gc_divisor` 配置共同决定当 `session_start()` 时, 垃圾回收器运行的概率
-
-当 `session.save_handler` 为默认的 `file` 时, session 文件是否过期是由 mtime(modified time) 决定, 而非 atime(accessed time), 这会导致 session 文件由于长期没更新而使垃圾回收器过早回收依然有效的 session 数据
-
-`session.cookie_lifttime` 决定 cookie 的过期时间, 由于 session 生存时间应该由服务器端决定, 所以这个参数实际上用处不大
-
-最好的方案是自己实现 session 过期机制:
-
-```php
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
-    // last request was more than 30 minutes ago
-    session_unset();     // unset $_SESSION variable for the run-time
-    session_destroy();   // destroy session data in storage
-}
-$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
-                                     // this update mtime, too. prevent
-                                     // gc collector from gc session
-                                     // prematurely
-```
-
-相关函数:
-- `session_save_path()`
-- `session_set_cookie_params()`
-
-# 修改 session 生存时间
-
-可以通过修改 `php.ini` 文件:
-
-确保 `session.gc_maxlifetime` 与 `session.cookie_lifetime` 一致, 同时确认 `session.use_cookies = 1`
-
-也可以用程式控制:
-
-```php
-$savePath = "./session_save_dir/";
-$lifeTime = 24 * 3600;
-session_save_path($savePath);
-session_set_cookie_params($lifeTime);
-session_start();
-```
-
-# 如何实现多服务器共享 session
-
-使用 mySQL 数据库存储并共享 session 数据
-
-# 大型网站中 Session 方面应注意什么
-
-如果使用默认的 file session_headler 的话, 会非常影响大访问量网站的性能. 考虑适用数据库来存储 session 数据
-
 # GET vs POST
 
 GET
@@ -224,38 +167,7 @@ PHP:
 - 压缩
 - 负载均衡
 
-数据库优化(参下)
-
 硬件
-
-# 如何优化数据库
-
-设计
-
-- 三大范式与适度反范式
-- 选择适当的字段类型
-- 选择适当的存储引擎
-- 适当建立索引(create index) - 经常作为查询条件,区分度高的字段
-- 适当使用外键
-- 水平 | 垂直划分表
-
-SQL 语句
-- 使用 explain/慢日志工具分析
-- 使用 limit, 避免 select *,
-- 使用连接查询 (JOIN) 替代子查询 (SUBQUERY)
-- 使用存储过程
-- 使用联合 (UNION) 替代手动创建临时表
-- 尽量少使用 LIKE 关键字和通配符
-
-数据库配置
-
-- 主从复制, 读写分离
-- 负载均衡
-- 分区
-
-硬件/操作系统
-
-# 简述三大范式
 
 # 负载均衡
 
@@ -394,7 +306,7 @@ _once 会检查是否已经包含, 如果包含过了则不再进行包含, 即�
 
 # mysql 取得当前时间和格式化日期函数
 
-now(), date_format()
+`now()`, `date_format()`
 
 # 版本控制工具
 
@@ -1016,14 +928,6 @@ if (flock($fp, LOCK_EX)) {
 fclose($fp);
 ```
 
-# 将一个远程图片抓取到本地
-
-```php
-$content = file_get_contents('http://cn.bing.com/sa/simg/CN_Logo_Gray.png');
-$handle = fopen('tmp.png', 'w+');
-fwrite($handle, $content);
-```
-
 # 写一个函数, 能计算两个文件的相对路径, 如 a/b/12/34/c.php 相对于 /a/b/c/d/e.php 的路径是 ../../c/d
 
 ```php
@@ -1055,47 +959,6 @@ echo $content;
 或
 
 `echo file_get_contents('http://baidu.com/index.html');`
-
-# 下载图片文件到本地
-
-```php
-$imageUrl = 'https://www.baidu.com/img/bd_logo1.png';
-
-// 1. fopen()
-$f0 = fopen('./f0', "wb");
-$image = fopen($imageUrl, "rb");
-while ($chunk = fread($image, 1024)) {
-    fwrite($f0, $chunk, 1024);
-}
-fclose($image);
-fclose($f0);
-
-// 2. file_get_contents()
-$f1 = fopen('./f1', 'wb');
-$image = file_get_contents($imageUrl);
-fwrite($f1, $image);
-fclose($f1);
-
-// 3. stream_get_contents()
-$f2 = fopen('./f2', 'wb');
-$image = stream_get_contents(fopen($imageUrl, 'rb'));
-fwrite($f2, $image);
-fclose($f2);
-
-// 4. curl
-$ch = curl_init($imageUrl);
-$f3 = fopen('./f3', 'wb');
-curl_setopt($ch, CURLOPT_FILE, $f3);
-curl_exec($ch);
-curl_close($ch);
-fclose($f3);
-
-// 5. gd
-$f4 = fopen('./f4', 'wb');
-$image = imagecreatefrompng($imageUrl);
-imagepng($image, $f4);
-fclose($f4);
-```
 
 # GD 库是做什么的
 
@@ -1523,4 +1386,180 @@ function capacity($posts) {
 }
 
 echo capacity([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]);
+```
+
+# Redis 集中数据结构
+
+- string 字符串
+- list 列表
+- set 集合
+- hash 散列
+- zset 有序集合
+
+# Redis 各数据类型内部存储
+
+see <https://www.jianshu.com/p/f09480c05e42>
+
+Link
+
+implemented via Linked Lists
+- pro: adding element performed in constant time
+- con: accessing element not so fast -> use sorted list
+
+Hash
+
+# 如何优化数据库
+
+see <https://juejin.im/post/5c2c53396fb9a04a053fc7fe>
+
+设计
+
+- 三大范式与适度反范式
+- 选择适当的字段类型
+- 选择适当的存储引擎
+- 适当建立索引(create index) - 经常作为查询条件,区分度高的字段
+- 适当使用外键
+- 水平 | 垂直划分表
+
+SQL 语句
+- 使用 explain/慢日志工具分析
+- 使用 limit, 避免 select *,
+- 使用连接查询 (JOIN) 替代子查询 (SUBQUERY)
+- 使用存储过程
+- 使用联合 (UNION) 替代手动创建临时表
+- 尽量少使用 LIKE 关键字和通配符
+
+数据库配置
+
+- 主从复制, 读写分离
+- 负载均衡
+- 分区
+
+硬件/操作系统
+
+# session vs cookie
+
+Session 工作原理: Session 储存于服务器端( 默认以文件方式存储 session ),  并通过 session id 标识这个 session
+
+Cookie 工作原理: Cookie 存储于客户端, 通过页面 HTTP 头传给 php 页面并自动生成为 $_COOKIE 超全局数组. Cookie 可分为非持久(内存) Cookie 和持久(硬盘) Cookie 两种
+
+联系: Session 在默认情况下是使用客户端的 Cookie 来保存 session id 的, 所以当客户端的 Cookie 出现问题的时候就会影响 session 了. 但是 Session 不一定必须依赖 Cookie, 当客户端的 Cookie 被禁用或出现问题时, PHP会自动把 session id 附着在 URL 中, 这样再通过 session id 就能跨页使用 session 变量了. 但这种附着也是有一定条件的, 即 php.ini 中的 session.use_trans_sid = 1 或者编译时打开打开了--enable-trans-sid 选项
+
+# 简述 session 生存时间机制
+
+`session.gc_maxlifetime` 配置决定 session 数据过多久之后会被当做垃圾, 以便被垃圾回收器回收
+
+`session.gc_probability` 和 `session.gc_divisor` 配置共同决定当 `session_start()` 时, 垃圾回收器运行的概率
+
+当 `session.save_handler` 为默认的 `file` 时, session 文件是否过期是由 mtime(modified time) 决定, 而非 atime(accessed time), 这会导致 session 文件由于长期没更新而使垃圾回收器过早回收依然有效的 session 数据
+
+`session.cookie_lifttime` 决定 cookie 的过期时间, 由于 session 生存时间应该由服务器端决定, 所以这个参数实际上用处不大
+
+最好的方案是自己实现 session 过期机制:
+
+```php
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+    // last request was more than 30 minutes ago
+    session_unset();     // unset $_SESSION variable for the run-time
+    session_destroy();   // destroy session data in storage
+}
+$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+                                     // this update mtime, too. prevent
+                                     // gc collector from gc session
+                                     // prematurely
+```
+
+相关函数:
+- `session_save_path()`
+- `session_set_cookie_params()`
+
+# 修改 session 生存时间
+
+可以通过修改 `php.ini` 文件:
+
+确保 `session.gc_maxlifetime` 与 `session.cookie_lifetime` 一致, 同时确认 `session.use_cookies = 1`
+
+也可以用程式控制:
+
+```php
+$savePath = "./session_save_dir/";
+$lifeTime = 24 * 3600;
+session_save_path($savePath);
+session_set_cookie_params($lifeTime);
+session_start();
+```
+
+# 如何实现多服务器共享 session
+
+使用 mySQL 数据库存储并共享 session 数据
+
+# 大型网站中 Session 方面应注意什么
+
+如果使用默认的 file session_headler 的话, 会非常影响大访问量网站的性能. 考虑适用数据库来存储 session 数据
+
+# PHP 代码优化
+
+see <https://learnku.com/articles/4685/php-application-performance-tuning-guide>
+
+# 使用 Php 写一个查找两个数组不同元素的功能
+
+```php
+$a = [1, 3, 5, 'a', 'c'];
+$b = [3, 4, 'b', 'a'];
+
+function diff($a, $b) {
+    $result = [];
+    foreach ($a as $needle) {
+        foreach ($b as $search) {
+            if ($needle == $search) {
+                continue 2;
+            }
+        }
+        array_push($result, $needle);
+    }
+    return $result;
+}
+
+var_dump(diff($a, $b));
+```
+
+# 下载图片文件到本地
+
+```php
+$imageUrl = 'https://www.baidu.com/img/bd_logo1.png';
+
+// 1. fopen()
+$f0 = fopen('./f0', "wb");
+$image = fopen($imageUrl, "rb");
+while ($chunk = fread($image, 1024)) {
+    fwrite($f0, $chunk, 1024);
+}
+fclose($image);
+fclose($f0);
+
+// 2. file_get_contents()
+$f1 = fopen('./f1', 'wb');
+$image = file_get_contents($imageUrl);
+fwrite($f1, $image);
+fclose($f1);
+
+// 3. stream_get_contents()
+$f2 = fopen('./f2', 'wb');
+$image = stream_get_contents(fopen($imageUrl, 'rb'));
+fwrite($f2, $image);
+fclose($f2);
+
+// 4. curl
+$ch = curl_init($imageUrl);
+$f3 = fopen('./f3', 'wb');
+curl_setopt($ch, CURLOPT_FILE, $f3);
+curl_exec($ch);
+curl_close($ch);
+fclose($f3);
+
+// 5. gd
+$f4 = fopen('./f4', 'wb');
+$image = imagecreatefrompng($imageUrl);
+imagepng($image, $f4);
+fclose($f4);
 ```
