@@ -1,3 +1,7 @@
+# See
+- <https://www.kancloud.cn/daniu945/php/408810>
+- <https://juejin.im/post/5c870297f265da2dd0527c8c>
+
 # General
 1. 经历
 2. 入行原因
@@ -5,6 +9,8 @@
 3. 长远打算(架构师)
 4. 得意之作
 5. 项目的用户量, PV, 吞吐量, 难点和解决方法
+
+# Tech
 
 # TODO
 

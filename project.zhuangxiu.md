@@ -180,3 +180,13 @@
 - 车库
 - 晾晒衣服: 北屋里外
 - 大门坡
+
+# 出图软件
+- 3dmax
+- sketchup
+- sweet home 3d
+- autocad
+- maya
+- tinkercad
+- live home 3d pro
+- homestyler

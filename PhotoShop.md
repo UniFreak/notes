@@ -1,4 +1,4 @@
-=============== ShortCut ===============
+# ShortCut
 Panel
 	Ctrl+K					general preference
 	Ctrl+Shift+K			color setting
@@ -22,7 +22,7 @@ View
 	Ctrl+R					ruler
 Tools
 	Shift+M					marquee
-	Shift+W					wand	
+	Shift+W					wand
 	Shift+G					gradient
 	Shift+U					shape
 	Shift+P					pen
@@ -60,7 +60,7 @@ Edit
 	Ctrl+Z					undo
 	Alt+Drag(layer)			copy layer
 	Ctrl+J					copy layer
-	
+
 	Ctrl+RightClick			select layer on canvas
 	Alt+[ / ]				select above/below layer in stack
 	Alt+Shift+[ / ]			multi-select layers in stack
@@ -68,12 +68,12 @@ Edit
 	Ctrl+BackSpace			fill layer with background color
 	Alt+BackSpace			fill layer with foreground color
 
-=============== Remember ===============
+# Remember
 Layer is not Object, Background is not Layer
 If you merge two text layer, will result in a non-text-anymore layer
 
 
-=============== Reference ===============
+# Reference
 Blending Mode
 	Other
 		Normal
@@ -130,5 +130,8 @@ Pen tool sign
 	*			new path
 	°			close path
 
-=============== Tricks ===============
+# Tricks
 double click slider name will reset it
+
+# Crack
+Download corresponding Adobe Zii and run it

@@ -2,118 +2,113 @@
 - php.*.md
 
 # 简历
+
 参考 <http://www.zhihu.com/question/25002833>
 
 投简历网站: linkin, 51job, jobbole, boss 直聘, 机到
 
 # 温习
-HTTP 状态码
 
-网络
+数据结构
 
-分布式系统开发
+算法
 
-PHP
-- 错误记录与监控系统
-- 性能优化
-- 网络编程
-- 全局常量
-- 魔术常量, - 魔术方法
-- 文件上传
-- Cli PHP
-- Memcached/Apc
-- debug/Xdebug
+PHP (see <php*.md>)
+- 语法: trait, interface, abstract, static, reflection
+- 错误处理: error report, exception
+- 全局常量, 魔术方法, 预定义接口, 预定义异常
+- 调试技巧: stack trace, xdebug
+- 特性: Session&Cookie
+- SPL
+- PSR
+- 框架: Laravel, Yii, CI, Yaf, Phalcon, ThinkPHP
+- 底层: 垃圾回收
+- 优化
+- 安全
 - 常考函数
-    - 错误/调试
-    - 日期/时间
-    - 字符串
-    - 数组
-    - 图像处理
-    - URL
-    - cURL
-    - Socket
-    - 文件系统相关
-    - 选项信息函数
-    - 数据库(PDO, mySQLi)
-    - 正则
-    - Math
-    - Curl
-    - Session/cookie
-    - spl
-    - XML
-    - 网络函数
-    - fitler
-    - 错误处理
+    + 日期/时间
+    + 字符串
+    + 数组
+    + 图像处理
+    + URL
+    + cURL
+    + Socket
+    + 文件系统
+    + 选项信息
+    + 数据库(PDO, mySQLi)
+    + 正则
+    + Math
+    + Session/cookie
+    + 网络函数
+    + fitler
+- PHP7
 
-框架: ThinkPHP, Yii, Laravel, Smarty
-
-MySQL (see <高性能 MySQL>)
+MySQL
+- 语法: 关联查询, 子查询, 条件语句
 - 存储引擎
+- 事务, MVCC, 锁
+- 存储过程, 分区表, 视图, 触发器
 - 数据类型
-- SQL: 全文搜索, join, union, if/case, 子查询
-- 事务
-- 函数: 日期
-- 存储过程
-- 触发器
-- 主从复制, 读写分离
-- 分库, 分表
-- 备份
-- 优化: explain
+- 索引
+- 分区
+- 分表
+- 常用函数
+- 优化
+    + 基准测试, 性能剖析
+    + 三大范式, 反范式和 schema 优化
+    + 慢查询, explain 和查询优化
+    + 索引优化
+    + 配置优化
+    - 主从复制, 读写分离
+    - 分库, 分表
 
-MongoDB, Redis
+Redis
+- 数据类型
 
-Apache
-- mod_rewrite rule
-- http.conf
-- vhost.conf
-- 负载均衡
-
-Nginx (see <nginx cookbook>)
-
-Regex
-
-Restful API
-
-Security
+Nginx
 
 Linux
 
+Regix
+
+前端技术
+- HTML, HTML5
+- CSS
+- JS: this, closure, OOP, module
+- ES6
+- JQuery, Bootstrap
+
+OO
+
+设计
+- 设计模式
+- 微服务
+- Restful
+
+网络
+- HTTP: 状态码
+
+安全
+- SQL 注入
+- XSS
+- CSRF
+
+高并发
+
+分布式
+
 Shell
 
-Vim
-
-HTML
-
-CSS
-- 盒模型
-
-JS
-- this
-- Closure
-- OOP
-- module
-
-jQuery
-
-DataStructure
-
-Algrithom: 查找 排序 优化
-
-DesignPattern
-
-SEO
-
-Profiling/Optimize/Performance
-
-Agile
-
-UX
+最佳实践
+- TDD
+- Agile
+- Refactor
+- DevOps
 
 Tools
 - Git
 - SVN
 - Composer
-- Jekins
 - 性能分析工具
 - 单元测试工具
 
