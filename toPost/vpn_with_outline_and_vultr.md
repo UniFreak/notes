@@ -10,7 +10,7 @@ try ping, if can not ping through, destroy and try another location. good luck
 
 
 # Ssh
-1. run `ssh root@<server ip>`
+1. run `ssh root@<server ip>` or `ssh -i /path/to/id_rsa user@x.x.x.x`
 2. type in passphrase
 
 # outline manager

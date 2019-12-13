@@ -1,3 +1,7 @@
+# See
+- <https://sebastianraschka.com/Articles/2014_python_2_3_key_diff.html>
+- book: introduction to programming using Python
+
 # TODO
 - with & context manager
 - ~~OOP~~
@@ -5,78 +9,263 @@
 - nested method
 - decrator
 
-# data types
+# Concept
+All data in Python are objects
+A variable in Python is actually a reference to an object
+System create an activation record that stores arguments and variables for each function when they are called, and place activation record in to call stack
+Python create and stores objects in a separate memory space called heap
+
+content of `immutable object` cannot be changed, like string or number
+whenever you assign a new number to a variable, Python creates a new object for the new number and assigns the reference of the new object to the variable
+
+name mangling: the interpreter changes the name of the variable in a way that makes it harder to create collisions when the class is extended later, It does this to protect the variable from getting overridden in subclasses
+
+dunder: name begin and end with double underscore
+
+# Comment
+
+```python
+    # line comment
+    ''' cross line
+        comment
+    '''
+```
+
+# Identifier
+
+can contain letters, digits and underscore
+begin with letter or underscore
+can not be keywords
+case sensitive
+
+# Data types
+see <https://docs.python.org/3/reference/datamodel.html#types>
+
 - no attribute is really private in Python
 - `dunders`: names like `__this__`
 
-## basic
+conversion: int(val), str(val)
+rounding: round(val)
+
+## Basic
 - bool: True, False
 - numeric: int, float, complex
-- str: '' (also an immutable sequence)
 
-## data structure
-sequence:
-- list: []
-- tuple: ()
+## Sequence
+Immutable
+- str: str(), ' ', " ", ''' ''', """ """, r' '
+- tuple: tuple(), ()
+- bytes: bytes(), b' ', b" ", b''' ''', b""" """
+
+Mutable
+- list: list(), []
+- bytearray (mutable): bytearray()
+
 - range: range()
+- memoryview: memoryview()
 
-text sequence:
-- str: ' ', " ", """ """
+escape: \b, \t, \n, \f, \r, `\\`, \', \''
 
-binary:
-- bytes
-- bytearray
-- memoryview
+common operatioin:
+- in, not in
+- +, *
+- [i], [i: j]
+- len(), min(), max(), sum()
+- for in
+- <, <=, >, <=, =, !=
 
-- set: unique, unordered: `set()`
-- dict: {}
+list comprehension: [x for x in range(5)]
 
-# operator
-- arithmetic: +  -  *  /  %  //  **
+list methods
+- append(x)
+- count(x)
+- extend(list)
+- index(x)
+- insert(i, x)
+- pop(i)
+- remove(x)
+- reverse()
+- sort()
+
+to copy list, don't do `list2 = list1`, becuase this will only cause them to refer to on reference.
+do this instead:
+- `list2 = [for x in list1]`
+- `list2 = [] + list1`
+
+
+## Set
+- set (mutable): set(), {element, ...}
+- frozenset (immutable): frozenset()
+
+{} can create empty dict, use set() to create empty set
+
+not ordered, cannot use [] operator
+
+set methods
+- issubset(s) or <, <=
+- issubset(s) or >, >=
+- union(s) or |
+- insertsect(s) or &
+- difference(s) or -
+- symmetric_difference(s) or ^
+
+## Mapping
+- dict: dict(), {key:val}
+
+not ordered, cannot use >, >=, <, <=
+
+dict methods
+- keys()
+- values()
+- items()
+- clear()
+- get(key) # return None if key not exist rather error as using []
+- pop(key) # same as del(dictName[key])
+
+
+## Callable
+- user-defined function: def
+- instance methods
+- generator function: yield
+- coroutine function: async def
+- asynchronous generator function: async def yield
+- built-in function
+- built-in method
+- class
+- class instance: __call__
+
+## Others
+- modules
+- custom class
+- I/O object
+- internal types
+
+# Operator
+- arithmetic:
+    - +  -  *  /  %
+    - //:  integer/floor division  `11 // 2` is 0
+    - **: exponentiation `4 ** 0.5` is 2.0
 - comparison: ==  !=  <  >  <=  >=
 - logical: and  not  or
 - bitwise: &  |  ~  ^  >>  <<
-- assignment: =  +=  -=  *=  /=  %=  //=  **=  &=  |=  ^=  >  <<=
+
+- assignment: =
+- augmented assignment: +=  -=  *=  /=  %=  //=  **=  &=  |=  ^=  >  <<=
+- simultaneous assginments: `var1, var2, ..., varn = exp1, exp2, ..., expn`
+  often to swap value: `x, y = y, x`
+
 - identity: is      is not (the only common use in practice is `is None` or `is not None`)
 - membership: in    not in
 
-# flow control
-- if  elif  else
-- while
-- break  continue
-- for in
-- <this> if <condition> else <that>
++ and += can do string concatenation
 
-# errors
+Precedence (low to high)
++, - (unary)
+**
+not
+*, /, //, %
++, - (binary)
+<, <=, >, >=
+==, !=
+and
+or
+=, +=, -=, *=, /=, //=, %=
+
+# Flow control
+selection
+- if  elif  else
+- conditional expression: <this> if <condition> else <that>
+- no switch
+
+loop
+- while
+- for in
+- break  continue
+- no do while
+
+range():
+range(a) same as range(0, a)
+range(a, b, k) k is step, can be negative
+
+# Function
+parameters means formal parameters
+argument means actual parameter
+
+DEFINE:
+
+```python
+    def func(arg1, arg2):
+        # statements
+```
+
+can be nested
+non-default parameters must be defined before default parameters
+no return means return None, return multiple value with `return a, b`
+multiple same name function, latest win
+
+CALL:
+
+call with positional arguments: `func(a, b)`
+or keyword arguments `func(arg1 = a, arg2 = b)`
+positional arguments cannot appear after any keyword arguments
+
+argument is passed to the parameter pass-by-value
+the value is actually a reference value to some object
+
+*args and **kwargs @?
+
+# Errors & Excpetions
 - syntax error: happen at the token processing
 - exception: error detected during execution, all derived from `BaseException` class
+
+Excpetion Class Level:
+Base <- Exception <- StandardError
+- <- ArithmeticError <- ZeroDivisionError
+- <- EnvironmentError <- IOError & OSError
+- <- RuntimeError
+- <- LookupError <- IndexError & KeyError
+- <- SyntaxError <- IndentationError
 
 When creating a module that can raise several distinct errors, a common practice is to create a base class for exceptions defined by that module, and subclass that to create specific exception classes for different error conditions
 
 ```python
 try:
     raise SomeError1 # can raise by class name or instance like `raise SomeError1('message')`
-    # do something
+    # handle
 except SomeError1: # can catch mutliple Error like `except (SomeError1, SomeError2)`
-    # do something
+    # handle
     raise # will re-raise catched exception
-except SomeError2 as err2: # can also chain the `except` clause
-    # do something
-else: # executed if try clause does not raise an exception
-    # do something
+except SomeError2 as err2: # using alias
+    # handle
+except: # all other exceptions
+    # handle
+else: # no exception
+    # handle
 finally: # always execute
-    # do something
+    # handle
 ```
 
 # namespacing
 - module is a namespacing machanism
 - top level code is in `__main__` namesapce
 
-# variable
+# Variable
 - `del`
 - `nonlocal`, `global`
 
-# function
+```python
+x = 1; # global by default
+def func():
+    global x # bind a local in the global scope
+    global y # create a global inside function
+    z # local by default
+```
+
+# Output format
+- %
+- .format
+
+# Function
 user-defined function has those special attributes:
 - `.__doc__`
 - `.__name__`
@@ -91,6 +280,7 @@ user-defined function has those special attributes:
 - `.__kwdefaults__`
 
 # OOP
+see <https://stackoverflow.com/questions/7456807/python-name-mangling>
 
 - in python, everything is an object
 - each object has an identity (`id()`), a type (`type()`) and a value
@@ -105,13 +295,29 @@ user-defined function has those special attributes:
 class Dog(Animal, Friend): #  inherit by (), support multi-inheritance
                            #  can also be `module.ClassName`
     kind = 'canine' #  class variable shared by all instance
-    _age #  underscore prefixed attributes should be considered non-public
-    __mangle #  `name mangling` to _Dog__mangle @?
+    _age #  underscore prefixed attributes **should be** considered non-public
+    __mangle #  private, name mangling to Dog._Dog__mangle
 
-    def __init__(self, name):
+    def __init__(self, name): # initializer, naming `self` is just a convention
+        super().__init__() # also can be `Animal.__init__(self)`, but not preferred
+                           # also note: super() don't require passing `self`
         self.name = name #  unique to each instance
-        Animal.do() #  call Base class method
 ```
+
+instantiate: `d = Dog('maew')`
+
+every class in Python is descendended from the `object` class
+all methods defined in the `object` class are special methods:
+- __new__()
+- __str__()
+- __init__()
+- __eq__(other)
+
+## name mangling
+
+see <https://dbader.org/blog/meaning-of-underscores-in-python>
+
+name mangling isn’t tied to class attributes specifically. It applies to any name starting with two underscore characters used in a class context.
 
 ## three new objects
 
@@ -157,10 +363,34 @@ class Dog(Animal, Friend): #  inherit by (), support multi-inheritance
 
 
 ## related functions
-- isinstance()
+- isinstance(object, className)
 - issubclass()
 
-# module
+## Special Methods
+
+operator overloading:
+__add__(self, other)
+__mul__(self, other)
+__sub__(self, other)
+__truediv__(self, other)
+__mod__(self, other)
+__cmp__(self, other)
+__lt__(self, other)
+__le__(self, other)
+__eq__(self, other)
+__ne__(self, other)
+__gt__(self, other)
+__ge__(self, other)
+__getitem__(self, index)
+__contains__(self, value)
+__len__(self)
+__str__(self)
+__float__(self)
+__int__(self)
+
+# Module
+simply a `.py` file
+
 - bug if run module with `python modu.py <arguments>`, module name will be `__main__`. so to make module as a script(for testing or provide a user interface) as well as importable module, add following codes at the end:
 
 ```python
@@ -266,3 +496,82 @@ def custom_open(filename):
 with custom_open('file') as f:
     contents = f.read()
 ```
+
+# 3 vs 2
+- 2 can behave like 3 using `__furture__` module
+- `print` is a function now, not a statement, must call with parenthesis
+- `5 / 2` now return `2.5`, not `2`
+- use unicode by default, not ASCII
+- `range` behave like `xrange` now, no `xrange` anymore
+
+# I/O
+
+## File
+
+- open(file, mode) create a _io.TextIOWrapper
+
+_io.TextIOWrapper
+- read(n) n chars
+- readline() a line
+- readlines() all line
+- write(s)
+- close()
+
+mode: r, w, a, rb, wb
+
+snippets: read all lines:
+- `while line != '':` or
+- `for line in infile:`
+
+
+## Web
+
+urllib.request.urlopen(url)
+
+## Binary
+
+pickle.dump(o, f)
+pickle.load(f)
+
+# Common functions
+input
+print(item, end='')
+format(var, specifier)
+    format specifier
+    <10.2f: type can be f,e,d,x,o,b,%,s, use <,> do justify, 10 is width, 2 is precision
+eval
+id(var)
+type(var)
+
+## Built-in
+abs(x)
+max(x1, x2, ...)
+min(x1, x2, ...)
+pow(a, b) # same as a ** b
+round(x)
+round(x, n) round to n digits after decimal point
+
+## Do Math: `math`
+
+fabs(x)
+ceil(x)
+floor(x)
+exp(x) exponential function # exp(1) is 2.71828
+log(x) natural logarithm
+log(x, base)
+squrt(x)
+sin(x)
+asin(x)
+cos(x)
+acos(x)
+tan(x)
+degrees(x)
+radians(x)
+
+## String Manipulation
+ord(ch)
+chr(code)
+
+## Generate Random `random`
+.randint(min, max)
+.random(max) random float

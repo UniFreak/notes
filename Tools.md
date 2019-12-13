@@ -1,3 +1,47 @@
+# Authoring
+- Markdown
+- AsciiDoc
+- reStructuredText
+
+# HTTP
+- cURL
+- HTTPie
+
+# API
+- Postman
+- SoupUI
+- Paw (only Mac)
+
+- apiary.io
+
+## Monitor
+- Runscope
+
+## Documentation
+Description Language
+- API Blueprint
+- RAML
+
+## Automated Testing
+- frisby.js
+
+# JSON
+- jq
+- Python JSON module
+
+# Network
+- Wireshark
+- ngrok
+
+# Proxy
+- Charles
+- Fiddler
+- mitmproxy
+
+# CI
+- TravisCI
+- Jenkins
+
 # Formats Convertor
 - pandoc
 
@@ -43,13 +87,13 @@
 # Binary Assert @?
 - Amazon S3
 
-# API
+# Public API
 - Twitter
 - Google Maps
 - Last.fm
 
 # Deployment
-- Capistrano 
+- Capistrano
 
 # Provision
 - Chef

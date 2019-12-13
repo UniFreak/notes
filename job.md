@@ -2,6 +2,29 @@
 - lagou 职场课
 - Coursera: How to write a resume
 - Lynda: Designing Professional Resumes
+- <https://yangshun.github.io/tech-interview-handbook/>
+- coursera course
+- work/resume
+- interview.*
+
+# 各招聘网站要求
+
+高级
+- 系统/核心模块/数据库设计与开发, 进度把控
+- 稳定, 可扩展
+- 沉淀抽象共用
+- 高并发, 大型系统
+- 性能瓶颈分析与改进, 性能调优
+- 缓存设计, NoSQL 方案
+- 技术研究, 优化
+- 分析解决问题的能力
+- 创新, 逻辑分析
+- 责任, 思维, 沟通, 推动, 合作
+
+专家
+- 团队管理, 资源配置
+- 成本, 进度, 质量, 风险把控
+- 技术攻关, 指导
 
 ## Online
 why: 5 out of 6 will look you online
@@ -16,7 +39,33 @@ so: clean up before looking for a job, especially social media
 - Google+
 - Twitter
 
-# 流程
+# 了解简历筛选流程
+
+make a skill set checklist by consulting team leader
+- Must have: degree or years of expierence in particular language or tech
+- Good to have: familiarity with secondary lang or tech, soft skills
+- Special bonus: recognized skill or expierence which are difficult to come by
+
+10 second glance for good keywords
+- good amount: pass
+- need more than 10s to figure out: fail
+- excessive amount: like spam, may or may not pass
+
+# 准备
+
+## 技能
+see: interview
+下载图谱
+
+- 算法
+- 架构
+- mySQL 调优
+
+## 环境
+
+## 练习白板
+
+# 选择领域
 自我评估
 - 测试: 霍兰德, MBTI, PTP, 九型人格
 - 会什么技术语言
@@ -39,7 +88,7 @@ so: clean up before looking for a job, especially social media
 - 行业领域是否喜欢
 - 核心, 边缘业务线有哪些
 
-# resume
+# 简历
 
 ## 类型
 - CV
@@ -55,6 +104,13 @@ so: clean up before looking for a job, especially social media
 - 同一家公司不要多次投递
 - 使用 bullet point, 避免嵌套
 - more solid details: numbers, percentage, results
+
+## 内容
+Projects
+- 1-2 lines about the project
+- 2-3 lines about your role, what technologies you used, what you did, your learning, etc etc
+- 2-3 projects that align with your interests/position
+- demonstrate your personality and skills, and be the talking point during the interview
 
 ## Strong Verbs
 
@@ -79,7 +135,7 @@ fonts: 10.5/12, traditional
 heading: same as content, stand out by bold or underline or caps
 algin: left
 
-save as PDF
+save as PDF, named like `firstname_lastname_resume.pdf`
 
 ## 针对职位微调
 
@@ -115,9 +171,10 @@ save as PDF
 - 兴趣爱好
 
 可加上
-- 专业一寸照
+- 专业一寸照?
 - 工作地
 - 大咖课程, 务必加上个人感悟和应用
+- 应聘职位
 
 HR 希望看到
 - 工作, 项目经历
@@ -134,18 +191,122 @@ Leader 希望看到
     + 工作量大
     + 个人开源或普通项目
 
+For developer positions, I think it is ok to not have any job experience and just list projects
+
+list your resume in reverse chronological order
+
 投递时间
 - 早上 9~10 点或下午 3~4 点
 
 # 面试
 
-## 技能
-see: interview
-下载图谱
+## 形式
+- Pop Quiz
+- Take home assignment
+- Phone interview
+- Onsite: prepare your laptop env
 
-- 算法
-- 架构
-- mySQL 调优
+## 内容
+- algorithm
+- system design
+- behavioural
+
+## 自我介绍
+should be: elevator pitch: short, direct, attention-grabbing
+
+tips:
+- short background: your name, past companies, noteworthy projects
+- KISS: show project highlights and some numbers
+- why you: relevant experience, similar tech stack, unique talent
+- practice your pitch: quick but easy-to-follow, natural
+
+outline:
+- a sentence on most recent role
+- a few sentence on (academic) background
+- some sentecen on professional experience: worked where? project? challenge? task? tech?
+- finish with why seeking new job and interested in this job
+
+## Coding
+
+1. Pick a language
+
+yes:
+- common: python, js, c++
+- familiar with
+
+no:
+- low level, C or Go
+
+2. Recap CS fundamentals
+
+hardcore:
+- <https://github.com/kdn251/interviews>
+- <https://leetcode-cn.com/>
+- <https://www.hackerrank.com/onboarding/challenge>
+- <https://yangshun.github.io/tech-interview-handbook/algorithms/algorithms-introduction>
+
+language:
+- understand the time and space complexities of the common operations in your chosen language
+- coding style
+- common pitfalls
+
+Do around 100–200 LeetCode questions and you should be good
+Practice, practice and more practice!
+
+3. Do leetcode
+
+<https://yangshun.github.io/tech-interview-handbook/best-practice-questions>
+
+4. Interview
+
+BEFORE CODING
+
+Prepare: pen, paper, earphones
+
+Always seek clarification about the question upon hearing it:
+- How big is the size of the input?
+- How big is the range of values?
+- What kind of values are there? Are there negative numbers? Floating points? empty inputs?
+- Are there duplicates within the input?
+- What are some extreme cases of the input?
+- Can I destroy the original array/graph/data structure?
+- How is the input stored? If you are given a dictionary of words, is it a list of strings or a Trie?
+
+Explain your high level approach to the interviewer
+
+Start coding after you and your interviewer have agreed on an approach
+
+WHILE CODING:
+
+When stuck:
+- Talk through what you initially thought might work and explain why it doesn't
+- Come up with more test cases and write them down
+- Think about how you would solve it without a program
+- Recall past questions related to the topic
+- Enumerate through the common data structures and whether they can be applied to the question
+- Look out for repeated work and determine if you can cache those computations
+
+Always be explaining what you are currently writing/typing to the interviewer
+
+AFTER CODING
+
+- Review and try to spot bugs
+- Come up with small test cases
+- Refactor
+- Give time/space complexity and tradeoff with alternative approaches
+- Prepare for extension questions
+
+5. Mock interview
+
+## Behavioral Questions
+
+<https://yangshun.github.io/tech-interview-handbook/behavioral-questions>
+
+## Question to Ask
+
+<https://yangshun.github.io/tech-interview-handbook/questions-to-ask>
+
+
 
 ## 现场
 自我介绍:简历之外, 面试官感兴趣内容
@@ -188,3 +349,4 @@ see: interview
 - 突出专业度
 - 跟进过几个, 什么级别项目?
 - 工作效果如何?
+

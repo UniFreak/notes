@@ -460,21 +460,18 @@ while( list( $key,$val ) = each( $user ) ) { ... }      // 效率更高
 
 - 定义
 
-    ```php
-    <?php
-    function 函数名(形参, 形参 , ...) {
-        函数体
-        return 返回值;
-    }
-    ?>
-    ```
+```php
+<?php
+function 函数名(形参, 形参 , ...) {
+    函数体
+    return 返回值;
+}
+?>
+```
 
 - 定义可变数量的参数列表
 
-    + <5.5:
-
-        使用 `func_num_args()`, `func_get_args()`, `func_get_arg()`
-
+    + <5.5: 使用 `func_num_args()`, `func_get_args()`, `func_get_arg()`
     + 5.6:
 
         也可以使用 `...`, 参数会以数组形式传入函数
@@ -671,10 +668,11 @@ class 类名        // `stdClass` 和 `__PHP_Incomplete_Class` 为 PHP 保留字
 - 为了对使用的类施加强制要求, `Trait` 支持抽象方法的使用
 - `Traits` 可以定义静态成员静态方法
 - 如果 `Trait` 定义了一个属性, 那类将不能定义同样名称的属性, 否则会产生一个错误
+- `Trait` 使用的其他类的属性或函数是否存在, 编译器并不会检查出来. 用户自己负责
 
 # 命名空间
 
-只有三种类型的代码受命名空间的影响: 类, 函数和常量
+只有五种类型的代码受命名空间的影响: 类, 接口, 函数, 常量, Trait
 
 - 声明
 
@@ -693,19 +691,19 @@ class 类名        // `stdClass` 和 `__PHP_Incomplete_Class` 为 PHP 保留字
 - 导入/别名:`use/as`
 
     + <5.5: 只支持命名空间和类的别名, 不支持函数和常量
-    + 5.6: 支持在类中导入外部的函数和常量
+    + 5.6: 支持在类中导入外部的函数(`use func`)和常量(`use constant`)
     + 一行可以使用多个 `use/as` 语句, 使用 `,` 号分割
 
 # 错误与异常
 
-### 设置
+## 设置
 
 - `php.ini`
 - `httpd.conf`
 - `htaccess`
 - 运行时
 
-### 级别
+## 级别
 
 | 数值表示 |常量表示 |
 |----------|---------|
@@ -722,7 +720,7 @@ class 类名        // `stdClass` 和 `__PHP_Incomplete_Class` 为 PHP 保留字
 |4096      |E_RECOVERABLE_ERROR|
 |8191      |E_ALL|
 
-### 一般需要考虑错误处理的情况
+## 一般需要考虑错误处理的情况
 
 - 连接到数据库
 - 使用一个全局变量
@@ -730,7 +728,7 @@ class 类名        // `stdClass` 和 `__PHP_Incomplete_Class` 为 PHP 保留字
 - 验证用户输入
 - 0 除错误
 
-### 处理方式
+## 处理方式
 
 - 展示(适用于开发环境)
 
@@ -778,15 +776,31 @@ class 类名        // `stdClass` 和 `__PHP_Incomplete_Class` 为 PHP 保留字
     - 自定义异常处理函数:
 
         ```php
-        <?php
         function exception_handler($exception) {
             echo "Uncaught exception: " , $exception->getMessage(), "\n";
         }
         set_exception_handler('exception_handler');
         throw new Exception('Uncaught Exception');
         echo "Not Executed\n";
-        ?>
         ```
+
+## 内置异常类
+
+Exception
+ErrorException
+LogicException
+- BadFunctionCallException
+    + BadMethodCallException
+- DomainException
+- InvalidArgumentException
+- LengthException
+- OutOfRangeException
+RuntimeException
+- OutOfBoundsException
+- OverflowException
+- RangeException
+- UnderflowException
+- UndexpectedValueException
 
 # *生成器
 
@@ -797,6 +811,7 @@ class 类名        // `stdClass` 和 `__PHP_Incomplete_Class` 为 PHP 保留字
 一个生成器函数看起来像一个普通的函数, 不同的是生成器可以 `yield` 生成许多它所需要的值
 
 当一个生成器被调用的时候, 它返回一个可以被遍历的对象
+生成器只能向前遍历, 不会回退; 只能遍历一次
 
 一个生成器不可以返回值, 这样做会产生一个编译错误; 然而 `return` 空是一个有效的语法并且它将会终止生成器继续执行
 
@@ -835,6 +850,67 @@ $data = (yield $key => $value);
 `yield` 可以在没有参数传入的情况下被调用来生成一个 `NULL` 值并配对一个自动的键名
 
 生成函数可以像使用值一样来使用引用生成
+
+# 闭包
+
+闭包实际上是一个 Closure 对象
+
+通过创建匿名方法创建闭包
+
+可以使用两种方式把状态绑定给闭包:
+
+1. `use`
+
+```php
+function enclosePerson($name) {
+    return function($doCommand) use ($name) {
+        return sprintf('%s, %s', $name, $doCommand);
+    }
+}
+
+$clay = enclosePerson('Clay');
+echo $clay('get me sweet tea!')
+// Outputs: "Clay, get me sweet tea!"
+```
+
+2. `bindTo()`
+bind a Closure object's internal state to a different object
+let the closure access protected and private memeber variables of the object to which it is bind
+
+classic usage: route binding
+
+```php
+class App
+{
+    protect $routes = [];
+    protect $responseBody = '';
+
+    public function addRoute($routePath, $routeCallback)
+    {
+        $this->routes[$routePath] = $routeCallback->bindTo($this, __CLASS__);
+    }
+
+    public function dispatch($currentPath)
+    {
+        foreach ($this->routes as $routePath => $callback) {
+            if ($routePath === $currentPath) {
+                $callback();
+            }
+        }
+        echo $this->responseBody;
+    }
+}
+
+$app = new App();
+$app->addRoute('/users/josh', function() {
+    $this->responseBody = "hello world";
+});
+$app->dispatch();
+```
+
+
+
+
 
 # 引用(可理解为别名, 删除别名并不会删除别名指向的变量)
 
@@ -951,108 +1027,3 @@ $data = (yield $key => $value);
         * `::send`
         * `::throw`
         * `::valid`
-
-# 上下文
-
-上下文(Context)由 `stream_context_create()` 创建
-
-选项可通过 `stream_context_set_option()` 设置
-
-参数可通过 `stream_context_set_params()` 设置
-
-## 选项
-
-- HTTP(`http://, https://`)
-
-    + `method `
-    + `header `
-    + `user_agent `
-    + `content `
-    + `proxy `
-    + `request_fulluri `
-    + `follow_location `
-    + `max_redirects `
-    + `protocal_version `
-    + `timout `
-    + `ignore_errors`
-
-- FTP(`ftp://, ftps://`)
-
-    + `overwrite `
-    + `resume_pos `
-    + `proxy`
-
-- SSL(`ssl://, tls://,` 同样适用于 `https://` 和 `ftps://` 上下文)
-
-    + `peer_name `
-    + `verify_peer `
-    + `verify_peer_name `
-    + `allow_self_signed `
-    + `cafile `
-    + `capath`
-    + `local_cert `
-    + `local_pk `
-    + `passphrase `
-    + `CN_match `
-    + `verify_depth `
-    + `ciphers`
-    + `capture_peer_cert `
-    + `capture_peer_cert_chain `
-    + `SNI_enabled `
-    + `SNI_server_name`
-    + `disable_compression `
-    + `peer_fingerprint`
-
-- CURL
-
-    + `method`
-    + `header`
-    + `user_agent`
-    + `content`
-    + `proxy`
-    + `curl_verify_ssl_host`
-    + `curl_verify_ssl_peer`
-
-- Phar(`phar://`)
-
-    + `compress `
-    + `metadata`
-
-- MongoDB(`mongodb://`)
-
-    + `log_cmd_insert `
-    + `log_cmd_delete `
-    + `log_cmd_update `
-    + `log_write_batch `
-    + `log_reply`
-    + `log_getmore `
-    + `log_killcursor`
-
-## 参数
-
-- notification
-
-# 支持的协议和封装协议
-
-- `file://`
-- `http://`
-- `https://`
-- `ftp://`
-- `ftps://`
-- `php://`
-    + `php://stdin`
-    + `php://stdout`
-    + `php://stderr`
-    + `php://input` (5.6: 可以多次打开并读取 `php://input`)
-    + `php://output`
-    + `php://fd`
-    + `php://memory`
-    + `php://temp`
-- `zlib://`
-- `data://`
-- `glob://`
-- `phar://`
-- `ssh2://`
-- `rar://`
-- `ogg://`
-- `expect://`

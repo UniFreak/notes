@@ -1,4 +1,105 @@
-see PSR2, PSR4
+# See
+- Book <Modern PHP>
+
+# Code Style
+
+See PSR1, PSR2
+
+# Autoloading: PSR4
+
+The essence of PSR-4 is mapping a top-level namespace prefix to a specific filesystem directory
+
+Like this:
+
+```php
+spl_autoload_register(function ($class) {
+    $prefix = 'Foo\\Bar\\';
+    $base_dir = __DIR__ . '/src';
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        return; // move to the next registerd autoloader
+    }
+
+    $relative_class = substr($class, $len);
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+    if (file_exists($file)) {
+        require $file;
+    }
+})
+```
+
+But you shouldn't write your own autoloader, use Composer instead
+
+# Security
+
+Trust no one: sanitize input, validate data, escape output
+
+## Sanitize Input
+
+- HTML
+
+use `htmlentities()` function or `HTMLPurifier` package.
+DONT use regex replacement
+
+- SQL queries
+
+use PDO and prepared statement
+DONT use `mysql_*` functions
+
+- User profile
+
+use `filter_var()` function
+
+## Validate Data
+
+use `filter_var()` with `FILTER_VALIDATE_*` flags or these package:
+- aura/filter
+- respect/validation
+- symfony/validator
+
+## Escape Output
+
+use `htmlentities()` function or template engine
+- twig/twig
+- smarty/smarty
+
+## Password
+
+Never know or restrict or email user password!
+Hash passwords with bcrypt and PHP's native password hashing API (`password_*` functions)
+
+# Date, Times, and Time Zones
+
+set a default time zone in `php.ini`
+DONT manage dates and times on your own
+use `DateTime`, `DateInterval`, `DateTimeZone`, `DatePeriod` class instead or `nsbot/carbon` package
+It's easier to always work in the UTC time zone (server, PHP, DB, display)
+
+# Mutlibyte Strings
+
+Use UTF8 every where:
+- `php.ini` `default_charset` setting
+- `header()` function
+- HTML `<meta>` tag
+- Database
+- Source files
+
+# Error and Exception
+
+Choose or create the exception subclass that best ansers why am I throwing this exception
+and document your choice
+
+You must act defensively when using PHP components and frameworks written by other developers
+
+Surround code that might throw an exception with a try/catch block
+
+Always set a global exception handler, and log exceptions inside it
+
+It's considered good etiquette to restore the previous error handler after your own code is done
+
+Display errors during development (Whoops package), log errors in production (Monolog package)
+
+# Coding
 
 Always use curly braces
 
@@ -8,8 +109,6 @@ declare variable before using them
 
 typehint everywhere
 
-@? user assertions for scalars
-
 use === instead of ==
 
 use bracket to make your operator precedence more clear
@@ -17,23 +116,13 @@ use bracket to make your operator precedence more clear
 use the built-in password hashing functions to hash and compare passwords, it
   also salts your password for you
 
-favor PDO
-
-use only `<?php` `?>` and `<?=` `?>` tags
-
 use `spl_autoload_register()`, not `autoload()` to autoload your classes
 
 favor `define()` instead of `const` to define constant
 
-caching PHP opcode(APC)
-
-If you need a distributed cache, use the Memcached client library. Otherwise, use APCu
-
 serve PHP from a web-server use PHP-FPM
 
 use `PHPMailer` instead of built-in `mail()` function to send mail
-
-use `filter_var()` to validate email address
 
 UTF8
 - use the `mb_*` functions whenever you operate on a Unicode string
@@ -45,17 +134,6 @@ UTF8
 - make sure your database and tables are all set to the `utf8mb4` character set
   and collation, and that you use the `utf8mb4` character set in the PDO connection string
 - In your HTML, include the charset meta tag in your page’s <head> tag
-
-always use the `DateTime` class for creating, comparing, changing, and displaying dates in PHP
-
-when testing the return value of a function that can return either 0 or boolean
-false, like `strpos()`, always use `===` and `!==`
-
-Structuring your data right in the first place can help a lot
-
-When there's no `else`, I prefer to explicitly halt at the top, so people don't have to scan ahead to see whether there's an else clause
-
-after a query, always check if query result available before using it
 
 if a function is for testing, use `is...` as its function name like: isBigger, isGood, isValidUTF8String
 
@@ -75,3 +153,24 @@ $a = 'multi-line example'
     . "\n"
     . 'of what to do';
 ```
+
+# Tooling
+
+Use Composer
+
+Automate server provision with
+- Puppet
+- Chef
+- Ansible
+- SaltStack
+
+Automate server deployment with
+- Capistrano
+- Deployer
+- Magallanes
+- Rocketeer
+
+Testing with
+- Unit test: PHPUnit
+- SpecBDD: PHPSpec
+- StoryBDD: Behat

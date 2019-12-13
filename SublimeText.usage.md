@@ -17,7 +17,7 @@ BC6CB3B5B6D183FF5C755DE7007C6C41
 ```
 
 
-# Build
+# Build System
 
 new: tools->build system->new build system
 choose between: ctrl + shift + b
@@ -113,14 +113,8 @@ Coding:
 
 # Write your own plugin
 
-```python
-open_browser:
-    import sublime
-    import sublime_plugin
-    import webbrowser
+see <SublimeText-dev.md>
 
-    class OpenBrowserCommand(sublime_plugin.TextCommand):
-        def run(self, edit):
-            url = self.view.file_name()
-            webbrowser.open_new(url)
-```
+# Mac Problem
+
+try run `xcode-select --install` if error prompt

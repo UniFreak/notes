@@ -1,10 +1,52 @@
-# Feature
-- 与其他服务器的比较
-    + tomcat, jeffy, IIS
-    + apache, lighthttpd
-- 自身特点: 开源, 稳定, 高效/高并发, 跨平台, 扩展性
+# SEE
+- <http://aosabook.org/en/nginx.html>
 
-# Installation
+# Architecture
+
+![Architecture](img/nginx_architecture.png)
+
+## Code: core and module
+Core: foundation, reverse proxy, network protocols, run-time environment
+Module
+- Upper: `http`, `mail`
+- Functional:
+    + event
+    + phase handler
+    + output filter (header, body)
+    + variable handler (like `geo`, `map`)
+    + protocals
+    + upstream
+    + load balancer
+
+## Request Process
+
+nginx processes connections through a pipeline, or chain, of modules.
+A typical HTTP request processing cycle looks like the following.
+
+1. Client sends HTTP request.
+2. nginx core chooses the appropriate phase handler based on the configured location matching the request. There are six phase: server rewrite, location, location rewrite, access control, try_files, log
+3. If configured to do so, a load balancer picks an upstream server for proxying.
+4. Phase handler does its job and passes each output buffer to the first filter
+5. First filter passes the output to the second filter.
+6. Second filter passes the output to third (and so on).
+7. Final response is sent to the client.
+
+With subrequests nginx can return the results from a different URL than the one the client originally requested
+
+## Workers Model
+
+`master process` read the conf file and determine how many `worker process` is spawn
+Connections are processed in a highly efficient run-loop in a limited number of single-threaded processes called workers
+each worker nginx can handle many thousands of concurrent connections and requests per second
+worker code includes the core and the functional modules
+resource controlling mechanisms are isolated within single-threaded worker processes
+
+## Process Roles
+
+a single master process and several worker processes. There are also a couple of special purpose processes, specifically a cache loader and cache manager
+primarily use shared-memory mechanisms for inter-process communication
+
+# Compile From Source Installation
 
 via repository:
 
@@ -26,9 +68,7 @@ compile:
 7. `make intall`
 8. 常用编译参数解释...
 
-# Defaut dirs/files
-
-configuration change will be applied after reload/restart
+# Dir and Files
 
 - nginx path prefix: `/usr/local/nginx`
 - nginx binary file: `/usr/local/nginx/sbin/nginx`
@@ -42,15 +82,7 @@ configuration change will be applied after reload/restart
 - log: `/var/log/nginx` or `/usr/local/nginx/logs`
 - conf: `/user/local/nginx/conf` or `/etc/nginx` or `/usr/local/etc/nginx`
 
-# Nginx architecture
-
-`master process` read the conf file and determine how many `worker process` is spawn
-
-request are processed by worker process
-
-# Command
-
-## Options
+# Command Options
 
 ```
 -?,-h         : this help
@@ -60,14 +92,6 @@ request are processed by worker process
 -T            : test configuration, dump it and exit
 -q            : suppress non-error messages during configuration testing
 -s signal     : send signal to a master process: stop, quit, reopen, reload
-    -s stop 等同于
-    kill -s SIGTERM <nginx pid> 等同于(可用 ps -ef | grep nginx 查看 pid)
-    kill -s SIGINT <nginx pid>
-
-    -s quit ("优雅" 的停止...) 等同于
-    kill -s SIGQUIT <nginx pid>
-    kill -s SIGWINCH <nginx pid>
-
 -p prefix     : set prefix path (default: NONE)
 -c filename   : set configuration file (default: conf/nginx.conf)
 -g directives : set global directives out of configuration file
@@ -75,25 +99,64 @@ request are processed by worker process
 
 # Config
 
-## Common concepts and tasks
+configuration change will be applied after reload/restart
 
-- simple directive: `<name> <param> <param>...;`
+## Units
+
+ms  milliseconds
+s   seconds
+m   minutes
+h   hours
+d   days
+w   weeks
+M   months, 30 days
+y   years, 365 days
+
+## Concepts
+
+syntax, formatting and definitions follow a so-called C-style convention
+
+Variable typically calculated only once and cached for the lifetime of a particular request
+
+- variable, embeded variable
+- context never overlap: `main`, `http`, `server`, `upstream`, `location`, `mail`
+- simple directive: `<name> <modifier> <param> <param>...;`
 - block directive: `<context> <param>... {}`, block directives can be nested
 - directives in the top level is in `main` context
 - common block directives are: `http -> server -> locatioin`
 
+## Common Directives
+
+under `server` or `location`, `location [ = | ~ | ~* | ^~ ] uri {...}`
+
+location directive search order:
+1. Exact matches (`=`), if matches search stops
+2. Prefix matches (longest match win)
+3. If matched prefix string have `^~` modifier, then searching stops, else
+4. Regex matches (`~*` case-insensitive, `~` case-sensitive, longest match win)
+
+under `server`, `server_name naem ...`
+
+server name search order:
+1. exact name
+2. longest wildcard name starting with an asterisk, e.g. `*.example.org`
+3. longest wildcard name ending with an asterisk, e.g. `mail.*`
+4. first matching regular expression (in order of appearance in a configuration file)
+
+## Common Tasks
 
 nginx.conf:
 
 ```ini
 # comment start with #
 user  nobody;               # which user the worker process run as
-worker_processes  1;        # how many worder process to spawn
+worker_processes  1;        # how many worker process to spawn
 error_log  logs/error.log;  # error log file path
 pid        logs/nginx.pid;  # what pid file the master process use
 
 events {
-    # how many connections a workder process handles
+    # event context config affect connection processing
+    # how many connections a worker process handles
     worker_connections  1024;
 }
 
@@ -125,13 +188,6 @@ serving static content:
 
 ```ini
 server {
-    # location directive search order:
-    # 1) Exact matches (location = /foo.html), if matched searching stops.
-    # 2) Prefix matches (location /foo or location ^~ /bar), longest to shortest;
-    #    if ^~ then searching stops, else search continues with...
-    # 3) regex matches (location ~ \.php$) in order of appearance.
-    # NOTE: regex matches beat regular prefix matches
-
     # `/` is the prefix compared with the URI from the request
     location / {
         root /data/www;
@@ -188,17 +244,17 @@ server {
 }
 ```
 
-## Common directives
+## Load balancing
 
-- listen
+use `upstream` for HTTP, `stream` for TCP or UDP
 
-# Load balancing
-
-three load balancing mechanisms are supported:
-
+supported load balancing mechanisms
 - round-robin (default)
-- least-connected
-- ip-hash
+- `least_conn` least connections
+- `least_time` least-time
+- `hash` generic hash
+- `random`
+- `ip_hash`
 
 # Module dev
 1. code
@@ -212,6 +268,10 @@ three load balancing mechanisms are supported:
     1. 修改 `/etc/sysctl.conf`
     2. 执行 `sysctl -p` 生效
     3. 常用参数解释...
+
+# Best Practice
+
+Use `include` to orgnize config files
 
 # Q&A
 

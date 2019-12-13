@@ -1,20 +1,19 @@
 # See
 - php.*.md
+- sandbox/algo
+- mysql.*.md
 
 # 简历
-
-参考 <http://www.zhihu.com/question/25002833>
 
 投简历网站: linkin, 51job, jobbole, boss 直聘, 机到
 
 # 温习
 
-数据结构
-
-算法
+数据结构, 算法
 
 PHP (see <php*.md>)
 - 语法: trait, interface, abstract, static, reflection
+- Closure
 - 错误处理: error report, exception
 - 全局常量, 魔术方法, 预定义接口, 预定义异常
 - 调试技巧: stack trace, xdebug
@@ -69,7 +68,7 @@ Nginx
 
 Linux
 
-Regix
+Regex
 
 前端技术
 - HTML, HTML5
@@ -115,6 +114,8 @@ Tools
 面试题(see <interview-question.md>)
 
 # 准备
+电脑环境
+
 U盘
 - notes
 - sublimeText

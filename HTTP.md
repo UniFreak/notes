@@ -1,4 +1,4 @@
-#Methods
+# Methods
 
 - __GET__: Used to fetch information specified in the request URI
 
@@ -20,7 +20,7 @@
      * 3. find out what `Accept-Ranges` response header is before you send a partial GET request
      * 4. typical usage: premium user are allowed to resume download from breakpoint
      */
-    Range: bytes=0-1024 
+    Range: bytes=0-1024
     ```
 
 - __POST__: Used to send some data to the server to be processed in some way
@@ -35,7 +35,7 @@
 
 - __HEAD__: Identical to GET except server should not return message-body in the response(`curl`'s I switch)
 
-- __TRACE__: Server will return what it has received 
+- __TRACE__: Server will return what it has received
 
     Used to debug what is actually sent to the server(may be modified by proxy)
 
@@ -48,7 +48,32 @@
     Usually been disabled becuase it may lead to security issues
 
 
-#Response code
+# Headers
+multiple value seperate with `,`
+
+## Content Negotiation
+- Accept
+- Accept-Encoding
+- Accept-Language
+- Accept-Charset
+
+`q` value indicat how much the option is preferred, default is 1:
+`Accept: text/html; q=0.9,image/webp`
+
+## Auth
+
+- Authorization
+
+## Cache
+
+- ETag / If-None-Match
+- Last-Modified / If-Modified-Since
+
+## Custom
+
+- X-*
+
+# Response statuc code
 
 __1xx__: Informational
 

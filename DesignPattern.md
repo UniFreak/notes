@@ -1,6 +1,9 @@
-#GoF Patterns
+# See
+- <https://github.com/domnikl/DesignPatternsPHP>
 
-##Creational(Class Instantiation)
+# GoF Patterns
+
+## Creational(Class Instantiation)
 
 - Abstract Factory
 
@@ -27,7 +30,7 @@ A fully initialized instance to be copied or cloned
 
     A class of which only a single instance can exist
 
-##Structrual(Class&Object Composition)
+## Structrual(Class&Object Composition)
 
 - Adapter
 
@@ -59,7 +62,7 @@ Restricts accessor/mutator access
 
 An object representing another object
 
-##Behavioral(Class Communication)
+## Behavioral(Class Communication)
 
 - Chain of Responsibility
 
@@ -109,7 +112,7 @@ Defer the exact steps of an algorithm to a subclass
 
 Define a new operationi to a class without change
 
-#Other
+# Other
 
 - Dependency injection
     + Constructor injection

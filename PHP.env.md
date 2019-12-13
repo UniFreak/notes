@@ -1,36 +1,47 @@
-# Mac Local LNMP
+# Install
 
-## PHP
+## Compile from source
 
-multiple version:
+- When do `./configure...`: icon problem
 
-install:
+see <https://stackoverflow.com/questions/24987305>
 
-php56: `brew install php56`
-php72: `brew unlink php56` -> `brew install php71`
+try add option `--with-iconv=/usr/local/Cellar/libiconv/1.15` or
+try add option `--with-iconv=$(brew --prefix libiconv)`
 
-config: change port 9000 to 9056 and 9071
+- When run `php`: `dyld: Library not loaded`
 
-php56: `/usr/local/etc/php/5.6/php-fpm.conf`
-php71: `/usr/local/etc/php/7.1/php-fpm.d/www.conf` <-- **NOTE www.conf**
+try `brew upgrade`
 
-start fpm
-php56: `/usr/local/Cellar/php56/5.6.**/sbin/php56-fpm start`
-php71: `/usr/local/Cellar/php70/7.1.**/sbin/php70-fpm start`
+- When do `make & make install`
 
-kill all fpm: `sudo killall php-fpm`
+1. open `MakeFile`
+2. search for variable `EXTRA_LIBS`
+3. replace `-liconv` with `/usr/local/opt/libiconv/lib/libiconv.dylib`
 
-## Nginx
+## Using Homebrew
 
-install: `brew install nginx`
+- `configure: error: Cannot find libz`
 
-config: `/usr/local/etc/nginx/nginx.conf`
+try `xcode-select --instal`
+or `xcode-select -p`
+or try reinstall zlib: `brew reinstall zlib`. remember to do the `export` as prompted
 
-start: `nginx` then visit `http://localhost:8080`
+- When run php: `dyld: Library not loaded: /usr/local/opt/openssl/lib/libssl.1.0.0.dylib`
 
-## Traps
+reinstall openssl:
+1. `brew uninstall openssl`
+2. `brew install https://github.com/tebelorg/Tump/releases/download/v1.0.0/openssl.rb`
 
-1. erp use php56 keep nginx 502 -> temparary use 71
-2. logger cannot create log files -> create the dir and make it 777
+- When run php: `dyld: Library not loaded: /usr/local/opt/readline/lib/libreadline.7.dylib`
 
-# Docker see <macUp.md>
+first try: `brew link readline --force`, if not working, try
+1. `cd /usr/local/opt/readline/lib/`
+2. `ln -s libreadline.dylib libreadline.7.dylib`
+
+
+# Built-in Server
+Use Built-in server only for local development
+
+1. cd into project directory
+2. run `php -S <servername>:<port> [-c <iniFile>] [<routerFile>]`

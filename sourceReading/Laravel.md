@@ -1,3 +1,52 @@
+# See
+- Book: Laravel 核心技术
+
+# Plan
+
+## 关注点
+- 实现
+- 设计模式
+- 编程惯例
+- 应用
+- ...
+
+## 输出
+- 博文
+- 技术分享
+
+# Implementatioin
+
+## Autoloading
+
+1. PSR4, PSR1,class_map, file -> composer (p.46)
+2. Facade/Alias -> `AliasLoader.php::prependToLoaderStack()` (p.48)
+
+Tech: Composer, PSR, `class_alias()`, `spl_autoload_register()`
+
+## IoC
+
+
+## Route
+## Middleware
+## MVC
+## Request Handle
+## Query Builder
+## Eloquent ORM
+## Migration
+## Error & Exception
+## Blade template engine
+## Message Queue
+## Event
+## Command
+## Cron
+## Artisan
+## Pipe
+## Facade
+## Env
+## Multi Language
+## Session
+
+
 # 命名
 - `callbacksPerType`: `per` 用于指示数组键名
 - `nomalizeSomething`: 标准化数据

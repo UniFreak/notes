@@ -1,3 +1,6 @@
+# Debug tool
+- dbg
+
 # `char c[]` vs `char *c` to handle string
 
 ```

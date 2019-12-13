@@ -1,3 +1,7 @@
+# See
+- <https://github.com/ziadoz/awesome-php>
+- <https://github.com/domnikl/DesignPatternsPHP>
+
 # 安装
 - install dependencies
     + `apt-get install libxml2 libxml2-dev`

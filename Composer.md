@@ -316,9 +316,24 @@ archive-dir
 
 # Autoloading
 
-## ?
-- psr 0 with \\ vs not with \\?
-- psr 0 vs psr 4
+Support 4 types of autoloading:
+
+```js
+{
+    "autoload": {
+        // PSR1: class `\Bpp\User` will reside in `bpp/Bpp/User.php`
+        "psr-0": { "Bpp\\": "bpp/" }
+        // PSR4: class `\App\User will reside in `app/User.php`.
+        // Note that no additional `App/` directory is required
+        "psr-4": { "App\\": "app/" }
+        // classmap: all `.php` or `.inc` file under `database` directory will be
+        // loaded into `autoload_classmap.php`
+        "classmap": [ "database" ]
+        // files: suit for classes that needed every execution
+        "files": [ "src/Illuminate/Foundation/helpers.php" ]
+    }
+}
+```
 
 # Tips
 - you probably want to add vendor/ in your .gitignore. You really don't want to add all of that code to your repository.

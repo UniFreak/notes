@@ -1,3 +1,8 @@
+# See
+
+- <https://daringfireball.net/projects/markdown/>
+- <https://github.github.com/gfm/>
+
 # Notes
 - (You can always use HTML tag&attributs in Markdown file)
 
@@ -26,6 +31,11 @@ or:
 > the second paragraph
 >> blcokquote also can be *nested*
 
+# Hard Line Break
+
+end with \
+or end with two space
+
 # Listing
 
 * unordered list item 1
@@ -41,6 +51,9 @@ or:
 1. unordered list item 1
 2. unordered list item 2
 3. unordered list item 3
+
+- [ ] undone task
+- [x] done task
 
 # Horizontal Ruling
 
@@ -72,8 +85,8 @@ __strong__
 <http://autolink.com>
 <fanghao90s@gmail.com>
 [reference link1][num1] and [reference link2][num2] defined by the following(see bottom)
-![Alt text](/path/to/img.jpg "Optional title")
-![Alt text][id] reference img defined by the following(seebottom)
+![alt text](/path/to/img.jpg "Optional title")
+![ref image][img_id] reference img defined by the following(seebottom)
 
 # Table
 
@@ -84,6 +97,6 @@ __strong__
 | 1920 |               -10 |                 32 |
 
 
-[num1]: http://sample1.com/ 		"reference link1"
-[num2]: http://sample2.com/ 		"reference link2"
-[id]: url/to/img "Optional title attribute"
+[num1]: http://sample1.com/ "optional title"
+[num2]: http://sample2.com/ "optional title"
+[img_id]: url/to/img "Optional title attribute"

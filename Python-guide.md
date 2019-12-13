@@ -48,8 +48,6 @@ complete application distribution:
 4. run `twine upload --repository-url https://pypi.org/legacy/ dist/*` to push to repo
 5. run `python3 -m pip install --index-url https://pypi.org/simple/ pkgname` to install
 
-
-
 # Installer
 
 - `pip`:
@@ -108,8 +106,6 @@ complete application distribution:
 - python-config
 - wheel
 - `site packages`: system-wide installed packages
-- `future imports`
-- `absolute imports`, `relative imports`
 - covariant or contravariant behavior -> see <https://www.python.org/dev/peps/pep-0484/>
 - `__all__`
 - rich comprison
@@ -322,7 +318,7 @@ four_lists = [[] for __ in range(4)]
 # Tricks
 - find out user base binary directory: `python -m site --user-base`
 
-# debug @?
+# Debug @?
 
 # Notes
 - Pipfile (and requirements.txt) is for applications; setup.py is for packages. They serve different purposes. If you need to sync them, you’re doing it wrong (IMO)
