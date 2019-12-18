@@ -1,3 +1,7 @@
+# UML
+- mermaid
+- plantUML
+
 # Authoring
 - Markdown
 - AsciiDoc

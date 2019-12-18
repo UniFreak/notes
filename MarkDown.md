@@ -82,6 +82,7 @@ __strong__
 
 [link](http://sample.com/ "Title") with title
 [link](http://sample.com/) without title
+[link](#to_ancher)
 <http://autolink.com>
 <fanghao90s@gmail.com>
 [reference link1][num1] and [reference link2][num2] defined by the following(see bottom)

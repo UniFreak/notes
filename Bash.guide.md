@@ -1,7 +1,6 @@
 # See
-- #bash channel topics
-- <https://wiki.bash-hackers.org/scripting/tutoriallist>
 - <http://mywiki.wooledge.org/BashGuide>
+- <https://wiki.bash-hackers.org/>
 
 # Concepts
 
@@ -25,6 +24,8 @@ String VS Stream:
 - stream is unidirectional (you can read from them, or write to them, but typically not both)
 - stream can contain NUL bytes
 
+Shell 脚本的关键在于输入多个命令并处理每个命令的结果, 用 `;` 可将多个命令分开
+
 # Get Help
 
 be familiar with
@@ -44,13 +45,19 @@ Options traditionally end with `--` (optinal): `tar -x -f archive.tar -v -- file
 - standalone, presente or not: `-x`
 - with arguments: `-f archive.tar`
 
+Print message with `echo msg`, print without linebreak with `echo -n msg`
+
+Comment begin with `#`: `echo "hi" # this is comment`
+
 Arguments are seperated by whitespace
 
 The amount of whitespace between arguments does not matter
 
 Quotes (`"` or `'`) group everything inside them into a single argument
 
-You should be very well aware of how expansion works
+You should be very well aware of how expansion works see [Expansion](#scripts)
+
+
 
 # Script
 
@@ -363,7 +370,7 @@ if COMMANDS; then
     OTHER COMMANDS
 elif COMMANDS; then
     OTHER COMMANDS
-else; then
+else
     OTHER COMMANDS
 fi
 ```
@@ -414,7 +421,7 @@ all supported operators:
 
 - `=`, `!=`: string comparision
 - `-eq`, `-ne`, `-lt`, `-gt`, `-le`, `-ge`: number comparision
-- `z`, `-n`: empty test
+- `-z`, `-n`: empty test
 - `! EXPR`: logical NOT
 - files:
     + `-e FILE`: True if file exists
@@ -639,7 +646,7 @@ $ tar -cf >(ssh host tar xf -) .
 - command grouping
 - arithmetic evaluation
 
-`function` and `alias` are not compund commands, but works similar
+`function` and `alias` are not compound commands, but works similar
 
 ## Subshell
 
@@ -693,7 +700,7 @@ If you need complex behavior, use a function instead
 
 `alias`, `unalias`
 
-# expansion (by order)
+# Expansion (by order)
 
 - brace expansion
 - tilde expansion
@@ -758,3 +765,13 @@ fix: `[ "$myname" = "$yourname" ]` or use `[[`
 - You should keep your logic (your code) and your input (your data) separated
 - Herestrings should be preferred over pipes when sending output of a variable as stdin into a command
 - If you end up making a pipeline that consists of three or more applications, it is time to ask yourself whether you're doing things a smart way
+
+# Coodies
+
+batch rename
+
+```sh
+for file in *.JPG *.jpeg
+do mv -- "$file" "${file%.*}.jpg"
+done
+```

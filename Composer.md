@@ -30,7 +30,7 @@
 2. `php -r "readfile('https://getcomposer.org/installer');" | php`
 3. _optional on cygwin_: see: http://www.pavlatka.cz/2015/01/install-composer-cygwin/
 
-# 配置用中国镜像(防被墙)
+# Mirrors
 
 - see <http://pkg.phpcomposer.com/>
 - run

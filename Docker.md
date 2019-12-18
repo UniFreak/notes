@@ -200,7 +200,7 @@ see: https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practice
     + --force-remove: always remove intermediate containers
     + q: supress verbose output
     + rm: remove intermediate containers after
-- history   
+- history
 - save
 - load
 - rmi
@@ -252,7 +252,7 @@ see: https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practice
 `Docker Machine` is a tool for provisioning and managing your Dockerized hosts (hosts with Docker Engine on them)
 
 - create
-- ssh 
+- ssh
 - ls
 - scp
 
@@ -271,7 +271,7 @@ see: https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practice
 
 - 使用 **数组** 语法设置要执行的命令
 - 不要使用 ARG 传递证书或秘钥
-- 使用 --priviliged 模式会有安全风险, 
+- 使用 --priviliged 模式会有安全风险,
 - 可以使用 nsenter 进入容器的 shell 或者使用 `docker exec` 来管理容器
 
 # Note
@@ -281,7 +281,8 @@ see: https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practice
 
 # Coodie
 
-- 删除所有容器: `docker rm `docker images -aq`
+- 删除所有容器: `docker rm $(docker container ls -aq)`
+- 删除所有镜像: `docker image rm $(docker image ls -aq)`
 - 删除所有 volume: `docker volume rm $(docker volume ls -q)`
 - 进入一个守护态的容器有三种方式:
     + `docker attach <container>`

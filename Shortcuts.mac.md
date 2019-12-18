@@ -45,6 +45,9 @@ ctrl-cmd-t      add to favorite
 
 - 通知中心
 
-ctrl+shift+eject     息屏
-command+ctrl+shift+4 截图
+ctrl+shift+eject    息屏
+shift-cmd-3         截屏
+shift-cmd-4         截图
+shift-cmd-5         录屏
+
 ctrl+cmd+space       emoji
