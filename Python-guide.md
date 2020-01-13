@@ -237,7 +237,7 @@ import library.foo_plugin # not OK
 - you need to understand the import mechanism in order to use this concept properly and avoid some issues
 - use properly mutable types for things that are mutable in nature and immutable types for things that are fixed
 - avoid using the same variable name for different things or assigning to a variable more than once
-- discourages the usage of the` %` operator in favor of the `str.format()` method
+- discourages the usage of the `%` operator in favor of the `str.format()` method
 - one of the secrets of becoming a great Python programmer is to read, understand, and comprehend excellent code
     + Howdoi
     + Flask

@@ -44,7 +44,28 @@ To override a file in an existing package, just create a file with the same name
 
 `selectors` are means to match scope names
 
-# Scopes
+key binding
+    `context`
+
+sublime contain window contain sheet
+sheet ie tab contain view or image preview
+view has a underlying buffer
+    scratch buffer are never reported as dirty (has unsaved modifications)
+    private setting
+    viewport (5, 5): 5 is pixel, means current viewable portion offset of buffer
+    edit exist to group buffer modification
+
+abc
+
+# 2 vs 3
+
+2 use python 2.6, 3 use python 3.3
+
+3: plugin run in `plugin_host` separate process
+
+3: all top-level statements in your module must not call any functions from the sublime module
+
+# Scope Nameing
 
 naming: see <https://macromates.com/manual/en/language_grammars#naming_conventions>
 
@@ -91,169 +112,9 @@ priority:
 - `Packages/User/<syntax>.sublime-settings`
 - `<Buffer Specific Settings>`
 
-# Key Bindings JSON
+# MiniHtml
 
-use `.sublime-keymap` json file
-
-example:
-
-```js
-[
-    {
-        "keys": ["super+shift+9"], // required
-        "command": "set_layout", // required
-        "args": // args to command
-        {
-            "cols": [0.0, 0.33, 0.66, 1.0],
-            "rows": [0.0, 0.33, 0.66, 1.0],
-            "cells":
-            [
-                [0, 0, 1, 1], [1, 0, 2, 1], [2, 0, 3, 1],
-                [0, 1, 1, 2], [1, 1, 2, 2], [2, 1, 3, 2],
-                [0, 2, 1, 3], [1, 2, 2, 3], [2, 2, 3, 3]
-            ]
-        },
-        "context": // restrict to a specific situation
-        [
-            {"key": "panel", "operand": "find"},
-            {"key": "panel_has_focus"},
-        ]
-    },
-]
-```
-
-# Color Scheme
-
-use `.sublime-color-scheme` json file
-
-example:
-
-```json
-{
-    "name": "Example Color Scheme",
-    "globals":
-    {
-        "background": "rgb(34, 34, 34)",
-        "foreground": "#EEEEEE",
-        "caret": "white"
-    },
-    "rules":
-    [
-        {
-            "name": "Comment",
-            "scope": "comment",
-            "foreground": "#888888"
-        },
-        {
-            "name": "String",
-            "scope": "string",
-            "foreground": "hsla(50, 100%, 50%, 1)"
-        },
-        {
-            "name": "Number",
-            "scope": "constant.numeric",
-            "foreground": "#7F00FF",
-            "font_style": "italic"
-        }
-    ]
-}
-```
-
-# Themes
-
-use `.sublime-theme` json file
-
-example:
-
-```json
-[
-    // Set up the textures for a button
-    {
-        "class": "button_control",
-        "layer0.tint": [0, 0, 0],
-        "layer0.opacity": 1.0,
-        "layer1.texture": "Theme - Example/textures/button_background.png",
-        "layer1.inner_margin": 4,
-        "layer1.opacity": 1.0,
-        "layer2.texture": "Theme - Example/textures/button_highlight.png",
-        "layer2.inner_margin": 4,
-        "layer2.opacity": 0.0,
-        "content_margin": [4, 8, 4, 8]
-    },
-    // Show the highlight texture when the button is hovered
-    {
-        "class": "button_control",
-        "attributes": ["hover"],
-        "layer2.opacity": 1.0
-    },
-    // Basic text label style
-    {
-        "class": "label_control",
-        "fg": [240, 240, 240],
-        "font.bold": true
-    },
-    // Brighten labels contained in a button on hover
-    {
-        "class": "label_control",
-        "parents": [{"class": "button_control", "attributes": ["hover"]}],
-        "fg": [255, 255, 255]
-    }
-]
-```
-
-# Menu
-
-use `.sublime-menu.` json file
-
-availabel menus:
-
-- Main.sublime-menu: Primary menu for the application
-- Side Bar Mount Point.sublime-menu: Context menu for top-level folders in the side bar
-- Side Bar.sublime-menu: Context menu for files and folders in the side bar
-- Tab Context.sublime-menu: Context menu for file tabs
-- Context.sublime-menu: Context menu for text areas
-- Find in Files.sublime-menu: Menu shown when clicking the ... button in Find in Files panel
-- Widget Context.sublime-menu: Context menu for text inputs in various panels
-
-example:
-
-```json
-[
-    {
-        "caption": "File",
-        "mnemonic": "F",
-        "id": "file",
-        "children":
-        [
-            { "command": "new_file", "caption": "New File", "mnemonic": "N" },
-
-            { "command": "prompt_open_file", "caption": "Open File…", "mnemonic": "O", "platform": "!OSX" },
-            { "command": "prompt_open_folder", "caption": "Open Folder…", "platform": "!OSX" },
-            { "command": "prompt_open", "caption": "Open…", "platform": "OSX" }
-        ]
-    }
-]
-```
-
-
-# Syntax Definition
-
-use `sublime-syntax` YAML file or `.tmLanguage ` file
-
-example:
-
-```yaml
-%YAML 1.2
----
-name: C
-file_extensions: [c, h]
-scope: source.c
-
-contexts:
-  main:
-    - match: \b(if|else|for|while)\b
-      scope: keyword.control.c
-```
+see <https://www.sublimetext.com/docs/3/minihtml.html>
 
 # Plugin
 
@@ -333,3 +194,8 @@ A `plugin` is some code that extends the editor.  A `package` is a container tha
 - fork channel file and edit it
 - push merge request
 - see <https://packagecontrol.io/docs>
+
+# Notes
+
+if a setting isn’t loading after creating a new setting file, restart Sublime
+

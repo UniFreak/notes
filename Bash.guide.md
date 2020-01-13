@@ -703,12 +703,30 @@ If you need complex behavior, use a function instead
 # Expansion (by order)
 
 - brace expansion
+
+```
+$ echo a{d,c,b}e
+ade ace abe
+```
+
 - tilde expansion
-- parameter
-- variable and arithmetic expansion and
-- command substitution (done in a left-to-right fashion)
+
+`~`             The value of `$HOME`
+`~/foo`         `$HOME/foo`
+`~fred/foo`     The subdirectory foo of the home directory of the user fred
+`~+/foo`        `$PWD/foo`
+`~-/foo`        `${OLDPWD-’~-’}/foo`
+`~N`            The string that would be displayed by `‘dirs +N’`
+`~+N`           The string that would be displayed by `‘dirs +N’`
+`~-N`           The string that would be displayed by `‘dirs -N’`
+
+- shell parameter expansion: see <#Parameter Expansion>
+- variable
+- arithmetic expansion `$(( expression ))`
+- command substitution (done in a left-to-right fashion) `$(cmd)`
+- process substitution `<(list)` `>(list)`
 - word splitting
-- pathname expansion
+- filename expansion
 
 # Debug
 - `set -o xtrace`

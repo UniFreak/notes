@@ -6,3 +6,6 @@
     3. how they are connected
 3. dive into submodle or pick your interest point and jump around
 4. make detailed comments
+
+pick an entrance
+pick an puzzler job

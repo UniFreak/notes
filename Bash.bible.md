@@ -333,7 +333,7 @@ FD 是一个非负整数, 每个进程最多有**9**个FD, Bash 保留了前三�
 
 重定向输出到 FD 时, 必须在 FD 数字前加 $
 临时: `echo "error message" >&2`
-永久: `exec 2> errfile`, `execc 1> outfile`
+永久: `exec 2> errfile`, `exec 1> outfile`
 
 重定向输入: `exec 0< infile`
 
@@ -432,3 +432,304 @@ echo ${result[*]}
 ```
 
 可以把函数定义到文件中, 通过 `source` 或 `.` 命令引入, 以便重用功能
+
+# Snippets
+
+- 根据日期和配置文件归档备份
+
+Lesson:
+用户变量用的**大写**
+告知详细信息, 出错, 进程, 文件行号等等...
+用 echo 输出空行分割信息
+通过 `$list="$list $new_item"` 加入列表
+最后 `exit`
+
+
+```sh
+DATE=$(date +%y%m%d)
+FILE=archive$DATE.tar.gz
+# 配置文件每行为要归档的文件路径
+CONFIG_FILE=/archive/Files_To_Backup
+DESTINATION=/archive/$FILE
+
+if [ -f $CONFIG_FILE ]; then
+    echo
+else
+    echo
+    echo "$CONFIG_FILE does not exists."
+    echo "Backup not completed due to missing Configuration File"
+    exit
+fi
+
+FILE_NO=1
+exec < $CONFIG_FILE
+read FILE_NAME
+while [ $? -eq 0 ]; do
+    if [ -f $FILE_NAME -o -d $FILE_NAME ]; then
+        FILE_LIST="$FILE_LIST $FILE_NAME"
+    else
+        echo
+        echo "$FILE_NAME, does not exist."
+        echo "It is listed on line $FILE_NO"
+        echo "Continuing..."
+        echo
+    fi
+    FILE_NO=$[$FILE_NO + 1]
+    read FILE_NAME
+done
+
+echo "Starting archive..."
+echo
+# c create, z zip, f file
+tar -czf $DESTINATION $FILE_LIST 2> /dev/null
+echo "Archive completed"
+echo "Resulting archive file is: $DESTINATION"
+echo
+
+exit
+```
+
+- 删除用户
+
+Lesson:
+通过在函数体外定义变量, 函数体内使用并 unset 变量使用函数
+通过函数让脚本语义更明确, 更清爽
+英语语法也很重要
+注释风格: 块儿, End of
+对不同输入的兼容, 如 Yes|yES
+重要操作多次询问, 多次确认
+
+```sh
+#!/bin/bash
+# Delete_User - Automates the 4 steps to remove an account
+#
+###################################
+# Define Functions
+###################################
+function get_answer {
+    unset ANSWER
+    ASK_COUNT=0
+
+    while [ -z "$ANSWER" ]; do
+        ASK_COUNT=$[ $ASK_COUNT + 1 ]
+        case $ASK_COUNT in
+            2)
+                echo
+                echo "Please answer the question."
+                echo
+                ;;
+            3)
+                echo
+                echo "One last try...please answer the question."
+                echo
+                ;;
+            4)
+                echo
+                echo "Since you refuse to answer the question..."
+                echo "exiting program."
+                echo
+                exit
+                ;;
+        esac
+
+        echo
+
+        if [ -n "$LINE2" ]; then
+            echo $LINE1
+            echo -e $LINE2" \c"
+        else
+            echo -e $LINE1" \c"
+        fi
+    done
+
+    unset LINE1
+    unset LINE2
+} # End of get_answer function
+
+function process_answer {
+    case $ANSWER in
+        y|Y|YES|Yes|yEs|yeS|YEs|yES)
+            ;;
+        *)
+            echo
+            echo $EXIT_LINE1
+            echo $EXIT_LINE2
+            echo
+            exit
+            ;;
+    esac
+
+    unset EXIT_LINE1
+    unset EXIT_LINE2
+} # Enf of process_answer function
+
+################# Main  Script ######################
+echo "Step #1 - Determine User Account name to Delete"
+echo
+LINE1="Please enter the username of the user "
+LINE2="account you wish to delete from system:"
+get_answer
+USER_ACCOUNT=$ANSWER
+
+LINE1="Is $USER_ACCOUNT the user account "
+LINE2="you wish to delete from the system? [y/n]"
+get_answer
+
+EXIT_LINE1="Because the account, $USER_ACCOUNT, is not "
+EXIT_LINE2="the one you wish to delete, we are leaving the script..."
+process_answer
+
+USER_ACCOUNT_RECORD=$(cat /etc/passwd | grep -w $USER_ACCOUNT)
+if [ $? -q 1 ]; then
+    echo
+    echo "Account, $USER_ACCOUNT, not found. "
+    echo "Leaving the script..."
+    echo
+    exit
+fi
+
+echo
+echo "I foun this record:"
+echo $USER_ACCOUNT_RECORD
+LINE1="Is this the correct User Account? [y/n]"
+get_answer
+
+EXIT_LINE1="Because the account, $USER_ACCOUNT, is not "
+EXIT_LINE2="the one you wish to delete, we are leaving the script..."
+process_answer
+
+echo
+echo "Step #2 - Find process on system belonging to user account"
+echo
+
+ps -u $USER_ACCOUNT >/dev/null
+case $? in
+1)
+    echo "There are no processes for this account currently running."
+    echo
+    ;;
+0)
+    echo "$USER_ACCOUNT has the following processes running: "
+    echo
+    ps -u $USER_ACCOUNT
+
+    LINE1="Would you like me to kill the process(es)? [y/n]"
+    get_answer
+    case $ANSWER in
+    y|Y|YES|yes|Yes|yEs|yeS|YEs|yES)
+        echo
+        echo "Killing off process(es)..."
+        COMMAND_1="ps -u $USER_ACCOUNT --no-heading"
+        COMMAND_3="xargs -d \\n /user/bin/sudo /bin/kill -9"
+        $COMMAND_1 | gawk '{print $1}' | $COMMAND_3
+        echo
+        echo "Process(es) killed."
+        ;;
+    *)
+        echo
+        echo "Will not kill the process(es)"
+        echo
+        ;;
+    esac
+esac
+
+echo
+echo "Step #3 - Find files on system belonging to user account"
+echo
+echo "Creating a report of all files owned by $USER_ACCOUNT."
+echo
+echo "It is recommended that you backup/archive these files,"
+echo "and then do one of two things:"
+echo "  1) Delete the files"
+echo "  2) Change the files' ownership to a current user account."
+echo
+echo "Please wait. This may take a while..."
+
+REPORT_DATE=$(date +%y%m%d)
+REPORT_FILE=$USER_ACCOUNT"_Files_"$REPORT_DATE".rpt"
+find / -user $USER_ACCOUNT > $REPORT_FILE 2>/dev/null
+echo
+echo "Report is complete."
+echo "Name of report:   $REPORT_FILE"
+echo "Location of report: $(pwd)"
+echo
+
+echo
+echo "Step #4 - Remove user account"
+echo
+
+LINE1="Remove $USER_ACCOUNT's account from system? [y/n]"
+get_answer
+EXIT_LINE1="Since you do not wish to remove the user account,"
+EXIT_LINE2="$USER_ACCOUNT at this time, exiting the script..."
+process_answer
+
+userdel $USER_ACCOUNT
+echo
+echo "User account, $USER_ACCOUNT, has been removed"
+echo
+
+exit
+```
+
+- 报告十名大容量目录, 生成报告文件
+
+Lesson:
+`exec <` 读取配置文件
+`exec >` 生成运行报告
+管道连接风格: `|` 放到最后, 然后另起一行
+
+```sh
+CHECK_DIRECTORIES=" /var/log /home"
+DATE=$(date '+%m%d%y')
+
+exec > disk_space_$DATE.rpt
+
+echo "Top Ten Disk Space Usage"
+echo "for $CHECK_DIRECTORIES Directories"
+
+for DIR_CHECK in $CHECK_DIRECTORIES; do
+    echo ""
+    echo "The $DIR_CHECK Directory:"
+    du -S $DIR_CHECK 2>/dev/null |
+    sort -rn |
+    sed '{11,$D; =}' |
+    sed 'N; s/\n/ /' |
+    gawk '{print $1 ":" "\t" $2 "\t" $3 "\n"}'
+done
+
+exit
+```
+
+- 从网站抓取天气信息
+
+Lesson:
+使用 `$(which cmd)` 查询程序是否可用
+使用 tmpfile
+
+```sh
+URL="http://weather.yahoo.com/united-states/illinois/chicago-2379574/"
+LYNX=$(which lynx)
+TMPFILE=$(mktemp tmpXXXXXX)
+$LYNX -dump $URL > $TMPFILE
+conditions=$(cat $TMPFILE | sed -n '/IL, United States/{ n; p }')
+temp=$(cat $TMPFILE | sed -n -f '/Feels Like/{p}' | awk '{print $4}')
+rm -f $TMPFILE
+echo "Current conditions: $conditions"
+echo The current temp outside is: $temp
+```
+
+- 编造借口
+
+```sh
+# textbelt not availabel anymore
+phone="15369997084"
+SMSrelay_url=http://textbelt.com/text
+text_message="System Code Red"
+
+curl -s $SMSrelay_url -d \
+number=$phone \
+-d "message=$text_message" > /dev/null
+
+exit
+```

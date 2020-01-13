@@ -217,6 +217,8 @@ the value is actually a reference value to some object
 
 *args and **kwargs @?
 
+# Lambda
+
 # Errors & Excpetions
 - syntax error: happen at the token processing
 - exception: error detected during execution, all derived from `BaseException` class

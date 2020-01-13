@@ -34,8 +34,8 @@ print "world"
 ## 内建变量
 
 - 字段和记录分隔符
-`FIELDWIDTHS` 又空格分割的一列数字, 定义了没个数据字段的宽度. **一旦设置之后就不能变**
-`FS` 输入字段分隔符. 默认空白符)
+`FIELDWIDTHS` 又空格分割的一列数字, 定义了每个数据字段的宽度. **一旦设置之后就不能变**
+`FS` 输入字段分隔符. 默认空白符
 `RS` 输入记录分隔符. 默认换行, 即每一行作为一个处理单元
 `OFS` 输出字段分隔符. 默认空格
 `ORS` 输出记录分隔符. 默认换行
@@ -89,7 +89,7 @@ gawk 自动给一行中的每个**数据字段**分配一个变量
 将正则限定在记录中**特定数据字段**
 
 `$n ~ /regex/` **过滤出**第 n 个字段匹配 regex 的所有记录
-`$n !~ /regex/` **过滤掉**第n 个字段匹配 regex 的所有记录
+`$n !~ /regex/` **过滤掉**第 n 个字段匹配 regex 的所有记录
 
 ## 数学表达式
 
@@ -235,3 +235,28 @@ function name([vars]) {
 可以将函数集中定义在一个文件中, 然后以 `-f` 选项引入: `gawk -f funclib -f script file`
 
 # Snippets
+
+假设文件 `scores.txt` 保存了两个队的三场比分
+
+```txt
+Rich Blum,team1,100,115,95
+Barbara Blum,team1,110,115,110
+Christine Bresnahan,team2,120,115,118
+Time Bresnahan,team2,125,112,116
+```
+
+以下脚本将计算两队总分和平均分
+
+```sh
+for team in $(gawk -F, '{print $2}' scores.txt | uniq); do
+    gawk -v team=$team 'BEGIN{FS=","; total=0} {
+        if ($2==team) {
+            total += $3 + $4 + $5;
+        }
+    }
+    END {
+        avg = total / 6;
+        print "Total for", team, "is", total, ", the average is", avg
+    }' scores.txt
+done
+```

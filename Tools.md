@@ -1,3 +1,10 @@
+# Forum framework
+- https://www.discourse.org/
+
+# JS interpreters
+- Mozilla's SpiderMonkey
+- Google's V8
+
 # UML
 - mermaid
 - plantUML
