@@ -1,4 +1,5 @@
-=============== Best Practice ===============
+# Best Practice
+
 Abstraction principle | DRY | Once and only once | Rule of three
 YAGNI
 K-I-S-S principle
@@ -44,7 +45,8 @@ SOLID
         - The most common, and most frequently used solution to invert the dependency is to introduce a
           more abstract module in our design
 
-====================== Design Pattern =======================
+# Design Pattern
+
 Design Principles
     Open Close Principle
     Dependency Inversion Principle
@@ -80,7 +82,9 @@ Structural Patterns
     Decorator
     Flyweight
     Prox
-=============== Bad Practice ===============
+
+# Bad Practice
+
 Code smells:
     - The Bloaters
         - Long Method

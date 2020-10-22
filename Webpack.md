@@ -8,7 +8,6 @@
 bundlers: compile small pieces of code into something larger and more complex that can run in a web browser
 
 webpack: static module bundler for modern JavaScript applications, run on node.js
-
 webpack supports modules written in a variety of languages and preprocessors, via loaders
 
 loaders: describe to webpack how to process non-JavaScript modules and include these dependencies into your bundles
@@ -27,7 +26,6 @@ In a typical application or site built with webpack, there are three main types 
 - A webpack **runtime** and **manifest** that conducts the interaction of all modules
 
 HMR: Hot Module Replacement
-
 allows all kinds of modules to be updated at runtime without the need for a full refresh
 
 # Why: to use js on the web

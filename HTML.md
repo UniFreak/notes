@@ -1,4 +1,5 @@
 # Tags:
+
 - (不包含不被推荐使用的标签)
 - !--
 - !DOCTYPE
@@ -19,6 +20,7 @@
 - embed object param
 
 # Sample:
+
 ```html
 <table>
     <thead>
@@ -52,6 +54,7 @@
 - <form enctype="multipart/form-data"> 文件上传时, 必须设置该属性值
 
 # Form
+
 - POST: 变量不会显示在URL中，不可以保存书签, 相对安全, 没有长度限制
 - GET: 会显示在URL中，可以保存书签, 相对不安全, 100个字符限制
 - 上传文件多选: 使用数组形式的 name 和 multiple 两个属性
@@ -62,6 +65,111 @@
     <input type="submit" value="upload" />
 </form>
 ```
+
+# BOM
+
+BOM 描述了与浏览器进行交互的方法和接口
+
+window.
+- frames[]
+- innerHeight
+- innerWidth
+- outerheight
+- outerwidth
+- screenLeft/screenX
+- screenTop/screenY
+- closed
+- name
+- defaultStatus
+- document
+- history
+- location
+- navigator
+- opener
+- screen
+- self
+- status
+- top
+- alert()
+- confirm()
+- prompt()
+- open()
+- close()
+- moveTo()
+- moveBy()
+- resizeTo()
+- resizeBy()
+- scrollBy()
+- scrollTo()
+- getComputedStyle()
+- blur()
+- setInterval()
+- setTimeout()
+- clearInterval()
+- clearTimeout()
+- focus()
+- print()
+
+navigator.
+
+来自 navigator 对象的信息具有误导性，不应该被用于检测浏览器版
+navigator 数据可被浏览器使用者更改
+浏览器无法报告晚于浏览器发布的新操作系统
+
+- plugins[]
+-
+- appCodeName
+- appMinorVersion
+- appName
+- appVersion
+- browserLanguage
+- cookieEnabled
+- cpuClass
+- onLine
+- platform
+- systemLanguage
+- userAgent
+- userLanguage
+- availWidth
+- avilHeight
+-
+- javaEnabled()
+- taintEnabled()
+
+screen.
+- availHeight
+- availWidth
+- height
+- width
+- bufferDepth
+- colorDepth
+- pixelDepth
+- deviceXDPI
+- deviceYDPI
+- logicalXDPI
+- logicalYDPI
+- fontSmoothingEnabled
+- updatInterval
+
+history
+- length
+- back()
+- forward()
+- go()
+
+location
+- hash
+- host
+- hostname
+- pathname
+- port
+- protocol
+- href
+- search
+
+- assign()            加载新文档
+- reload()
+- replace()
 
 # Best practice
 
@@ -76,6 +184,7 @@
 - Give user smart warning
 
 ## Form validation
+
 - Never omit server-side validation
 - ways clearly mark required fields
 - on’t forget to inform users when the form was completed successfully

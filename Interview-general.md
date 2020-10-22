@@ -2,6 +2,7 @@
 - php.*.md
 - sandbox/algo
 - mysql.*.md
+- job.*.md
 
 # 简历
 

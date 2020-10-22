@@ -29,10 +29,31 @@ Shell 脚本的关键在于输入多个命令并处理每个命令的结果, 用
 # Get Help
 
 be familiar with
-- `man`
+- `man`: 用于访问 **手册页面**
+
+通过关键字搜索: `man -k <keyword>`
+
+指定内容区域: `man <section_no> <topic>`
+
+内容区域含义如下
+
+|区域号|内容|
+|------|------|
+|1|可执行程序或 shell 命令 (默认)|
+|2|系统调用|
+|3|库调用|
+|4|特殊文件|
+|5|文件格式与约定|
+|6|游戏|
+|7|概览, 约定及杂项|
+|8|超级用户和系统管理员命令|
+|9|内核例程|
+
+- `info`: 访问 **info 页面**
 - `aprops` = `man -k`
 - `whatis` = `man -f`
 - `help`
+- `<command> --help`
 - `type`: `type -a bash` print all bash executable in PATH
 
 to find out built-in commands: `man bash`
@@ -56,8 +77,6 @@ The amount of whitespace between arguments does not matter
 Quotes (`"` or `'`) group everything inside them into a single argument
 
 You should be very well aware of how expansion works see [Expansion](#scripts)
-
-
 
 # Script
 

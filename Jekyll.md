@@ -391,3 +391,6 @@ To create gem-based theme:
 
 To replace layouts or includes in your theme, make a copy in your _layouts or _includes directory of the specific file you wish to modify, or create the file from scratch giving it the same name as the file you wish to override. You can use `bundle show <themeName>` to show theme files
 
+# Debug
+
+`{{ variable | inspect }}`

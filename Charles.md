@@ -81,3 +81,11 @@
 - Use repeat/repeat advanced tool to easily repeat a request. The Compose tool builds on the Repeat tool by allowing you to change the contents of the request before repeating it
 
 - Charles can validate the recorded responses by sending them to the W3C HTML validator, W3C CSS validator and W3C Feed validator.
+
+# POST
+
+record
+- Desktop
+- Mobile
+- SSL
+

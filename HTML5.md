@@ -1,20 +1,23 @@
 when talking about html5, here we mean html5 new tags, css3 properties and new javascript APIs, basically, cool new web stuff
 
-GUIDELINE:
-    avoid id as possible as you can
-    use div only if there is not better suitable tag available
-    section or div?
-        the contents is thematically related(typically have a header)? --> use section
-        you wanna wrap is for targetting style? --> use div
-    carefully create your document outline using sectioning tag and heading tag
-SIMPLIFIED:
-    simplified many tag's attributes, like:
-        <!DOCTYPE html>
-        <style></style>
-    no ending / required for self-closing tag
-    attribute's value does *not* required to be quoted
-    most closing tag, or even wrapping tag like <head> is not required, modern browser is smart enough to add it by itself(but I don't think )
-DOC STRUCTURE
+# GUIDELINE:
+avoid id as possible as you can
+use div only if there is not better suitable tag available
+section or div?
+    the contents is thematically related(typically have a header)? --> use section
+    you wanna wrap is for targetting style? --> use div
+carefully create your document outline using sectioning tag and heading tag
+
+# SIMPLIFIED:
+simplified many tag's attributes, like:
+    <!DOCTYPE html>
+    <style></style>
+no ending / required for self-closing tag
+attribute's value does *not* required to be quoted
+most closing tag, or even wrapping tag like <head> is not required, modern browser is smart enough to add it by itself(but I don't think )
+
+# DOC STRUCTURE
+
     <!doctype html>
     <html>
     <head lang="en">
@@ -24,84 +27,96 @@ DOC STRUCTURE
     <body>
     </body>
     </html>
-CONTENT MODEL
-    Metadata content
-        base command link meta noscript script style title
-    Flow content
-        a abbr address article aside audio b bdi bdo blockquote br button canvas cite code command
-        datalist del details dfn div dl em embed fieldset figure footer form h1 h2 h3 h4 h5 h6 header
-        hr i iframe img input ins kbd keygen label map mark math menu meter nav noscript object
-        ol output p pre progress q ruby s samp script section select small span strong sub sup svg
-        table textarea time u ul var video wbr text
-        area(if it is a descendant of a map element)
-        style(if the scoped attribute is present)
-    Sectioning content
-        article aside nav section
-    Heading content
-        h1 h2 h3 h4 h5 h6
-    Phrasing content
-        abbr audio b bdi bdo br button canvas cite code command datalist dfn em embed i iframe img
-        input kbd keygen label mark math meter noscript object output progress q ruby s samp script
-        select small span strong sub sup svg textarea time u var video wbr text
-        a del ins map(if it contain only phrasing content)
-    Embedded content
-        audio canvas embed iframe img math object svg video
-    Interactive content
-        a button details embed iframe keygen label select textarea
-        audio video(if the control attributes is present)
-        img object(if the usemap attribute is present)
-        input(if the type attribute is not in the hidden state)
-        menu(if the type attribute is in the toolbar state)
-        area(if it is a descendant of a map element)
-SECTIONING ROOT: have their own outline, but do not contribute to the outlines of their ancestors
-    blockquote body fieldset figure td
-HTML5 Shim
+
+# CONTENT MODEL
+Metadata content
+    base command link meta noscript script style title
+Flow content
+    a abbr address article aside audio b bdi bdo blockquote br button canvas cite code command
+    datalist del details dfn div dl em embed fieldset figure footer form h1 h2 h3 h4 h5 h6 header
+    hr i iframe img input ins kbd keygen label map mark math menu meter nav noscript object
+    ol output p pre progress q ruby s samp script section select small span strong sub sup svg
+    table textarea time u ul var video wbr text
+    area(if it is a descendant of a map element)
+    style(if the scoped attribute is present)
+Sectioning content
+    article aside nav section
+Heading content
+    h1 h2 h3 h4 h5 h6
+Phrasing content
+    abbr audio b bdi bdo br button canvas cite code command datalist dfn em embed i iframe img
+    input kbd keygen label mark math meter noscript object output progress q ruby s samp script
+    select small span strong sub sup svg textarea time u var video wbr text
+    a del ins map(if it contain only phrasing content)
+Embedded content
+    audio canvas embed iframe img math object svg video
+Interactive content
+    a button details embed iframe keygen label select textarea
+    audio video(if the control attributes is present)
+    img object(if the usemap attribute is present)
+    input(if the type attribute is not in the hidden state)
+    menu(if the type attribute is in the toolbar state)
+    area(if it is a descendant of a map element)
+
+# SECTIONING ROOT
+
+have their own outline, but do not contribute to the outlines of their ancestors
+blockquote body fieldset figure td
+
+# HTML5 Shim
+
     <<!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-COMPATIBILITY
-    FEATURE DETECTION
-        manually:
-            <script>
-                if (!!'placeholder' in document.createElement('input')) {
-                    // support placeholder attribute in input tag
-                }
+# COMPATIBILITY
+FEATURE DETECTION
+    manually:
 
-                var i = document.createElement('input');
-                i.setAttribute('type', 'email');
-                if (i.type === 'email') {
-                    // support email type input
-                }
+        <script>
+            if (!!'placeholder' in document.createElement('input')) {
+                // support placeholder attribute in input tag
+            }
 
-                if (!!document.createElement('canvas').getContext) {
-                    // support canvas
-                }
+            var i = document.createElement('input');
+            i.setAttribute('type', 'email');
+            if (i.type === 'email') {
+                // support email type input
+            }
 
-                if (!!document.createElement('video').canPlayType) {
-                    // support video
-                }
+            if (!!document.createElement('canvas').getContext) {
+                // support canvas
+            }
 
-                if (!!document.createElement('audio').canPlayType) {
-                    // support video
-                }
+            if (!!document.createElement('video').canPlayType) {
+                // support video
+            }
 
-                try { // put in try block to avoid err
-                    if ('localStorage' in window && window.localStorage !== null) {
-                        // support local storage
-                    }
-                } catch (e) {
-                    // don't support local storage
-                }
+            if (!!document.createElement('audio').canPlayType) {
+                // support video
+            }
 
-                if (!!navigator.geolocation) {
-                    // support geolocation
+            try { // put in try block to avoid err
+                if ('localStorage' in window && window.localStorage !== null) {
+                    // support local storage
                 }
-            </script>
-        use Modernizr: modernizr.com
-    POLYFILL
-        https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills
-        use modernizr-load to load script asynchronously
+            } catch (e) {
+                // don't support local storage
+            }
+
+            if (!!navigator.geolocation) {
+                // support geolocation
+            }
+        </script>
+
+    use Modernizr: modernizr.com
+
+# POLYFILL
+
+    https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-browser-Polyfills
+    use modernizr-load to load script asynchronously
+
+# API
 
 history
     .pushState()
@@ -111,7 +126,6 @@ localStorage
     .getItem()
     .removeItem()
     .clear()
-
     storage
 
 Audio/Video
@@ -120,7 +134,7 @@ Audio/Video
     load()              重新加载音频/视频元素
     play()              开始播放音频/视频
     pause()             暂停当前播放的音频/视频
-
+    ---
     audioTracks         返回表示可用音轨的 AudioTrackList 对象
     autoplay            设置或返回是否在加载完成后随即播放音频/视频
     buffered            返回表示音频/视频已缓冲部分的 TimeRanges 对象
@@ -150,7 +164,7 @@ Audio/Video
     textTracks          返回表示可用文本轨道的 TextTrackList 对象
     videoTracks         返回表示可用视频轨道的 VideoTrackList 对象
     volume              设置或返回音频/视频的音量
-
+    ---
     abort               当音频/视频的加载已放弃时
     canplay             当浏览器可以播放音频/视频时
     canplaythrough      当浏览器可在不因缓冲而停顿的情况下进行播放时
@@ -173,6 +187,7 @@ Audio/Video
     timeupdate          当目前的播放位置已更改时
     volumechange        当音量已更改时
     waiting             当视频由于需要缓冲下一帧而停止
+
 Canvas
     fillStyle               设置或返回用于填充绘画的颜色、渐变或模式
     strokeStyle             设置或返回用于笔触的颜色、渐变或模式
@@ -193,7 +208,7 @@ Canvas
     width                   返回 ImageData 对象的宽度
     height                  返回 ImageData 对象的高度
     data                    返回一个对象，其包含指定的 ImageData 对象的图像数据
-
+    ---
     createLinearGradient()  创建线性渐变（用在画布内容上）
     createPattern()         在指定的方向上重复指定的元素
     createRadialGradient()  创建放射状/环形的渐变（用在画布内容上）

@@ -50,4 +50,4 @@ shift-cmd-3         截屏
 shift-cmd-4         截图
 shift-cmd-5         录屏
 
-ctrl+cmd+space       emoji
+ctrl+cmd+space       emoji, 符号等

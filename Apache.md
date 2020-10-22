@@ -128,56 +128,72 @@ SetEnvIfNoCase Request_URI .(?:gif|jpe?g|png)$ no-gzip
 </IfModule>
 
 
-Apache
-    安装配置
-        加载 php 模块
-            httpd.conf : LoadModule php5_module "<php_path>/php5apache2.dll"
-        指定需要解析为 php 的文件后缀名
-            httpd.conf : AddType application/x-httpd-php .php .phtml
-        指定 php.ini 路径
-            httpd.conf : PHPIniDir "<php.ini_path>/php.ini "
-        添加 index.php 到目录索引中
-            <IfModule dir_module>
-                DirectoryIndex index.php index.html index.htm
-            </IfModule>
-    配置语法
-        #   注释
-        \   续行
-        使用正斜杠 (/) 分隔目录总是不会错的
-        指令不区分大小写
-        指令的参数区分大小写
-    常用全局指令
-        Alias               实际路径                    别名
-        ServerRoot          Apache目录
-        Listen              [地址:]端口 [协议]
-        LoadModule      模块名称        模块路径
-        User                用户名 | #-用户id
-        Group               用户组名
-        ServerAdmin     管理员邮箱地址
-        ServerName      服务器域名
-        DocumentRoot        网站文件路径
-        DirectoryIndex      目录默认访问页面(如 index.html)
-        ErrorLog            错误日志路径
-        CustomLog       访问日志路径
-        DefaulType          默认文档类型
-        AddType             要被解析成的应用类型      文件扩展名
-        Include             要包含的文件路径
-    常用容器(容器可以嵌套)
-        <IfDefine></IfDefine>
-        <IfModule></IfModule>
-        <IfVersion></IfVersion>
+# Apache
 
-        <Directory></Directory>
-        <DirectoryMatch></DirectoryMatch>
-        <Files></Files>
-        <FilesMatch></FilesMatch>
-        <Location></Location>
-        <LocationMatch></LocationMatch>
-        <VirtualHost></VirtualHost>
-    容器指令
-        Option Indexes          // 允许索引目录
-        Option FollowSymLinks   // 允许访问链接文件
-        Order Allow,Deny            // 先允许, 后拒绝
-        AllowOverride   all | none  // 允许 all | none 重写
-        Allow From all          // 允许所有访问
-        Deny From all               // 拒绝所有访问
+安装配置
+
+加载 php 模块
+
+    httpd.conf : LoadModule php5_module "<php_path>/php5apache2.dll"
+
+指定需要解析为 php 的文件后缀名
+
+    httpd.conf : AddType application/x-httpd-php .php .phtml
+
+指定 php.ini 路径
+
+    httpd.conf : PHPIniDir "<php.ini_path>/php.ini "
+
+添加 index.php 到目录索引中
+
+    <IfModule dir_module>
+        DirectoryIndex index.php index.html index.htm
+    </IfModule>
+
+配置语法
+
+    #   注释
+    \   续行
+    使用正斜杠 (/) 分隔目录总是不会错的
+    指令不区分大小写
+    指令的参数区分大小写
+
+常用全局指令
+
+    Alias               实际路径                    别名
+    ServerRoot          Apache目录
+    Listen              [地址:]端口 [协议]
+    LoadModule      模块名称        模块路径
+    User                用户名 | #-用户id
+    Group               用户组名
+    ServerAdmin     管理员邮箱地址
+    ServerName      服务器域名
+    DocumentRoot        网站文件路径
+    DirectoryIndex      目录默认访问页面(如 index.html)
+    ErrorLog            错误日志路径
+    CustomLog       访问日志路径
+    DefaulType          默认文档类型
+    AddType             要被解析成的应用类型      文件扩展名
+    Include             要包含的文件路径
+
+常用容器(容器可以嵌套)
+
+    <IfDefine></IfDefine>
+    <IfModule></IfModule>
+    <IfVersion></IfVersion>
+    <Directory></Directory>
+    <DirectoryMatch></DirectoryMatch>
+    <Files></Files>
+    <FilesMatch></FilesMatch>
+    <Location></Location>
+    <LocationMatch></LocationMatch>
+    <VirtualHost></VirtualHost>
+
+容器指令
+
+    Option Indexes          // 允许索引目录
+    Option FollowSymLinks   // 允许访问链接文件
+    Order Allow,Deny            // 先允许, 后拒绝
+    AllowOverride   all | none  // 允许 all | none 重写
+    Allow From all          // 允许所有访问
+    Deny From all               // 拒绝所有访问

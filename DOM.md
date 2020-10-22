@@ -4,8 +4,8 @@
 
 文本总是存储在文本节点中
 
+# XML DOM
 
-=============== XML DOM ===============
 XML DOM是用于获取、更改、添加或删除XML元素的标准
 
 创建XML文档对象
@@ -216,7 +216,8 @@ HTMLElement (继承 Element, 参见 HTML DOM >> Element)
 HTMLCollection (继承NodeList)
 	namedItem()
 
-=============== HTML DOM ===============
+# HTML DOM
+
 HTML DOM是关于如何获取、修改、添加或删除HTML元素的标准
 
 Document (HTML文档) document.

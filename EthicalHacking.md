@@ -1,4 +1,5 @@
-==================== System preparation ====================
+# System preparation
+
 install vBox
 install kali in vBox
     set up encrypted LVM
@@ -61,7 +62,8 @@ Tor setup
 check whether system has rootkit
     `chkrootkit`
 
-==================== workflow ====================
+# workflow
+
 Checklist
     gather information about the client organization
         - foundation
@@ -118,7 +120,8 @@ penetration workflow
         -> social engineering
         -> wireless test
 
-==================== information gathering ====================
+# information gathering
+
 Workflow:
     WEB
         Website visite --> Google Dorks --> Web Tools

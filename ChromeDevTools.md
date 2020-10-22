@@ -1,8 +1,8 @@
-==================== Shortcuts ====================
+# Shortcuts
 ctrl+shift+F            search
 ctrl+p                  switch sources file
 
-=============== Source ===============
+# Source
 concept
 	step in: if you are interested in this function and whatever functions this functions calls
 	step over: if you are only interested in this function, but none external functions
@@ -10,7 +10,7 @@ concept
 
 ctrl+shift+o: jump between function definitions
 
-=============== Network ===============
+# Network
 concept
 	time: total duration, from the start of the request to the receipt of the final byte in the response
 	latency(time to first byte|TTFB): to load the first byte in the response
@@ -31,7 +31,7 @@ available filter type(filter format: <filter type>:<value>)
 	set-cookie-domain
 	status-code
 
-=============== Timeline ===============
+# Timeline
 concept
 	three section: overview section at the top, a records view, and a toolbar
 	four basic records groups: Loading, Scripting, Rendering, and Painting
@@ -69,17 +69,18 @@ you can trace a script by using console.trace(), and `watch Expression` in the r
 `ctrl+enter` in script to run it
 in Timeline, `ctrl+e` to start/stop a recording
 
-=============== Profile ===============
-=============== Audit ===============
-=============== Rendering ===============
-=============== Emulation ===============
-=============== Search ===============
+# Profile
+
+# Audit
+
+# Rendering
+
+# Emulation
+
+# Search
 ctrl+shift+f to open
 
-
-
-
-=============== Console API ===============
+# Console API
 console.log()
 console.dir()
 console.info()
@@ -95,7 +96,7 @@ console.table()
 debug()
 monitor()
 
-=============== Command API ===============
+# Command API
 $0
 $()
 $_

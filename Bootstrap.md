@@ -1,4 +1,5 @@
-=============== Accessibility Rules ===============
+# Accessibility Rules
+
 - Be sure to use a <nav> element or, if using a more generic element such as a <div>, add a role="navigation" to every navbar or tab or pill
 - Always add label
 - Use `role`
@@ -6,7 +7,8 @@
 - Use `sr-only`
 
 
-=============== BASE CSS ===============
+# BASE CSS
+
 Breakpoint
 	xs: < 768px(default)
 	sm: < 992px
@@ -75,9 +77,9 @@ Form
 Button
 	- While button classes can be used on <a> and <button> elements, only <button> elements are supported within our nav and navbar components
 	- If the <a> elements are used to act as buttons – triggering in-page functionality, rather than navigating to another document or section within the current page – they should also be given an appropriate role="button"
-	- highly recommend using the <button> element whenever possible 
+	- highly recommend using the <button> element whenever possible
 
-	.btn 
+	.btn
 	.btn-default .btn-primary .btn-success .btn-info .btn-warning .btn-danger .btn-link
 	.btn-lg .btn-sm btn-xs
 	.btn-block
@@ -91,21 +93,22 @@ Helper
 
 	.text-muted .text-primary .text-success .text-info .text-warning .text-danger
 	.bg-primary .bg-success .bg-info .bg-warning .bg-danger
-	.close .caret 
+	.close .caret
 	.pull-left .pull-right
 	.center-block
 	.clearfix
 	.show .hidden .invisible
 	.sr-only .sr-only-focusable
 	.text-hide
-Responsive utilities	
+Responsive utilities
 	.visible-[xs|sm|md|lg]-[block|inline|inline-block]
 	.hidden-[xs|sm|md|lg]-[block|inline|inline-block]
 	.visible-print-[block|inline|inline-block]
 	.hidden-print
 
 
-=============== Components ===============
+# Components
+
 Glyphicons
 	- Icon classes cannot be directly combined with other components. They should not be used along with other classes on the same element. Instead, add a nested <span> and apply the icon classes to the <span>
 	- Icon classes should only be used on elements that contain no text content and have no child elements
@@ -368,7 +371,8 @@ Well
 	.well
 	.well-lg .well-sm
 
-=============== Javascript ===============
+# Javascript
+
 - You can use all Bootstrap plugins purely through the markup API without writing a single line of JavaScript. This is Bootstrap's first-class API and should be your first consideration when using a plugin
 - we also provide the ability to disable the data attribute API by unbinding all events on the document namespaced with data-api. This looks like this:
 	$(document).off('.data-api')
@@ -506,7 +510,7 @@ Tooltip.js
 			hiden.bs.tooltip
 Popover.js
 *	- The Tooltip and Popover data-apis are opt-in, meaning you must initialize them yourself
-	- When using popovers on elements within a .btn-group or an .input-group, you'll have to specify the option container: 'body' (documented below) to avoid unwanted side effects 
+	- When using popovers on elements within a .btn-group or an .input-group, you'll have to specify the option container: 'body' (documented below) to avoid unwanted side effects
 	- Don't try to show popovers on hidden elements
 	- Popovers on disabled elements require wrapper elements
 

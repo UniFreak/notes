@@ -11,7 +11,18 @@ is array(array()) empty? NO, it contain a empty array, so it's not empty!
 
 is `!emtpy($var)` enough or have to do `isset($var) && !empty($var)`? enough
 
+is_null(0): false
+0 == null: true
+
 # Traps
+
+## Bitwise operation
+
+Bit shifting in PHP is arithmetic
+
+If both operands for the &, |, ^ and ~ operators are strings, then the operation will be performed on the ASCII values of the characters that make up the strings and the result will be a string. In all other cases, both operands will be converted to integers and the result will be an integer
+
+Both operands and the result for the << and >> operators are always treated as integers
 
 ## JSON 数据不能被解析
 看字符串并没有 JSON 语法错误, 但是用 `json_decode()` 解析出来是 NULL
@@ -23,6 +34,17 @@ is `!emtpy($var)` enough or have to do `isset($var) && !empty($var)`? enough
 
 see: http://www.cnblogs.com/zqphp/p/4885473.html
 
+## Type
+
+`(bool) "false"` or `boolval("false")` or `settype("false", 'bool')`: true
+
+`is_int('42')` false
+`is_numeric('42')` true
+
+## File
+
+`feof()` will read in a null value at last
+`fgets()`  will implicitly move file pointer next line
 
 # Misc
 

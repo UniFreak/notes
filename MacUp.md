@@ -1,16 +1,30 @@
-# quirks
+# Quirks
 - install old php & package(php56, php56-xdebug...): https://stackoverflow.com/questions/49649693/install-php-extension-for-php-5-6-on-osx-with-deprecated-homebrew-php
 
-# common utils
+# Apps
+
+## Daily
+
 - QQ
 - Chrome
 - XChat
 - Xunlei
 - PDF reader
 - PS
-- typora
 - office for Mac
+
+## Efficency
+
+- typora
 - MollyGuard
+- Keyboard Meastro
+- Launchbar
+
+## Cli Env
+
+- Starship
+- z
+- tldr
 
 # dev utils
 - @see: http://www.josebrowne.com/open/from-windows-to-mac-dev

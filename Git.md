@@ -317,6 +317,10 @@ ignore mode changes?
     3. delete the old remote branch: ` git push --delete <remoteName> <branchName>`
     4. reset the upstream branch: `git push origin -u <newName>`
 
+- Git doesn't display utf8 characters correctly
+
+`git config --global core.quotepath off`
+
 # Alias config
 
 # Coodie

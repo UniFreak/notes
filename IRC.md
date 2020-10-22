@@ -1,4 +1,4 @@
-=============== COMMANDS ===============
+# COMMANDS
 server
 links
 whowas
@@ -112,7 +112,7 @@ RAW
 TIME
 TOPIC
 
-=============== FLAG ===============
+# FLAG
 +v 		Enables use of the voice/devoice commands.
 +V 		Enables automatic voice.
 +o 		Enables use of the op/deop commands.
@@ -129,7 +129,7 @@ TOPIC
 +b 		Enables automatic kickban.
 
 
-=============== MODE ===============
+# MODE
 CHANNEL
 +n 		Disallows external messages.
 +t 		Only op/hops can set the topic.
@@ -153,7 +153,7 @@ USER
 +h 		User is a half-op on the current channel
 +v 		User has voice on the current channel
 
-=============== OTHER ===============
+# OTHER
 SMILEY
 	:)	:( 	;) 	:P 	:s 	:D 	<3 :O xD :]
 	O_O
@@ -197,7 +197,7 @@ lel			(always in lower case)laugh even louder, or show bored
 ime         In My Experience
 mofo        mother fucker
 
-=============== Server&Channel ===============
+# Server&Channel
 irc.evilzone.org
 	#evilzone
 irc.freenode.net
@@ -232,6 +232,6 @@ irc.mozilla.org
 	##thunderbird
 
 
-============== Snippet ===============
+# Snippet
 see advanced channel list help
 	/msg alis help list

@@ -1,4 +1,4 @@
-# Why use CLI 
+# Why use CLI
 - no need to learn another language such as Perl, Bash or Awk
 - running scheduled (CRON) tasks written in php
 - making GUI applications with PHP and GTK
@@ -18,7 +18,7 @@
 - * PHP CLI does not change the current directory to the directory of the executed script. The current directory for the script would be the directory where your type PHP CLI command
 - There are number of USEFUL options available for PHP CLI. Which will allow you to get some valuable information about you php setup, your php script or run it in different modes
 
-# Usage & Option
+# Option
 Usage: php [options] [-f] <file> [--] [args...]
              php [options] -r <code> [--] [args...]
              php [options] [-B <begin_code>] -R <code> [-E <end_code>] [--] [args...]
@@ -55,3 +55,43 @@ Usage: php [options] [-f] <file> [--] [args...]
     --rf <name> Show information about function <name>.
     --rc <name> Show information about class <name>.
     --re <name> Show information about extension <name>.
+    --rz <name> Show information about Zend extension <name>.
+    --ri <name> Show configuration for extension <name>.
+
+Cli only:
+
+    -b  --bindpath Bind Path for external FASTCGI Server mode
+    -C  --no-chdir Do not chdir to the script's directory
+    -q  --no-header Quiet-mode. Suppress HTTP header output
+    -T  --timing Measure execution time of script repeated count times
+
+# Usage
+
+Run certain file:
+- `php -f script.php -- args` or `php script.php args`
+- `php -r 'echo "hi";'`
+- use pipes: `some_app | php`
+
+Retrive arguments via `$argv`. `$argv[0]` will always be script name
+But if run with `-r`, it will be a dash `-`
+`$argc` equals `$argv` length
+
+Use the argument list separator `--` if you want to pass args start with `-`
+You can use shebang and `chmod +x`, in this case you dont have
+to worry about args start with `-`
+
+# I/O Stream Constant
+
+`STDIN`
+`STDOUT`
+`STDERR`
+
+```php
+$stdin = fopen('php://stdin', 'r');
+
+$line = trim(fgets(STDIN)); // reads one line from STDIN
+fscanf(STDIN, "%d\n", $number); // reads number from STDIN
+
+$stdout = fopen('php://stdout', 'w');
+$stderr = fopen('php://stderr', 'w');
+```
