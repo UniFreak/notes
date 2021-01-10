@@ -9,3 +9,12 @@ OS X 10.11: El Capitan (Gala)
 macOS 10.12: Sierra (Fuji)
 macOS 10.13: High Sierra (Lobo)
 macOS 10.14: Mojave (Liberty)
+
+# Dev Life
+
+Things break after system upgrade:
+
+```sh
+sudo rm -rf /Library/Developer/CommandLineTools
+sudo xcode-select --install
+```

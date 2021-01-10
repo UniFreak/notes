@@ -127,7 +127,7 @@ __4xx__: Client error
 |413 |Request Entity Too Large        |
 |414 |Request-url Too Long            |
 |415 |Unsupported Media Type          |
-|416 |                                |
+|416 |Range Not Satisfiable           |
 |417 |Expectation Failed              |
 
 __5xx__: Server error

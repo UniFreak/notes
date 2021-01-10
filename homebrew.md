@@ -134,6 +134,7 @@ git remote set-url origin https://github.com/Homebrew/homebrew-core.git
 
 # Tricks
 - switch between php56 and php@7.1
+- find prefix: `brew --prefix libiconv`
 
 # Fixs
 

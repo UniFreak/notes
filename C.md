@@ -1,3 +1,23 @@
+# See
+
+- <C 语言程序设计 现代方法 2e>
+
+# Idiom
+
+防止多次包含头文件 `p.253`
+
+```c
+#ifdef BOOLEAN_H
+#define BOOLEAN_H
+
+...
+
+#endif
+```
+
+配合 C++: see `C++.md`
+- C++ 的链接指示: `extern "C" {}`
+- `__cplusplus` 预处理器变量
 
 # Debug tool
 - dbg
