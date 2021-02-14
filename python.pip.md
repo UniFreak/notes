@@ -16,6 +16,7 @@ pip-autoremove somepackage -y
 # 切换其他源
 
 - 阿里: `pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/`
-- 清华: https://pypi.tuna.tsinghua.edu.cn/simple
+- 清华: `https://pypi.tuna.tsinghua.edu.cn/simple`
+- 官方: `https://pypi.python.org/simple`
 
 临时用可用 `pip install -i <源地址>`

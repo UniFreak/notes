@@ -26,6 +26,8 @@
 - z
 - tldr
 
+`brew install inetutils` install ftp, telnet, ...
+
 # dev utils
 - @see: http://www.josebrowne.com/open/from-windows-to-mac-dev
 - sublimeText: @see SublimeText.md

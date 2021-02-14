@@ -123,3 +123,13 @@ Description Language
 
 # Web app framework
 - PHP: Laravel, Yii, CodeIgniter
+
+# Reader
+
+# Data Warehousing
+Amazon Redshift
+Google BigQuery
+
+# Object Store
+Amazon S3
+

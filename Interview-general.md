@@ -1,8 +1,12 @@
 # See
+- <https://www.hiredintech.com/>
+
 - php.*.md
-- sandbox/algo
 - mysql.*.md
+- sandbox/algo
 - job.*.md
+- SystemDesign*
+- Math*
 
 # 简历
 
