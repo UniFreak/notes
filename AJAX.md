@@ -1,4 +1,5 @@
 # 前端
+
 创建XMLHttpRequest对象
 
     现代浏览器 ? xmlhttp = new XMLHttpRequest : xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
@@ -16,30 +17,32 @@
 
 # Sample
 
+    ```javascript
     function showCustomer(str) {
-    var xmlhttp;
-    if (str=="")    {
-        document.getElementById("txtHint").innerHTML="";
-        return;
+        var xmlhttp;
+        if (str=="") {
+            document.getElementById("txtHint").innerHTML="";
+            return;
         }
-    if (window.XMLHttpRequest)  {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp=new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
         }
-    else {
-        // code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-    xmlhttp.onreadystatechange=function()   {
-        if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-            document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+        xmlhttp.onreadystatechange=function()   {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
             }
         }
-    xmlhttp.open("GET","getcustomer.asp?q="+str,true);
-    xmlhttp.send();
+        xmlhttp.open("GET","getcustomer.asp?q="+str,true);
+        xmlhttp.send();
     }
+    ```
 
 # 后台
+
 接收请求
 处理数据
 返回响应

@@ -1,6 +1,19 @@
+# See
+- <https://xdebug.org/docs>
+
+# Install
+
+`pecl install xdebug`
+
+# Config
+
+`zend_extension=path/to/xdebug.so`
+
+
+
 # setup
 - using docker-php: see: macUp.md
-- run phpunit locally in command line: 
+- run phpunit locally in command line:
     1. make sure local php's xdebug conf file(use `php -ini` to find out the file location) have those setting:
 
     ```ini

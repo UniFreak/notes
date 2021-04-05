@@ -1,0 +1,1 @@
+- 同源策略 <http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html>

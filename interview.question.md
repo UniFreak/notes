@@ -4,6 +4,7 @@
 - book: cracking the coding interview
 
 # General
+
 1. 经历
 2. 入行原因
 3. 对上个公司的评价, 为什么离职
@@ -11,7 +12,7 @@
 4. 得意之作
 5. 项目的用户量, PV, 吞吐量, 难点和解决方法
 
-# Behavior
+# 行为
 
 ## 自我介绍
 
@@ -31,6 +32,7 @@
 自己的缺点: 要真实, 合乎情理, 加上如何克服
 
 ## 提问
+
 了解公司:
 - 团队, 项目, 合作, 规划
 - 为什么来这个公司, 挑战
@@ -42,57 +44,94 @@
 - 对 X 感兴趣, 如何学习
 - X 的原理
 
-# Tech
+# 经验问题
 
-简述三大范式
+如何定义系统行为, 边界和交互?
 
+# 项目问题
+
+exciler:
+- es6 | node:8.11 | vue-cli/vue.js/vue-router | axios | elementui
+- lumen5.1
+- 源(别名) -*> 版本 -> 词典 | Excel: 输入, 输出
+- API / UI (配置+查询) / cron
+- 异步 (队列)
+- 校验发现错误订单, 除了报警, 还有什么处理?
+
+QLog:
+- 调试模式 (TOKEN)
+- Laravel 事件 -> 自动 log
+- 请求链
+
+悲观购车锁
+
+资管路由
+
+方案管道
+
+订单生成器
+
+Fetcher
+
+签名校验
+
+PSR
+
+自动化
+
+RemembrableDB
+
+# 技术
+
+## 架构
+
+高并发, 大流量, 高可用
+MySQL 分区, 分表, 集群
+NoSQL (redis, mongodb) 优缺点对比, 应用场景
+- <https://juejin.cn/post/6844904006502858760>
+设计, 改进, 调优
+分布式
+    RPC 框架
+    负载均衡
+    分布式存储
+    分布式事务
+微服务
+    服务治理
+    service mesh
+    event mesh
+队列:
+    幂等, 可靠, 高效
+    队列堆积问题, 消息丢失问题
+工具
+    MySQL
+    MQ
+    Kafka
+    Redis
+    MongoDB
+    Memcache
+    K8s
+    ELK
+
+## 概念
+
+see intervew.collection.md
+see security.md
+
+Object Store: <https://www.zhihu.com/question/21536660>
+三大范式
 DDOS
-
-跨域: jsonp
-
-单点登录的实现
-
+跨域: jsonp       cors.md
+单点登录的实现      sso.md
 `$_POST`, `$_RAW_POST_DATA`, `input://`
-
-架构设计
-
-框架设计
-
 静态化设计
-
-瓶颈分析
-
 分表
-
 数据库设计
-
 主从复制
-
 late binding
-
 closure
-
 name space & auto-loading
-
 site scraping
-
 cli-php
-
-date time
-
-实现
-- 无极分类
-- 分页
-- 权限管理
-- 登录注册
-- 表单校验
-- 验证码
-- 文件上传
-- 数据安全检查
-- 留言板
-- 静态化
-- 下拉菜单选择文章分类
-
 对 PDO 的了解
 
 ## 单引号 vs 双引号

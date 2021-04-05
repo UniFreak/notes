@@ -92,13 +92,11 @@
     + `Route::resource()` can also define a partial resource routes, this should be under other related route definitions
 
         ```php
-        <?php
         Route::resource('photo', 'PhotoController',
                         ['only' => ['index', 'show']]);
 
         Route::resource('photo', 'PhotoController',
                         ['except' => ['create', 'store', 'update', 'destroy']]);
-         ?>
         ```
 
     + use `.` to define nested resource routes(say comments to photos), like `Route::resource('photos.comments', 'PhotoCommentController');`, then you can access it via URL `photos/{photos}/comments/{comments}`

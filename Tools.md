@@ -1,3 +1,26 @@
+# Benchmark
+- Ab
+- Jemeter
+- Apache Bench
+- Siege
+
+# PaaS
+- AppFog <https://appfog.com>
+- AWS Elastic Beanstalk <http://aws.amazon.com/elasticbeanstalk>
+- Engine Yard
+- Fortrabbit
+- Google App Engine
+- Heroku
+- Microsoft Azure
+- Pagoda Box
+- Red Hat OpenShift
+- Zend Developer Cloud
+
+# Service Discovery
+- ZooKeeper
+- etcd
+- Consul
+
 # Disposable Phone Number
 - https://smsreceivefree.com/
 
@@ -53,7 +76,7 @@ Description Language
 - mitmproxy
 
 # CI
-- TravisCI
+- TravisCI <https://travis-ci.org>
 - Jenkins
 
 # Formats Convertor
@@ -98,6 +121,12 @@ Description Language
 - New Relic
 - Loggly
 
+# Profiler
+PHP
+- Xdebug
+- XHProf
+- Blackfire
+
 # Binary Assert @?
 - Amazon S3
 
@@ -108,10 +137,15 @@ Description Language
 
 # Deployment
 - Capistrano
+- Deployer <http://deployer.in/>
+- Magallanes <http://magephp.com/>
+- Rocketeer <http://rocketeer.autopergamene.eu/>
 
 # Provision
-- Chef
-- Puppet
+- Chef <https://www.getchef.com/chef/>
+- Puppet <http://puppetlabs.com>
+- Ansible <http://www.ansible.com/home>
+- SaltStack <http://www.saltstack.com>
 
 # Log Router
 - Logplex
@@ -126,10 +160,8 @@ Description Language
 
 # Reader
 
-# Data Warehousing
-Amazon Redshift
-Google BigQuery
-
-# Object Store
-Amazon S3
+# Test
+- TDD: PHPUnit <https://phpunit.de/>
+- SpecBDD: PHPSpec <http://www.phpspec.net/>
+- StoryBDD: Behat <http://behat.org>
 

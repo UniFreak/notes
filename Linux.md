@@ -998,68 +998,116 @@ ulimit          限制用户资源使用
 
 
 # Snippets
+
 find 'word' recusively in file:
+
     find . -type f -exec grep -l "word" {} +
     find -name '*.php' -exec grep 'word' {} +
     grep 'word' * -r .
+
 find files whose last modified time is more recentely than a.php
+
     find -newer a.php
+
 check out the distribution version
+
     cat /etc/*-release
     uname -a
+
 check the memory info
+
     cat /proc/meminfo
     vmstat
     top
+
 see connected ftp user:
+
     pure-ftpwho
+
 back up web
+
     - use tar
         tar -czf /where/you/want/to/save.tar.gz /path/to/your/web
     - use rsync
         ...
+
 back up database
+
     mysqldump  dbName-u user -p pwd | gzip > /where/you/want/to/save.gz
+
 cp and change all *.php to *.m.php
+
     for script in *.php;
         do cp -- "$script" "${script%.php}.m.php";
     done
+
 after adding a alias into /root/.bashrc, let the alias take effect immediately:
+
     source /root/.bashrc
+
 configure ssh from host(win7) to vbox centOS
+
     1. create new port forwarding rule in vbox->setting->network->port forwarding
         name:ssh, host port:3022, guest port 22
     2. in putty, ssh to root@127.0.0.1:3022
+
 display largest size file/folder:
+
     ls -lSh | head -20
+
 show folder/file size in current folder
+
     du -sh --max-depth 1
+
 list group
+
     cat /etc/group
+
 run httpd, mysqld at startup
+
     chkconfig --level 235 httpd on
     chkconfig --level 2345 mysqld on
+
 open port for httpd
+
     iptables -I INPUT 5 -i eth1 -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
     service iptables save
+
 solve `this account is currently not available` error when su apache
+
     @/etc/passwd:
     change apache's shell from /sbin/nologin to /bin/bash
+
 tar
+
     tar -czvf       // tar and zip
     tar -xzvf       // untar and unzip
     tar -xzvkf      // untar and unzip, without override existing files
     tar -tf         // see the tarball file list
+
 change prompt color:
+
     `export PS1="\e[0;36m[\u@\h \W]\$\e[m"`
+
 find out whether port 80 is in use: `sudo lsof -i:80 | grep LISTEN`
+
+
 忘记 root 密码
+
     进入单人维护模式, 运行 `passwd` 命令
+
 扇区错乱
+
     运行 `fsck` 命令
 `etc/fstab` 配置错误而无法正常启动
     `mount -n -o remount,rw /`
+
 broken dependency
+
     1. try `yum clean all`
     2. then `yum update`
     3. then `yum deplist pkg` and install
+
+sync (backup) folder
+
+    rsync -aE --delete source_folder/ dest_folder/

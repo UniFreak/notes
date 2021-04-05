@@ -1,5 +1,36 @@
 # See
 - <http://sourceware.org/gdb/current/onlinedocs/gdb/>
+- Mac Install: 
+    - <https://sourceware.org/gdb/wiki/PermissionsDarwin>
+    - <https://www.ics.uci.edu/~pattis/common/handouts/macmingweclipse/allexperimental/mac-gdb-install.html>
+
+gdb.xml:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+    <key>com.apple.security.cs.allow-dyld-environment-variables</key>
+    <true/>
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+    <key>com.apple.security.cs.disable-executable-page-protection</key>
+    <true/>
+    <key>com.apple.security.cs.debugger</key>
+    <true/>
+    <key>com.apple.security.get-task-allow</key>
+    <true/>
+</dict>
+</plist>
+```
+
+`codesign --entitlements gdb.xml -fs gdbc /usr/local/bin/gdb`
 
 # Config file
 
@@ -207,8 +238,6 @@ Dynamic printf
 ```sh
 # Whenever execution reaches location, print the values of one or more expressions under the control of the string template.
 dprintf location,template,expression[,expression…]
-
-
 ```
 
 Continuing, Stepping

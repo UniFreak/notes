@@ -1,3 +1,13 @@
+- 1. Basic Coding Standard
+- 3. Logger Interface
+- 4. Autoloading Standard
+- 6. Caching Interface
+- 7. HTTP Message Interface
+- 11. Container Interface
+- 12. Extended Coding Style Standard
+- 13. Hypermedia Links
+-
+
 # Autoloader
 
 # Coding Standard
